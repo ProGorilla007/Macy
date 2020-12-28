@@ -5,3 +5,4 @@ class IndexView(TemplateView):
     template_name = "home.html"
 
 
+asdfasdf

@@ -7,3 +7,9 @@ class User(models.Model):
 
 
 
+$ git config --global user.name "Your name here"
+$ git config --global user.email "your_email@example.com"
+
+git remote add origin https://github.com/ProGorilla007/Macy.git
+
+git remote -v

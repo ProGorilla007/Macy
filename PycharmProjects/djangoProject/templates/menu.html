@@ -1,0 +1,19 @@
+{%load static%}
+
+{% block menu %}
+    <div class="menu">
+        <ul>
+            <li><a href="{% url 'index_view' %}"><img class="logo" alt="" src="{% static 'Macy/img/bg-min.png' %}"/> </a></li>
+            <li>
+                {% if user.is_authenticated %}
+                    Hi {{ user.username }}!
+                    <p><a href="{% url 'logout' %}">Log Out</a></p>
+                {% else %}
+                    <p>You are not logged in</p>
+                    <a href="{% url 'login' %}">Log In</a>
+                {% endif %}
+            </li>
+        </ul>
+
+    </div>
+{% endblock %}

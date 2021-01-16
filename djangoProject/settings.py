@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Macy',
+    'django_sass',
 ]
 
 MIDDLEWARE = [

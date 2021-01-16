@@ -1,28 +1,23 @@
 # Macy
-
-
 # DEMO
+---
 
-1. Tap the card
-2. Edit your info
-3. Be creative with your personalized businesscard
 
 # Features
 
 Macy let the users share their customized information in a moment. 
-It can be used in casual scene to any business scene. Think it as digitalized form of business card.
+It can be used in a casual scene to any business scene. Think it as digitalized form of business card.
 
 # Requirement
 
-* bootstrap
-* vue.js
+* Materialize
+* django-sass
 * ...
 
-# Installation
-
-
 # Usage
-
+1. Tap the card
+2. Edit your info
+3. Be creative with your personalized business card
 
 # Note
 

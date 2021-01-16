@@ -1,23 +1,10 @@
-{%load static%}
-<!DOCTYPE html>
-<html lang="eng">
-<head>
-    <meta charset="utf-8">
-    <title>{% block title %}Macy{% endblock %}</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'Macy/css/bootstrap.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'Macy/css/style.css' %}">
+{% extends 'base.html' %}
 
-    <link rel="shortcut icon" type="image/png" href="{% static 'Macy/favicon/favicon-96x96.png' %}"/>
-</head>
-<body>
-    <div class="bg-img"></div>
-    {% block menu %}
-        {% include "menu.html" %}
-    {% endblock %}
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-</body>
-</html>
+{% block title %}Macy | Home{% endblock %}
+
+{% block content %}
+    <div class="home">
+        <h1>Welcome to Macy</h1>
+        <a class="btn-primary" href="{% url 'signup' %}">新規登録</a>
+    </div>
+{% endblock %}

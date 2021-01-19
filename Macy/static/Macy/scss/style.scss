@@ -25,40 +25,99 @@ body {
     color: $grey;
     background-size: cover;
     text-decoration: none;
-
-}
-.bg-img{
-
-}
-
-.brand-logo{
-    font-family: 'Major Mono Display', sans-serif;
-}
-
-.logo{
-    width: 5%;
-    margin: .5%;
-    vertical-align: top;
 }
 
 .menu {
-
     p {
         padding: 0;
         display: inline-block;
         margin: 0 100px 0 0;
     }
 
+    .brand-logo {
+        font-family: 'Major Mono Display', sans-serif;
+    }
+
+    .logo{
+        width: 5%;
+        margin: .5%;
+        vertical-align: top;
+    }
 }
 
-
 .home{
+    h1{
+        color: darken($grey, 15%);
+    }
+
+    .slider{
+        .slides{
+            background-color: $white;
+
+            h3{
+                font-size: 4rem;
+                line-height: 500%;
+                font-weight: bolder;
+                user-select: none;
+            }
+
+            li{
+               .caption{
+                   color: $navy;
+                   text-align: right;
+                   vertical-align: bottom;
+                }
+            }
+
+            img{
+                filter: brightness(90%) blur(2px) grayscale(30%);
+                clip-path: polygon(100% 0, 0 0, 0% 100%);
+            }
+        }
+
+
+    }
+
+    .demo{
+        margin-top: 50px;
+
+        .flex-box{
+            display: flex;
+            justify-content: space-around;
+
+            .card{
+                width: 30%;
+            }
+        }
+
+        .row{
+            width: 30%;
+        }
+    }
+
+    .signup-btn{
+        padding: 20%;
+        text-align: center;
+
+        .btn-large{
+            width: 100%;
+            line-height: 100px;
+            height: 100px;
+            font-size: 30px;
+
+        }
+    }
+}
+
+.sign-up{
+    position: absolute;
+    top: 50%; /*親要素を起点に上から50%*/
+    left: 50%;  /*親要素を起点に左から50%*/
+    transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
+    -webkit-transform: translateY(-50%) translateX(-50%);
 
     h1{
         color: darken($grey, 15%);
     }
-    .signup-btn{
-        padding: 20%;
-        text-align: center;
-    }
 }
+

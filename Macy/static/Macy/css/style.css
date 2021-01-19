@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*-----------------------------------------------------------------------------
 version:   1.0
 date:      01/03/07
@@ -13,25 +14,21 @@ version history: [location of file]
 }
 
 body {
-  font-family: "Bradley Hand", "Lucida Sans", Tahoma, Verdana, sans-serif;
-  background: linear-gradient(0deg, #22c1c3 0%, #87d5e2 21%, #e9e9ff 100%) no-repeat fixed;
+  font-family: "M PLUS 1p", ‘ヒラギノ角ゴシック’, ‘メイリオ’, sans-serif;
+  background: #eceff1;
+  color: #8a8a8a;
   background-size: cover;
   text-decoration: none;
 }
 
-.menu {
-  background-color: rgba(109, 149, 176, 0.57);
-  width: 100%;
-  height: 100px;
-  display: flex;
-  color: white;
-  padding: 1%;
-  align-items: center;
-  justify-content: space-around;
+.brand-logo {
+  font-family: 'Major Mono Display', sans-serif;
 }
 
 .logo {
-  width: 7%;
+  width: 5%;
+  margin: .5%;
+  vertical-align: top;
 }
 
 .menu p {
@@ -40,18 +37,11 @@ body {
   margin: 0 100px 0 0;
 }
 
-.menu ul {
-  list-style: none;
+.home h1 {
+  color: #646464;
 }
 
-.menu li {
-  display: inline-block;
-}
-
-.menu li a {
-  text-decoration: none;
-}
-
-.home {
-  padding: 10%;
+.home .signup-btn {
+  padding: 20%;
+  text-align: center;
 }

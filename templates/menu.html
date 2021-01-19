@@ -1,19 +1,20 @@
 {%load static%}
 
 {% block menu %}
-    <div class="menu">
-        <ul>
-            <li><a href="{% url 'index_view' %}"><img class="logo" alt="" src="{% static 'Macy/img/bg-min.png' %}"/> </a></li>
-            <li>
-                {% if user.is_authenticated %}
-                    Hi {{ user.username }}!
-                    <p><a href="{% url 'logout' %}">Log Out</a></p>
-                {% else %}
-                    <p>You are not logged in</p>
-                    <a href="{% url 'login' %}">Log In</a>
-                {% endif %}
-            </li>
-        </ul>
-
-    </div>
+    <nav>
+        <div class="nav-wrapper menu">
+            <a class="brand-logo" href="{% url 'index_view' %}"><img class="logo" alt="" src="{% static 'Macy/img/bg-min.png' %}"/>Macy</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    {% if user.is_authenticated %}
+                        Hi {{ user.username }}!
+                        <p><a href="{% url 'logout' %}"><i class="material-icons right">login</i>Log Out</a></p>
+                    {% else %}
+                        <p>You are not logged in</p>
+                        <a href="{% url 'login' %}">Log In</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </nav>
 {% endblock %}

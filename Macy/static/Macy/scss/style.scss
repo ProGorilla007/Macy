@@ -5,19 +5,24 @@ author:    Takumi
 version history: [location of file]
 @import url("typography.css");
  */
-
+$project-font: "M PLUS 1p", ‘ヒラギノ角ゴシック’, ‘メイリオ’ ,sans-serif;
+$navy: #2D3142;
+$blue: #4F5D75;
+$grey: #8a8a8a;
+$white: #eceff1;
+$orange: #EF8354;
 
 /* Remove padding and margin */
-*
-    {
+* {
     margin: 0;
     padding: 0;
     border: 0;
 }
 
 body {
-    font-family:  "Bradley Hand", "Lucida Sans", Tahoma, Verdana, sans-serif;
-    background:linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(135, 213, 226, 1) 21%, rgba(233, 233, 255, 1) 100%) no-repeat fixed;
+    font-family:  $project-font;
+    background: $white;
+    color: $grey;
     background-size: cover;
     text-decoration: none;
 
@@ -26,37 +31,34 @@ body {
 
 }
 
-.menu{
-    background-color: rgba(109, 149, 176, 0.57);
-    width: 100%;
-    height: 100px;
-    display: flex;
-    color: white;
-    padding: 1%;
-    align-items: center;
-    justify-content: space-around;
+.brand-logo{
+    font-family: 'Major Mono Display', sans-serif;
 }
+
 .logo{
-    width: 7%;
+    width: 5%;
+    margin: .5%;
+    vertical-align: top;
 }
 
-.menu p{
-    padding: 0;
-    display: inline-block;
-    margin: 0 100px 0 0;
-}
-.menu ul{
-    list-style: none;
-}
-.menu li{
-    display: inline-block;
+.menu {
+
+    p {
+        padding: 0;
+        display: inline-block;
+        margin: 0 100px 0 0;
+    }
 
 }
 
-.menu li a{
-    text-decoration: none;
-}
 
 .home{
-    padding: 10%;
+
+    h1{
+        color: darken($grey, 15%);
+    }
+    .signup-btn{
+        padding: 20%;
+        text-align: center;
+    }
 }

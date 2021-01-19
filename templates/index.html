@@ -4,7 +4,21 @@
 
 {% block content %}
     <div class="home">
-        <h1>Welcome to Macy</h1>
-        <a class="btn-primary" href="{% url 'signup' %}">新規登録</a>
+        <div class="intro">
+            <h1>Macyで快適なソーシャルライフを</h1>
+            <div class="demo">
+                <!--<img src="" name="Demo画像1" />-->
+                <!--<img src="" name="Demo画像2" />-->
+                <!--<img src="" name="Demo画像3" />-->
+                <p>
+                    あなただけの特別なカードでネットワークの輪を広げよう！
+                    使い方は相手の携帯にタップするだけ！
+                    手軽に自分の情報をシェア！
+                </p>
+            </div>
+        </div>
+        <div class="signup-btn">
+            <a class="waves-effect waves-light btn-large" href="{% url 'signup' %}">新規登録</a>
+        </div>
     </div>
 {% endblock %}

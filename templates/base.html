@@ -5,19 +5,29 @@
     <meta charset="utf-8">
     <title>{% block title %}Macy{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'Macy/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Macy/css/materialize.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="{% static 'Macy/css/style.css' %}">
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="{% static 'Macy/favicon/favicon-96x96.png' %}"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
     <div class="bg-img"></div>
     {% block menu %}
         {% include "menu.html" %}
     {% endblock %}
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+    <div class="container">
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+<script type="text/javascript" src="{% static 'Macy/js/materialize.min.js' %}"></script>
 </body>
 </html>

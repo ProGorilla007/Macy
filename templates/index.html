@@ -8,3 +8,12 @@
         <a class="btn-primary" href="{% url 'signup' %}">新規登録</a>
     </div>
 {% endblock %}
+
+{% block main %}
+<h2>会員ページ</h2>
+<p>{{ user }}さん、こんにちは！</p>
+
+<p><a href="{% url 'logout' %}">ログアウト</a></p>
+<p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
+<p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
+{% endblock %}

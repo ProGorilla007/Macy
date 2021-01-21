@@ -17,10 +17,13 @@
     <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="{% static 'Macy/favicon/favicon-96x96.png' %}"/>
 
+    <link rel="apple-touch-icon-precomposed" href="{% static 'Macy/favicon/favicon-96x96.png' %}" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Macy|人と人を繋ぐアプリ" />
+
 </head>
 <body>
-    <div class="bg-img"></div>
     {% block menu %}
         {% include "menu.html" %}
     {% endblock %}
@@ -31,6 +34,15 @@
             {% endblock %}
         </main>
     </div>
+
+
+    <footer>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2020 Copyright Macy
+            </div>
+        </div>
+    </footer>
 
     <script type="text/javascript" src="{% static 'Macy/js/vendor/materialize.min.js' %}"></script>
 

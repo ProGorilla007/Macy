@@ -37,8 +37,46 @@ body {
   vertical-align: top;
 }
 
-.home h1 {
+.container h1 {
   color: #646464;
+  margin-bottom: 2%;
+}
+
+.container .alert-success {
+  padding: 20px;
+  background-color: #00897b;
+  color: white;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.container form {
+  margin-top: 50px;
+}
+
+.container form label {
+  font-size: 1.5em;
+}
+
+.container form p {
+  font-size: 1em;
+}
+
+.container form .errorlist {
+  color: red;
+}
+
+.container form .center-btn {
+  padding: 10%;
+  text-align: center;
+}
+
+.container form .center-btn .btn-large {
+  width: 100%;
+  line-height: 50px;
+  height: 50px;
+  font-size: 25px;
 }
 
 .home .slider .slides {
@@ -92,17 +130,6 @@ body {
   font-size: 30px;
 }
 
-.sign-up {
-  position: absolute;
-  top: 50%;
-  /*親要素を起点に上から50%*/
-  left: 50%;
-  /*親要素を起点に左から50%*/
-  transform: translateY(-50%) translateX(-50%);
-  /*要素の大きさの半分ずつを戻す*/
-  -webkit-transform: translateY(-50%) translateX(-50%);
-}
-
-.sign-up h1 {
-  color: #646464;
+footer {
+  text-align: right;
 }

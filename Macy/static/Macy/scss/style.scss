@@ -45,10 +45,51 @@ body {
     }
 }
 
-.home{
+.container{
     h1{
         color: darken($grey, 15%);
+        margin-bottom: 2%;
     }
+
+    .alert-success{
+        padding: 20px;
+        background-color: #00897b;
+        color: white;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
+    form{
+        margin-top: 50px;
+
+         label{
+            font-size: 1.5em;
+        }
+
+        p{
+            font-size: 1em;
+        }
+
+        .errorlist{
+            color: red;
+        }
+
+        .center-btn{
+            padding: 10%;
+            text-align: center;
+
+
+            .btn-large{
+                width: 100%;
+                line-height: 50px;
+                height: 50px;
+                font-size: 25px;
+            }
+        }
+    }
+}
+.home{
 
     .slider{
         .slides{
@@ -74,8 +115,6 @@ body {
                 clip-path: polygon(100% 0, 0 0, 0% 100%);
             }
         }
-
-
     }
 
     .demo{
@@ -104,20 +143,20 @@ body {
             line-height: 100px;
             height: 100px;
             font-size: 30px;
-
         }
     }
 }
 
 .sign-up{
-    position: absolute;
-    top: 50%; /*親要素を起点に上から50%*/
-    left: 50%;  /*親要素を起点に左から50%*/
-    transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
-    -webkit-transform: translateY(-50%) translateX(-50%);
 
-    h1{
-        color: darken($grey, 15%);
-    }
 }
+
+.log-in{
+
+}
+
+footer{
+    text-align: right;
+}
+
 

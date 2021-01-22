@@ -14,7 +14,8 @@ urlpatterns = [
 	path('user_list/', views.UserList.as_view(), name='user_list'),
 	path('', views.IndexView.as_view(), name='index_view'),
 	path('admin/', admin.site.urls),
-	#djangoがデフォルトで用意している機能の追加。
+	#djangoがデフォルトで用意している機能の追加（ログイン、ログアウト、パスワード変更、パスワード再発行）
     path("", login_required(index_view), name="index"),
     path('', include("django.contrib.auth.urls")),
+	path('delete/', views.MemberDelete.as_view(), name='delete'),
 ]

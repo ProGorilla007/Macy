@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView,DeleteView
 from django.views.generic.edit import FormView, CreateView
 from Macy.form import UserForm
 from django.urls import reverse_lazy
@@ -22,3 +22,9 @@ class AccountView(TemplateView):
 class UserList(ListView):
     model = User
     template_name = "User_list.html"
+
+
+class MemberDelete(DeleteView):
+    model = User
+    success_url = reverse_lazy("user")
+

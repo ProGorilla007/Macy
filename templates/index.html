@@ -1,33 +1,99 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Macy | Home{% endblock %}
 
 {% block content %}
     <div class="home">
         <div class="intro">
             <h1>Macyで快適なソーシャルライフを</h1>
-            <div class="demo">
-                <!--<img src="" name="Demo画像1" />-->
-                <!--<img src="" name="Demo画像2" />-->
-                <!--<img src="" name="Demo画像3" />-->
-                <p>
-                    あなただけの特別なカードでネットワークの輪を広げよう！
-                    使い方は相手の携帯にタップするだけ！
-                    手軽に自分の情報をシェア！
-                </p>
-            </div>
+            <blockquote>
+                あなただけの特別なカードでネットワークの輪を広げよう！
+                使い方は相手の携帯にタップするだけ！
+                手軽に自分の情報をシェア！
+            </blockquote>
         </div>
+        <div class="slider">
+            <ul class="slides">
+              <li>
+                <img alt="slide1" src="{% static 'Macy/img/slideshow/slide-1.jpg' %}" />
+                <div class="caption right-align">
+                    <h3>Tapして、</h3>
+                </div>
+              </li>
+              <li>
+                <img alt="slide2" src="{% static 'Macy/img/slideshow/slide-3.jpg' %}" />
+                <div class="caption right-align">
+                  <h3>登録したら、</h3>
+
+                </div>
+              </li>
+              <li>
+                <img alt="slide3" src="{% static 'Macy/img/slideshow/slide-2.jpg' %}" />
+                <div class="caption right-align">
+                  <h3>いつでも共有！</h3>
+
+                </div>
+              </li>
+            </ul>
+        </div>
+        <div class="demo">
+             <div class="ji">
+                <div class="flex-box">
+                  <div class="card">
+                    <div class="card-image">
+                      <img alt="sample-1" src="{% static 'Macy/img/sample-1.png' %}">
+                      <span class="card-title">Card Title</span>
+                    </div>
+                    <div class="card-content">
+                      <p>I am a very simple card. I am good at containing small bits of information.
+                      I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#">This is a link</a>
+                    </div>
+                  </div><div class="card">
+                    <div class="card-image">
+                      <img alt="sample-1" src="{% static 'Macy/img/sample-1.png' %}">
+                      <span class="card-title">Card Title</span>
+                    </div>
+                    <div class="card-content">
+                      <p>I am a very simple card. I am good at containing small bits of information.
+                      I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#">This is a link</a>
+                    </div>
+                  </div><div class="card">
+                    <div class="card-image">
+                      <img alt="sample-1" src="{% static 'Macy/img/sample-1.png' %}">
+                      <span class="card-title">Card Title</span>
+                    </div>
+                    <div class="card-content">
+                      <p>I am a very simple card. I am good at containing small bits of information.
+                      I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#">This is a link</a>
+                    </div>
+                  </div>
+                </div>
+             </div>
+        </div>
+        {% if not user.is_authenticated %}
         <div class="signup-btn">
-            <a class="waves-effect waves-light btn-large" href="{% url 'signup' %}">新規登録</a>
+            <a class="waves-effect waves-light btn-large" href="{% url 'signup' %}">今すぐ登録！</a>
         </div>
+    {% endif %}
     </div>
 {% endblock %}
 
 {% block main %}
-<h2>会員ページ</h2>
-<p>{{ user }}さん、こんにちは！</p>
+    <h2>会員ページ</h2>
+    <p>{{ user }}さん、こんにちは！</p>
 
-<p><a href="{% url 'logout' %}">ログアウト</a></p>
-<p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
-<p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
+    <p><a href="{% url 'logout' %}">ログアウト</a></p>
+    <p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
+    <p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
 {% endblock %}

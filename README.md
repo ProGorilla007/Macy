@@ -12,6 +12,9 @@ It can be used in a casual scene to any business scene. Think it as digitalized 
 
 * Materialize
 * django-sass
+  ```
+    python manage.py sass Macy/static/Macy/scss/ Macy/static/Macy/css/ --watch 
+  ```
 * ...
 
 # Usage

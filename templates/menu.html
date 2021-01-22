@@ -1,17 +1,39 @@
 {%load static%}
-
 {% block menu %}
+    <ul id="dropdown1" class="dropdown-content">
+      <li><a href="{% url 'logout' %}"><i class="material-icons right">login</i>Log Out</a></li>
+      <li><a href="#">アカウント情報</a></li>
+      <li><a href="#">マイページ</a></li>
+    </ul>
     <nav>
         <div class="nav-wrapper menu">
-            <a class="brand-logo" href="{% url 'index_view' %}"><img class="logo" alt="" src="{% static 'Macy/img/bg-min.png' %}"/>Macy</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <a class="brand-logo" href="{% url 'index_view' %}">
+                <img class="logo" alt="" src="{% static 'Macy/img/bg-min.png' %}"/>Macy
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                {% if request.get_full_path == "/" %}
+                    <li>
+                        <a href="#">会社概要</a>
+                    </li>
+                    <li>
+                        <a href="#">Macyとは</a>
+                    </li>
+                    <li>
+                        <a href="#">お問い合わせ</a>
+                    </li>
+                {% endif %}
                 <li>
                     {% if user.is_authenticated %}
-                        Hi {{ user.username }}!
-                        <p><a href="{% url 'logout' %}"><i class="material-icons right">login</i>Log Out</a></p>
+                        <li>
+                            <a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                                <i class="material-icons right">account_circle</i>
+                                Hi {{ user.username }}!
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                        </li>
+
                     {% else %}
-                        <p>You are not logged in</p>
-                        <a href="{% url 'login' %}">Log In</a>
+                        <a href="{% url 'login' %}"><i class="material-icons right">login</i>Log In</a>
                     {% endif %}
                 </li>
             </ul>

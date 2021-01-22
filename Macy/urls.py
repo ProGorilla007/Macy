@@ -1,21 +1,12 @@
-from django.urls import path
 from . import views
-from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.decorators import login_required
 
-from django.views.generic import TemplateView
-
-index_view = TemplateView.as_view(template_name="registration/index.html")
-
 urlpatterns = [
 	path('signup/', views.SignupView.as_view(), name='signup'),
-	path('account_info/', views.AccountView.as_view(), name='account'),
+	# path('account/<name>', views.AccountView.as_view(), name='account'),
 	path('user_list/', views.UserList.as_view(), name='user_list'),
+	path('login/', views.LogInView.as_view(), name="login_view"),
 	path('', views.IndexView.as_view(), name='index_view'),
-	path('admin/', admin.site.urls),
-	#djangoがデフォルトで用意している機能の追加（ログイン、ログアウト、パスワード変更、パスワード再発行）
-    path("", login_required(index_view), name="index"),
-    path('', include("django.contrib.auth.urls")),
-	path('delete/', views.MemberDelete.as_view(), name='delete'),
+	c2742f95c6c27a3135a21f9aac9b3f7903148bc4
 ]

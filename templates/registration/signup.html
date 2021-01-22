@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>Sign up here!</p>
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+    <h3>ユーザー登録</h3>
+    <div class="sign-up">
 
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                {{ field.label_tag }}
+                {{ field }}
+                <p>{{ field.help_text }}</p>
+                <br/>
+                {{ field.errors }}
+            {% endfor %}
+            <div class="center-btn">
+                <button type="submit" class="waves-effect waves-light btn-large" >登録</button>
+            </div>
+        </form>
+    </div>
 
 {% endblock %}

@@ -37,11 +37,18 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
         return current_user.pk == self.kwargs['pk'] or current_user.is_superuser
 
 
-class UserList(ListView):
-    model = User
-    template_name = "User_list.html"
-
-
 class LogInView(LoginView):
     form_class = LoginForm
     template_name = "registration/login.html"
+
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+
+class GuideView(TemplateView):
+    template_name = "guide.html"
+
+
+class ContactView(TemplateView):
+    template_name = "contact.html"

@@ -9,19 +9,19 @@
     {% endif %}
     <nav>
         <div class="nav-wrapper menu">
-            <a class="brand-logo" href="{% url 'index_view' %}">
+            <a class="brand-logo" href="{% url 'index' %}">
                 <img class="logo" alt="" src="{% static 'Macy/img/bg-min.png' %}"/>Macy
             </a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 {% if request.get_full_path == "/" %}
                     <li>
-                        <a href="#">会社概要</a>
+                        <a href="{% url 'about' %}">会社概要</a>
                     </li>
                     <li>
-                        <a href="#">Macyとは</a>
+                        <a href="{% url 'guide' %}">Macyとは</a>
                     </li>
                     <li>
-                        <a href="#">お問い合わせ</a>
+                        <a href="{% url 'contact' %}">お問い合わせ</a>
                     </li>
                 {% endif %}
                 <li>

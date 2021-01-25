@@ -31,5 +31,8 @@
             </div>
             {% csrf_token %}
         </form>
+        {% if user.is_authenticated %}
+            <p>you're logged in</p>
+        {% endif %}
     </div>
 {% endblock %}

@@ -20,7 +20,6 @@ class SignupView(SuccessMessageMixin, CreateView):
     template_name = "registration/signup.html"
     success_message = "ユーザ登録が完了しました。以下フォームよりログインください。"
 
-
     def get_success_url(self):
         login(self.request, self.object)
         return reverse('users', kwargs={'pk': self.object.id})
@@ -40,7 +39,7 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
 class UserDelete(SuccessMessageMixin, DeleteView):
     template_name = "registration/user_delete_confirm.html"
     model = User
-    success_url = reverse_lazy("index_view")
+    success_url = reverse_lazy("index")
     success_message = "ユーザー削除が完了しました"
 
 

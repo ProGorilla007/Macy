@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'django_sass',
 ]
 
@@ -135,3 +134,7 @@ AUTH_USER_MODEL = 'Macy.User'
 MESSAGE_TAGS = {
     messages.SUCCESS: 'alert alert-success',
 }
+
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+)

@@ -155,8 +155,25 @@ body {
 
 }
 
-.delete{
+.delete {
 
+}
+
+.account{
+    padding: 10%;
+    background: #8a8a8a;
+    color: white;
+    border-radius: 3px;
+    min-height: 80vh;
+    line-height: 300%;
+    .label{
+        float: left;
+        text-align: right;
+    }
+    .user-info{
+        float: right;
+        width: 80%;
+    }
 }
 
 footer{

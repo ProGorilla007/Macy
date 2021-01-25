@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Macy | アカウント削除{% endblock %}
+
+{% block content %}
+
+    <h3>削除確認画面</h3>
+    <div class= "delete">
+        <form method="post">
+            {% csrf_token %}
+            <p>本当にアカウントを削除しますか？</p>
+            <input type="submit" value="削除する">
+        </form>
+    </div>
+
+
+{% endblock %}

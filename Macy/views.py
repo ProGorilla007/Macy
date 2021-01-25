@@ -1,5 +1,4 @@
-from django.views.generic import TemplateView, ListView, DetailView
-    c2742f95c6c27a3135a21f9aac9b3f7903148bc4
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView
 from django.views.generic.edit import FormView, CreateView
 from Macy.form import UserForm, LoginForm
 from django.urls import reverse_lazy
@@ -17,7 +16,7 @@ class SignupView(SuccessMessageMixin, CreateView):
     form_class = UserForm
     template_name = "registration/signup.html"
     success_url = reverse_lazy('login_view')
-    success_message = "ユーザ登録が完了しました。以下フォームよりログインください。"
+    success_message = "ユーザ登録が完了しました。以下フォームよりログインください"
 
 
 class AccountView(LoginRequiredMixin, DetailView):
@@ -31,13 +30,15 @@ class UserList(ListView):
     template_name = "User_list.html"
 
 
-<<<<<<< HEAD
-class MemberDelete(DeleteView):
+class UserDelete(SuccessMessageMixin, DeleteView):
+    template_name = "registration/user_delete_confirm.html"
     model = User
-    success_url = reverse_lazy("user")
+    success_url = reverse_lazy("index_view")
+    success_message = "ユーザー削除が完了しました"
 
-=======
+
 class LogInView(LoginView):
     form_class = LoginForm
     template_name = "registration/login.html"
->>>>>>> c2742f95c6c27a3135a21f9aac9b3f7903148bc4
+
+

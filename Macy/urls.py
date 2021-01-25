@@ -7,6 +7,10 @@ urlpatterns = [
 	# path('account/<name>', views.AccountView.as_view(), name='account'),
 	path('user_list/', views.UserList.as_view(), name='user_list'),
 	path('login/', views.LogInView.as_view(), name="login_view"),
+	path('delete/<int:pk>', views.UserDelete.as_view(), name='delete'),
 	path('', views.IndexView.as_view(), name='index_view'),
-	c2742f95c6c27a3135a21f9aac9b3f7903148bc4
+	# path('admin/', admin.site.urls),
+	# djangoがデフォルトで用意している機能の追加（ログイン、ログアウト、パスワード変更、パスワード再発行）
+	# path("", login_required(index_view), name="index"),
+	path('', include("django.contrib.auth.urls")),
 ]

@@ -2,7 +2,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import FormView, CreateView
 from Macy.form import UserForm, LoginForm
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
@@ -26,10 +26,15 @@ class SignupView(SuccessMessageMixin, CreateView):
         return reverse('users', kwargs={'pk': self.object.id})
 
 
-class AccountView(LoginRequiredMixin, DetailView):
+class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
     permission_denied_message = "お手数ですがログイン後、もう一度お試しください"
     template_name = "registration/account.html"
     model = User
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.pk == self.kwargs['pk'] or current_user.is_superuser
 
 
 class UserList(ListView):

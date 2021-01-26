@@ -7,6 +7,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
 from django.urls import reverse
+from django.shortcuts import redirect
 
 User = get_user_model()
 
@@ -18,7 +19,13 @@ class IndexView(TemplateView):
 class SignupView(SuccessMessageMixin, CreateView):
     form_class = UserForm
     template_name = "registration/signup.html"
-    success_message = "ユーザ登録が完了しました。以下フォームよりログインください。"
+    success_message = "ユーザ登録が完了しました。以下よりアカウントの情報が確認できます。"
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        if self.request.user.is_authenticated:
+            return redirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
         login(self.request, self.object)
@@ -36,11 +43,16 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
         return current_user.username == self.kwargs['slug'] or current_user.is_superuser
 
 
-class UserDelete(SuccessMessageMixin, DeleteView):
+class UserDelete(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     template_name = "registration/user_delete_confirm.html"
     model = User
     success_url = reverse_lazy("index")
     success_message = "ユーザー削除が完了しました"
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.username == self.kwargs['slug'] or current_user.is_superuser
 
 
 class LogInView(LoginView):

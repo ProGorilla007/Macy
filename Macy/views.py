@@ -22,7 +22,7 @@ class SignupView(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         login(self.request, self.object)
-        return reverse('users', kwargs={'pk': self.object.id})
+        return reverse_lazy('users', kwargs={'slug': self.object.slug})
 
 
 class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
@@ -33,7 +33,7 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.pk == self.kwargs['pk'] or current_user.is_superuser
+        return current_user.username == self.kwargs['slug'] or current_user.is_superuser
 
 
 class UserDelete(SuccessMessageMixin, DeleteView):

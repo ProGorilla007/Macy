@@ -5,6 +5,8 @@ from django.contrib.auth.models import PermissionsMixin, UserManager, AbstractUs
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.contrib.auth import password_validation
+from django.utils.text import slugify
 
 
 class CustomUserManager(UserManager):
@@ -36,7 +38,8 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractUser):
-    my_id = uuid.uuid4()
+    my_id = models.UUIDField(null=False, unique=True)
+    slug = models.SlugField(null=False, unique=True)
 
     # adminサイトへのアクセス権をユーザーが持っているか判断するメソッド
     is_staff = models.BooleanField(
@@ -71,6 +74,14 @@ class User(AbstractUser):
     # メールの送信に関するメソッド
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.slug = self.slug or slugify(self.username)
+        self.my_id = uuid.uuid4()
+        super().save(*args, **kwargs)
+        if self._password is not None:
+            password_validation.password_changed(self._password, self)
+            self._password = None
 
 
 class Links(models.Model):

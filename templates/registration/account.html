@@ -27,5 +27,8 @@
         <div class="edit">
             <a class="waves-effect waves-light btn-large" href="{% url 'delete' slug=user.slug %}">アカウント削除</a>
         </div>
+        <div class="password_reset">
+            <a class="waves-effect waves-light btn-large" href="{% url 'password_change' pk=user.id %}">パスワード変更</a>
+        </div>
     </div>
 {% endblock %}

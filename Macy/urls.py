@@ -10,6 +10,8 @@ urlpatterns = [
 	path('contact/', views.ContactView.as_view(), name='contact'),
 	path('account/<slug:slug>/', views.AccountView.as_view(), name='users'),
 	path('account/<slug:slug>/delete/', views.UserDelete.as_view(), name='delete'),
+	path('password_change/<int:pk>', views.PasswordChange.as_view(), name='password_change'),
+	path('password_change/done/<int:pk>', views.PasswordChangeDone.as_view(), name='password_change_done'),
 	path('', views.IndexView.as_view(), name='index'),
 	]
 

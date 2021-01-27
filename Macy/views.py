@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView, CreateView
 from Macy.form import UserForm, LoginForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
 from django.urls import reverse
@@ -71,3 +71,12 @@ class GuideView(TemplateView):
 class ContactView(TemplateView):
     template_name = "contact.html"
 
+
+class PasswordChange(LoginRequiredMixin, PasswordChangeView):
+    template_name = "registration/password_change.html"
+    success_url = reverse_lazy("password_change_done")
+
+
+class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
+    template_name = "registration/password_change_done.html"
+    success_url = reverse_lazy("index")

@@ -130,6 +130,14 @@ body {
   font-size: 30px;
 }
 
+.sign-up select {
+  display: inline-block;
+}
+
+.sign-up td.delete input {
+  display: none;
+}
+
 .account {
   padding: 10%;
   background: #8a8a8a;

@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView, ListView, DetailView, DeleteView
 from django.views.generic.edit import FormView, CreateView
-from Macy.form import UserForm, LoginForm
+from Macy.form import UserForm, LoginForm, LinksForm, UserSignupFormSet
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
@@ -25,11 +25,26 @@ class SignupView(SuccessMessageMixin, CreateView):
         self.object = None
         if self.request.user.is_authenticated:
             return redirect('/')
-        return super().get(request, *args, **kwargs)
+        form = self.get_form(self.form_class)
+        links_form = UserSignupFormSet()
+        return self.render_to_response(
+            self.get_context_data(form=form,
+                                  links_form=links_form))
 
     def get_success_url(self):
         login(self.request, self.object)
         return reverse_lazy('users', kwargs={'slug': self.object.slug})
+
+    def post(self, request, *args, **kwargs):
+        formset = UserSignupFormSet(self.request.POST)
+        form = self.get_form()
+        if form.is_valid():
+            self.object = form.save()
+            formset.instance = self.object
+            formset.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
@@ -40,7 +55,7 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.username == self.kwargs['slug'] or current_user.is_superuser
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
 
 
 class UserDelete(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
@@ -52,7 +67,7 @@ class UserDelete(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.username == self.kwargs['slug'] or current_user.is_superuser
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
 
 
 class LogInView(LoginView):

@@ -148,6 +148,15 @@ body {
 }
 
 .sign-up{
+    select{
+        display: inline-block;
+    }
+
+    td.delete{
+        input{
+            display: none;
+        }
+    }
 
 }
 

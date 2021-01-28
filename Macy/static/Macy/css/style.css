@@ -138,6 +138,19 @@ body {
   display: none;
 }
 
+.delete {
+  text-align: center;
+  margin: 5%;
+}
+
+.delete i {
+  margin: 5%;
+}
+
+.delete i input {
+  color: white;
+}
+
 .account {
   padding: 10%;
   background: #8a8a8a;
@@ -145,16 +158,32 @@ body {
   border-radius: 3px;
   min-height: 80vh;
   line-height: 300%;
+  display: flex;
+  flex-direction: column;
 }
 
-.account .label {
-  float: left;
+.account .account-info {
+  display: flex;
+}
+
+.account .account-info .label {
   text-align: right;
+  margin: 2%;
 }
 
-.account .user-info {
-  float: right;
-  width: 80%;
+.account .account-info .user-info {
+  margin: 2%;
+}
+
+.account .account-info .user-info img {
+  width: 5%;
+  vertical-align: middle;
+}
+
+.account .account-manage {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5%;
 }
 
 footer {

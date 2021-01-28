@@ -165,7 +165,15 @@ body {
 }
 
 .delete {
+    text-align: center;
+    margin: 5%;
 
+    i{
+        margin: 5%;
+        input{
+            color: white;
+        }
+    }
 }
 
 .account{
@@ -175,14 +183,33 @@ body {
     border-radius: 3px;
     min-height: 80vh;
     line-height: 300%;
-    .label{
-        float: left;
-        text-align: right;
+    display: flex;
+    flex-direction: column;
+
+    .account-info{
+
+        display: flex;
+
+        .label{
+            text-align: right;
+            margin: 2%;
+        }
+        .user-info{
+            margin: 2%;
+
+            img{
+                width: 5%;
+                vertical-align: middle;
+            }
+        }
     }
-    .user-info{
-        float: right;
-        width: 80%;
+
+    .account-manage{
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 5%;
     }
+
 }
 
 footer{

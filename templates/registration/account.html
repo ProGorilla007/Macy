@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{%load static%}
 
 {% block title %}Macy | アカウント情報{% endblock %}
 {% block content %}
@@ -11,24 +12,46 @@
     {% endif %}
     <h3>アカウント情報</h3>
     <div class="account">
-        <div class="label">
-            <p>ユーザーネーム: </p>
-            <p>最後にログインした日時: </p>
-            <p>加入した日: </p>
-            <p>ユーザーID: </p>
-        </div>
-        <div class="user-info">
-            <p>{{ user.username }}</p>
-            <p>{{ user.last_login }}</p>
-            <p>{{ user.date_joined }}</p>
+        <div class="account-info">
+            <div class="label">
+                <p>ユーザーネーム: </p>
+                <p>名前: </p>
+                <p>苗字: </p>
+                <p>最後にログインした日時: </p>
+                <p>加入した日時: </p>
+                <p>ユーザーID: </p>
+                <p>紐づいたリンク:</p>
+            </div>
+            <div class="user-info">
+                <p>{{ user.username }}</p>
+                <p>{{ user.first_name }}</p>
+                <p>{{ user.last_name }}</p>
+                <p>{{ user.last_login }}</p>
+                <p>{{ user.date_joined }}</p>
 
-            <p>{{ user.my_id }}</p>
+                <p>{{ user.my_id }}</p>
+
+                <ul>
+
+                {% for links in user.links_set.all %}
+                    {% with 'Macy/img/'|add:links.media_choice|add:'.png' as image_static %}
+                    <li>
+                        <img class="logo" alt="" src="{% static image_static %}"/>
+                        <a href="{{ links.link }}">{{ links.link }}</a>
+                    </li>
+                    {% endwith %}
+                {% endfor %}
+
+                </ul>
+            </div>
         </div>
-        <div class="edit">
-            <a class="waves-effect waves-light btn-large" href="{% url 'delete' slug=user.slug %}">アカウント削除</a>
-        </div>
-        <div class="password_reset">
-            <a class="waves-effect waves-light btn-large" href="{% url 'password_change' pk=user.id %}">パスワード変更</a>
+        <div class="account-manage">
+            <div class="edit">
+                <a class="waves-effect waves-light btn-large" href="{% url 'delete' slug=user.slug %}">アカウント削除</a>
+            </div>
+            <div class="password_reset">
+                <a class="waves-effect waves-light btn-large" href="{% url 'password_change' pk=user.id %}">パスワード変更</a>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -40,6 +40,7 @@ class CustomUserManager(UserManager):
 class User(AbstractUser):
     my_id = models.UUIDField(null=False, unique=True)
     slug = models.SlugField(null=False, unique=True)
+    intro = models.TextField(blank=True, null=True)
 
     # adminサイトへのアクセス権をユーザーが持っているか判断するメソッド
     is_staff = models.BooleanField(
@@ -94,6 +95,8 @@ class Links(models.Model):
         ('LNE', 'LINE'),
         ('MIS', 'Other'),
     ]
+
+    account_id = models.CharField(blank=True, null=True, max_length=50)
 
     user_id = models.ForeignKey(
         User, on_delete=models.CASCADE)

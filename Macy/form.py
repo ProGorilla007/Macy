@@ -2,6 +2,7 @@ from .models import User
 from django.forms import ModelForm, inlineformset_factory
 from .models import Links
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django import forms
 
 
 class UserForm(UserCreationForm):
@@ -9,7 +10,16 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name')
+        fields = ('username', 'first_name', 'last_name', 'intro')
+        labels = {
+            'username': 'ユーザー名',
+            'first_name': '名前',
+            'last_name': '氏名',
+            'intro': '自己紹介',
+        }
+        widgets = {
+            'intro': forms.Textarea(attrs={'placeholder': '簡単な自己紹介を書いてね！'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
@@ -22,7 +32,16 @@ class UserForm(UserCreationForm):
 class LinksForm(ModelForm):
     class Meta:
         model = Links
-        fields = ('media_choice', 'link',)
+        fields = ('media_choice', 'link', 'account_id')
+        labels = {
+            'media_choice': 'SNS',
+            'link': 'リンクURL',
+            'account_id': 'ユーザーID',
+        }
+        widgets = {
+            'link': forms.TextInput(attrs={'placeholder': '例）https://twitter.com/アカウント名'}),
+            'account_id': forms.TextInput(attrs={'placeholder': '@twitter_official'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(LinksForm, self).__init__(*args, **kwargs)

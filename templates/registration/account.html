@@ -19,6 +19,7 @@
                 <p>苗字: </p>
                 <p>最後にログインした日時: </p>
                 <p>加入した日時: </p>
+                <p>紹介文: </p>
                 <p>ユーザーID: </p>
                 <p>紐づいたリンク:</p>
             </div>
@@ -28,7 +29,7 @@
                 <p>{{ user.last_name }}</p>
                 <p>{{ user.last_login }}</p>
                 <p>{{ user.date_joined }}</p>
-
+                <p>{{ user.intro }}</p>
                 <p>{{ user.my_id }}</p>
 
                 <ul>
@@ -38,6 +39,7 @@
                     <li>
                         <img class="logo" alt="" src="{% static image_static %}"/>
                         <a href="{{ links.link }}">{{ links.link }}</a>
+                        <p>{{ links.account_id }}</p>
                     </li>
                     {% endwith %}
                 {% endfor %}

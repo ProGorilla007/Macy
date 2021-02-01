@@ -24,9 +24,11 @@
 
 </head>
 <body>
-    {% block menu %} {% include "menu.html" %}
-
-    {% endblock %}
+    {% if view.template_name != 'mypage.html' or request.user.is_authenticated %}
+        {% block menu %}
+            {% include "menu.html" %}
+        {% endblock %}
+    {% endif %}
 
     <div class="container">
         <main>
@@ -45,6 +47,10 @@
     </footer>
 
     <script type="text/javascript" src="{% static 'Macy/js/vendor/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Macy/js/vendor/emergence.min.js' %}"></script>
+    <script>
+      emergence.init();
+    </script>
 
 </body>
 </html>

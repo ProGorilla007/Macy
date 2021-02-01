@@ -1,6 +1,5 @@
 from . import views
 from django.urls import path, include
-from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
 	path('signup/', views.SignupView.as_view(), name='signup'),
@@ -8,6 +7,7 @@ urlpatterns = [
 	path('about/', views.AboutView.as_view(), name='about'),
 	path('guide/', views.GuideView.as_view(), name='guide'),
 	path('contact/', views.ContactView.as_view(), name='contact'),
+	path('<slug:slug>/', views.MypageView.as_view(), name='mypage'),
 	path('account/<slug:slug>/', views.AccountView.as_view(), name='users'),
 	path('account/<slug:slug>/delete/', views.UserDelete.as_view(), name='delete'),
 	path('password_change/<int:pk>', views.PasswordChange.as_view(), name='password_change'),

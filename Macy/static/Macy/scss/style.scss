@@ -12,6 +12,15 @@ $grey: #8a8a8a;
 $white: #eceff1;
 $orange: #EF8354;
 
+@keyframes jump {
+  0%   { transform: scale(1.0, 1.0) translate(0%, 0%); }
+  15%  { transform: scale(0.9, 0.9) translate(0%, 3%); }
+  30%  { transform: scale(1.1, 0.9) translate(0%, 3%); }
+  50%  { transform: scale(0.9, 1.1) translate(0%, -3%); }
+  70%  { transform: scale(0.9, 0.9) translate(0%, 3%); }
+  100% { transform: scale(1.0, 1.0) translate(0%, 0%); }
+}
+
 /* Remove padding and margin */
 * {
     margin: 0;
@@ -158,6 +167,13 @@ body {
         }
     }
 
+    textarea{
+        background: white;
+        min-height: 250px;
+        padding: 3%;
+        border-radius: 3px;
+    }
+
 }
 
 .log-in{
@@ -188,6 +204,7 @@ body {
 
     .account-info{
 
+
         display: flex;
 
         .label{
@@ -201,6 +218,18 @@ body {
                 width: 5%;
                 vertical-align: middle;
             }
+
+            a{
+                color: darken($white, 15%);
+                transition: color .2s ease-in;
+
+                &:hover{
+                    color:$orange;
+
+                }
+            }
+
+
         }
     }
 
@@ -210,6 +239,108 @@ body {
         margin-top: 5%;
     }
 
+}
+
+.mypage{
+    padding: 5%;
+
+    h4{
+        color: $white;
+    }
+
+    h6{
+        color: darken($white, 5%);
+    }
+
+    .slide{
+        margin-bottom: 50px;
+        padding: 5%;
+    }
+
+    .header{
+        background-image: url('../img/mypage.jpg');
+
+        min-height: 500px;
+
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        border-radius: 3px;
+        color: white;
+
+        -webkit-box-shadow: inset 0px -2px 13px -2px rgba(0,0,0,0.9);
+        box-shadow: inset 0px -2px 13px -2px rgba(0,0,0,0.9);
+    }
+
+    .desc{
+        border-radius: 5px;
+        color: #333;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.5);
+        min-height: 150px;
+        padding: 2%;
+        width: 50%;
+    }
+
+    .links{
+        background-color: $white;
+
+        ul{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+            max-height: 700px;
+
+            li {
+                width: 250px;
+                height: 250px;
+                background: $blue;
+                color: $white;
+                border-radius: 50px;
+                text-align: center;
+                margin: 3%;
+                padding: 2%;
+                overflow: hidden;
+                box-shadow: 6px 5px 23px -1px rgba(0,0,0,0.2);
+
+
+                a{
+                    color: white;
+
+                }
+
+                img{
+                    height: 100px;
+                    width: 100px;
+                }
+            }
+
+            li:hover{
+                background: lighten($blue, 5%);
+                animation: jump 0.8s linear 0s 1;
+            }
+
+            li[data-emergence=hidden] {
+                opacity: 0;
+                transform: scale(.5);
+
+            }
+
+            li[data-emergence=visible] {
+                opacity: 1;
+                transform: scale(1);
+                transition: opacity .5s ease,
+                transform .5s ease,
+                background .5s ease;
+            }
+        }
+
+
+    }
 }
 
 footer{

@@ -58,6 +58,11 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
         return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
 
 
+class MypageView(DetailView):
+    template_name = "mypage.html"
+    model = User
+
+
 class UserDelete(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     template_name = "registration/user_delete_confirm.html"
     model = User

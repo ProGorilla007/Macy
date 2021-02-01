@@ -1,12 +1,13 @@
 from django.views.generic import TemplateView, ListView, DetailView, DeleteView
 from django.views.generic.edit import FormView, CreateView
-from Macy.form import UserForm, LoginForm
+from Macy.form import UserForm, LoginForm, MyPasswordResetForm, MySetPasswordForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
 from django.urls import reverse
+
 
 User = get_user_model()
 
@@ -68,3 +69,34 @@ class PasswordChange(LoginRequiredMixin, PasswordChangeView):
 class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = "registration/password_change_done.html"
     success_url = reverse_lazy("index")
+
+
+class PasswordReset(PasswordResetView):
+    """パスワード変更用URLの送付ページ"""
+    subject_template_name = 'registration/mail_template/create/subject.txt'
+    email_template_name = 'registration/mail_template/create/message.txt'
+    template_name = 'registration/password_reset_form.html'
+    # form_class = MyPasswordResetForm
+    success_url = reverse_lazy('password_reset_done')
+
+
+class PasswordResetDone(PasswordResetDoneView):
+    """パスワード変更用URLを送りましたページ"""
+    template_name = 'registration/password_reset_done.html'
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+    """新パスワード入力ページ"""
+    # form_class = MySetPasswordForm
+    success_url = reverse_lazy('password_reset_complete')
+    template_name = 'registration/password_reset_confirm.html'
+
+    def get_success_url(self):
+
+        return reverse('password_reset_complete', kwargs={'pk': self.user.id})
+
+
+class PasswordResetComplete(PasswordResetCompleteView):
+    """新パスワード設定しましたページ"""
+    template_name = 'registration/password_reset_complete.html'
+    #success_url = reverse_lazy('index')

@@ -13,7 +13,7 @@
         {% endif %}
 
         {% if form.errors %}
-            <p>Your username and password didn't match. Please try again.</p>
+            <p>ユーザー名とパスワードが一致しません。　もう一度お試しください。</p>
         {% endif %}
         <form method="post">
             {{ form.non_field_errors }}
@@ -31,6 +31,11 @@
             </div>
             {% csrf_token %}
         </form>
+        <div class="password_reset">
+            <small>
+                <a href="{% url 'password_reset' %}" class="text-muted">パスワードを忘れた場合</a>
+            </small>
+        </div>
         {% if user.is_authenticated %}
             <p>you're logged in</p>
         {% endif %}

@@ -76,7 +76,7 @@ class PasswordReset(PasswordResetView):
     subject_template_name = 'registration/mail_template/create/subject.txt'
     email_template_name = 'registration/mail_template/create/message.txt'
     template_name = 'registration/password_reset_form.html'
-    # form_class = MyPasswordResetForm
+    form_class = MyPasswordResetForm
     success_url = reverse_lazy('password_reset_done')
 
 
@@ -87,7 +87,7 @@ class PasswordResetDone(PasswordResetDoneView):
 
 class PasswordResetConfirm(PasswordResetConfirmView):
     """新パスワード入力ページ"""
-    # form_class = MySetPasswordForm
+    form_class = MySetPasswordForm
     success_url = reverse_lazy('password_reset_complete')
     template_name = 'registration/password_reset_confirm.html'
 
@@ -99,4 +99,4 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 class PasswordResetComplete(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
     template_name = 'registration/password_reset_complete.html'
-    #success_url = reverse_lazy('index')
+    success_url = reverse_lazy('index')

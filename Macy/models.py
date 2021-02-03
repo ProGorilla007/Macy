@@ -37,7 +37,7 @@ class CustomUserManager(UserManager):
 
 class User(AbstractUser):
     my_id = uuid.uuid4()
-
+    email = models.EmailField(_('email address'), null=False, unique=True)
     # adminサイトへのアクセス権をユーザーが持っているか判断するメソッド
     is_staff = models.BooleanField(
         _('staff status'),
@@ -62,7 +62,7 @@ class User(AbstractUser):
     # 平たくいうと上からメールドレスフィールド、ユーザー名として使うフィールド、スーパーユーザーを作る際に必ず入力するべきフィールドを指定している。
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELD = []
+    REQUIRED_FIELD = ['email']
 
     class Meta:
         verbose_name = _('user')

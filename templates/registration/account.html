@@ -1,27 +1,60 @@
 {% extends 'base.html' %}
+{%load static%}
 
 {% block title %}Macy | アカウント情報{% endblock %}
 {% block content %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <h3>アカウント情報</h3>
     <div class="account">
-        <div class="label">
-            <p>ユーザーネーム: </p>
-            <p>最後にログインした日時: </p>
-            <p>加入した日: </p>
-            <p>ユーザーID: </p>
-        </div>
-        <div class="user-info">
-            <p>{{ user.username }}</p>
-            <p>{{ user.last_login }}</p>
-            <p>{{ user.date_joined }}</p>
+        <div class="account-info">
+            <div class="label">
+                <p>ユーザーネーム: </p>
+                <p>名前: </p>
+                <p>苗字: </p>
+                <p>最後にログインした日時: </p>
+                <p>加入した日時: </p>
+                <p>紹介文: </p>
+                <p>ユーザーID: </p>
+                <p>紐づいたリンク:</p>
+            </div>
+            <div class="user-info">
+                <p>{{ user.username }}</p>
+                <p>{{ user.first_name }}</p>
+                <p>{{ user.last_name }}</p>
+                <p>{{ user.last_login }}</p>
+                <p>{{ user.date_joined }}</p>
+                <p>{{ user.intro }}</p>
+                <p>{{ user.my_id }}</p>
 
-            <p>{{ user.my_id }}</p>
+                <ul>
+
+                {% for links in user.links_set.all %}
+                    {% with 'Macy/img/'|add:links.media_choice|add:'.png' as image_static %}
+                    <li>
+                        <img class="logo" alt="" src="{% static image_static %}"/>
+                        <a href="{{ links.link }}">{{ links.link }}</a>
+                        <p>{{ links.account_id }}</p>
+                    </li>
+                    {% endwith %}
+                {% endfor %}
+
+                </ul>
+            </div>
         </div>
-        <div class="edit">
-            <a class="waves-effect waves-light btn-large" href="{% url 'delete' pk=user.id %}">アカウント削除</a>
-        </div>
-        <div class="password_change">
-            <a class="waves-effect waves-light btn-large" href="{% url 'password_change' pk=user.id %}">パスワード変更</a>
+
+        <div class="account-manage">
+            <div class="edit">
+                <a class="waves-effect waves-light btn-large" href="{% url 'delete' slug=user.slug %}">アカウント削除</a>
+            </div>
+            <div class="password_reset"><!--#クラス名をpassword_changeに変更。-->
+                <a class="waves-effect waves-light btn-large" href="{% url 'password_change' slug=user.slug %}">パスワード変更</a>
+            </div>
         </div>
     </div>
 {% endblock %}

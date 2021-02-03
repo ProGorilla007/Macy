@@ -5,6 +5,8 @@ from django.contrib.auth.models import PermissionsMixin, UserManager, AbstractUs
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.contrib.auth import password_validation
+from django.utils.text import slugify
 
 
 class CustomUserManager(UserManager):
@@ -36,8 +38,11 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractUser):
-    my_id = uuid.uuid4()
     email = models.EmailField(_('email address'), null=False, unique=True)
+    my_id = models.UUIDField(null=False, unique=True)
+    slug = models.SlugField(null=False, unique=True)
+    intro = models.TextField(blank=True, null=True)
+
     # adminサイトへのアクセス権をユーザーが持っているか判断するメソッド
     is_staff = models.BooleanField(
         _('staff status'),
@@ -72,6 +77,14 @@ class User(AbstractUser):
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
+    def save(self, *args, **kwargs):
+        self.slug = self.slug or slugify(self.username)
+        self.my_id = uuid.uuid4()
+        super().save(*args, **kwargs)
+        if self._password is not None:
+            password_validation.password_changed(self._password, self)
+            self._password = None
+
 
 class Links(models.Model):
     MEDIA_CHOICES = [
@@ -84,6 +97,8 @@ class Links(models.Model):
         ('MIS', 'Other'),
     ]
 
+    account_id = models.CharField(blank=True, null=True, max_length=50)
+
     user_id = models.ForeignKey(
         User, on_delete=models.CASCADE)
 
@@ -94,9 +109,3 @@ class Links(models.Model):
     )
 
     link = models.URLField(max_length=255)
-
-# ***git set up command cheat list***
-# $ git config --global user.name "Your name here"
-# $ git config --global user.email "your_email@example.com"
-# git remote add origin https://github.com/ProGorilla007/Macy.git
-# git remote -v

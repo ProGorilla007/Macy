@@ -1,10 +1,10 @@
 {%load static%}
 {% block menu %}
-    {% if user.is_authenticated %}
+    {% if request.user.is_authenticated %}
         <ul id="dropdown1" class="dropdown-content">
           <li><a href="{% url 'logout' %}"><i class="material-icons right">login</i>Log Out</a></li>
-          <li><a href="{% url 'users' pk=user.id %}">アカウント情報</a></li>
-          <li><a href="#">マイページ</a></li>
+          <li><a href="{% url 'users' slug=request.user.slug %}">アカウント情報</a></li>
+          <li><a href="{% url 'mypage' slug=request.user.slug %}">マイページ</a></li>
         </ul>
     {% endif %}
     <nav>
@@ -25,11 +25,11 @@
                     </li>
                 {% endif %}
                 <li>
-                    {% if user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                         <li>
                             <a class="dropdown-trigger" href="#!" data-target="dropdown1">
                                 <i class="material-icons right">account_circle</i>
-                                Hi {{ user.username }}!
+                                Hi {{ request.user.username }}!
                                 <i class="material-icons right">arrow_drop_down</i>
                             </a>
                         </li>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block title %}Macy | マイページ{% endblock %}
+{% block content %}
+    <div class="mypage">
+        <div class="header slide">
+            <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+            <h6>{{ user.username }}</h6>
+            <div class="desc">
+                <p>{{ user.intro }}</p>
+            </div>
+        </div>
+
+        <div class="links slide">
+            <ul>
+                {% for links in user.links_set.all %}
+                    {% with 'Macy/img/'|add:links.media_choice|add:'.png' as image_static %}
+                    <li data-emergence="hidden">
+                        <a href="{{ links.link }}">
+                            <img class="logo" alt="" src="{% static image_static %}"/>
+                            <p>{{ links.account_id }}</p>
+                        </a>
+                    </li>
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

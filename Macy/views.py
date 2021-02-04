@@ -1,13 +1,13 @@
-from django.views.generic import TemplateView, ListView, DetailView, DeleteView
-from django.views.generic.edit import FormView, CreateView
-from Macy.form import UserForm, LoginForm, LinksForm, UserSignupFormSet
+from django.http import HttpResponseRedirect
+from django.views.generic import TemplateView, DetailView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView
+from Macy.form import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
-from django.urls import reverse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
 User = get_user_model()
 
@@ -56,6 +56,83 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
         return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+
+
+class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+    template_name = "registration/edit.html"
+    model = User
+    form_class = UserEditForm
+    success_url = reverse_lazy("index")
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form(self.form_class)
+        links_form = UserEditFormSet(
+            initial=[{'media_choice': link.media_choice,
+                      'link': link.link,
+                      'account_id': link.account_id,
+                      } for link in self.request.user.links_set.all()]
+        )
+        return self.render_to_response(
+            self.get_context_data(form=form,
+                                  links_form=links_form))
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['username'] = self.request.user.username
+        initial['first_name'] = self.request.user.first_name
+        initial['last_name'] = self.request.user.last_name
+        initial['intro'] = self.request.user.intro
+
+        return initial
+
+    def post(self, request, *args, **kwargs):
+
+        user_update = get_object_or_404(User, slug=self.request.user.slug)
+
+        formset = UserEditFormSet(self.request.POST)
+
+        # create instance for each link forms
+        i = 0  # counter
+        for instance in self.request.user.links_set.all():
+            link_form = formset.forms[i]
+            link_form.instance = instance
+            i += 1
+
+        form = UserEditForm(self.request.POST, instance=user_update)
+
+        # if both user form and link forms are valid, pass those forms to form_valid and save the changes
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(form, formset)
+        else:
+            return self.form_invalid(form, formset)
+
+    def form_valid(self, form, formset):
+
+        self.object = form.save()
+        formset.instance = self.object
+        links = formset.save()
+
+        # assign each data to link instance and save the changes
+        i = 0  # counter
+        for link in links:
+            link.media_choice = formset.cleaned_data[i]['media_choice']
+            link.link = formset.cleaned_data[i]['link']
+            link.account_id = formset.cleaned_data[i]['account_id']
+            link.save()
+            i += 1
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, links_form):
+        return self.render_to_response(
+            self.get_context_data(form=form,
+                                  links_form=links_form))
 
 
 class MypageView(DetailView):

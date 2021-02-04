@@ -313,6 +313,15 @@ body {
   transition: opacity .5s ease, transform .5s ease, background .5s ease;
 }
 
+.edit select {
+  display: inline-block;
+}
+
+.edit input[type="checkbox"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 footer {
   text-align: right;
 }

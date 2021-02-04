@@ -343,6 +343,21 @@ body {
     }
 }
 
+.edit{
+    select{
+        display: inline-block;
+    }
+
+    input{
+        &[type="checkbox"]{
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+    }
+
+}
+
 footer{
     text-align: right;
 }

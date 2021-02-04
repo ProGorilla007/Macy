@@ -48,11 +48,14 @@
             </div>
         </div>
         <div class="account-manage">
-            <div class="edit">
+            <div class="account-delete">
                 <a class="waves-effect waves-light btn-large" href="{% url 'delete' slug=user.slug %}">アカウント削除</a>
             </div>
             <div class="password_reset">
                 <a class="waves-effect waves-light btn-large" href="{% url 'password_change' pk=user.id %}">パスワード変更</a>
+            </div>
+            <div class="account-edit">
+                <a class="waves-effect waves-light btn-large" href="{% url 'edit' slug=user.slug %}">アカウント情報変更</a>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 from .models import User
 from django.forms import ModelForm, inlineformset_factory
 from .models import Links
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django import forms
 
 
@@ -29,6 +29,23 @@ class UserForm(UserCreationForm):
             self.fields[self._meta.model.USERNAME_FIELD].widget.attrs['autofocus'] = True
 
 
+class UserEditForm(UserChangeForm):
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'intro')
+        labels = {
+            'username': '名前',
+            'first_name': '名前',
+            'last_name': '氏名',
+            'intro': '自己紹介',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserEditForm, self).__init__(*args, **kwargs)
+        self.fields.pop('password')
+
+
 class LinksForm(ModelForm):
     class Meta:
         model = Links
@@ -47,7 +64,8 @@ class LinksForm(ModelForm):
         super(LinksForm, self).__init__(*args, **kwargs)
 
 
-UserSignupFormSet = inlineformset_factory(User, Links, form=LinksForm, exclude=("id",), extra=3, can_delete=False)
+UserSignupFormSet = inlineformset_factory(User, Links, form=LinksForm, extra=4, can_delete=False)
+UserEditFormSet = inlineformset_factory(User, Links, form=LinksForm, extra=4, can_delete=False)
 
 
 class LoginForm(AuthenticationForm):

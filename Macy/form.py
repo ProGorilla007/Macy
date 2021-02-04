@@ -1,7 +1,7 @@
 from .models import User
 from django.forms import ModelForm, inlineformset_factory
 from .models import Links
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordResetForm, SetPasswordForm
 from django import forms
 
 
@@ -10,9 +10,11 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'intro')
+
+        fields = ('username', 'email', 'first_name', 'last_name', 'intro', 'email')
         labels = {
             'username': 'ユーザー名',
+            'email': 'メールアドレス',
             'first_name': '名前',
             'last_name': '氏名',
             'intro': '自己紹介',
@@ -20,6 +22,7 @@ class UserForm(UserCreationForm):
         widgets = {
             'intro': forms.Textarea(attrs={'placeholder': '簡単な自己紹介を書いてね！'}),
         }
+
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
@@ -33,9 +36,10 @@ class UserEditForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'intro')
+        fields = ('username', 'email', 'first_name', 'last_name', 'intro')
         labels = {
             'username': '名前',
+            'email': 'メールアドレス',
             'first_name': '名前',
             'last_name': '氏名',
             'intro': '自己紹介',
@@ -76,3 +80,21 @@ class LoginForm(AuthenticationForm):
         for field in self.fields.values():
             # field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['placeholder'] = field.label
+
+
+class MyPasswordResetForm(PasswordResetForm):
+    """パスワード忘れたときのフォーム"""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class MySetPasswordForm(SetPasswordForm):
+    """パスワード再設定用フォーム(パスワード忘れて再設定)"""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'

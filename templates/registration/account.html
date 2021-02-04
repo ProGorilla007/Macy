@@ -15,16 +15,18 @@
         <div class="account-info">
             <div class="label">
                 <p>ユーザーネーム: </p>
+                <p>メール: </p>
                 <p>名前: </p>
                 <p>苗字: </p>
-                <p>最後にログインした日時: </p>
-                <p>加入した日時: </p>
+                <p>最終ログイン日: </p>
+                <p>加入した日: </p>
                 <p>紹介文: </p>
                 <p>ユーザーID: </p>
                 <p>紐づいたリンク:</p>
             </div>
             <div class="user-info">
                 <p>{{ user.username }}</p>
+                <p>{{ user.email }}</p>
                 <p>{{ user.first_name }}</p>
                 <p>{{ user.last_name }}</p>
                 <p>{{ user.last_login }}</p>
@@ -47,12 +49,13 @@
                 </ul>
             </div>
         </div>
+
         <div class="account-manage">
             <div class="account-delete">
                 <a class="waves-effect waves-light btn-large" href="{% url 'delete' slug=user.slug %}">アカウント削除</a>
             </div>
-            <div class="password_reset">
-                <a class="waves-effect waves-light btn-large" href="{% url 'password_change' pk=user.id %}">パスワード変更</a>
+            <div class="password-change">
+                <a class="waves-effect waves-light btn-large" href="{% url 'password_change' slug=user.slug %}">パスワード変更</a>
             </div>
             <div class="account-edit">
                 <a class="waves-effect waves-light btn-large" href="{% url 'edit' slug=user.slug %}">アカウント情報変更</a>

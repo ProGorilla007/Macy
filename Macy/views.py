@@ -1,13 +1,14 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, DetailView, DeleteView
 from django.views.generic.edit import CreateView, UpdateView
-from Macy.form import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet
-from django.urls import reverse_lazy
+from Macy.form import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet, MyPasswordResetForm, MySetPasswordForm
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
 from django.shortcuts import redirect, get_object_or_404
+
 
 User = get_user_model()
 
@@ -85,6 +86,7 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     def get_initial(self):
         initial = super().get_initial()
         initial['username'] = self.request.user.username
+        initial['email'] = self.request.user.email
         initial['first_name'] = self.request.user.first_name
         initial['last_name'] = self.request.user.last_name
         initial['intro'] = self.request.user.intro
@@ -140,7 +142,7 @@ class MypageView(DetailView):
     model = User
 
 
-class UserDelete(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class UserDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     template_name = "registration/user_delete_confirm.html"
     model = User
     success_url = reverse_lazy("index")
@@ -156,6 +158,10 @@ class LogInView(LoginView):
     form_class = LoginForm
     template_name = "registration/login.html"
 
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
+        return url
+
 
 class AboutView(TemplateView):
     template_name = "about.html"
@@ -169,11 +175,42 @@ class ContactView(TemplateView):
     template_name = "contact.html"
 
 
-class PasswordChange(LoginRequiredMixin, PasswordChangeView):
+class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = "registration/password_change.html"
-    success_url = reverse_lazy("password_change_done")
+
+    def get_success_url(self):
+        return reverse('password_change_done', kwargs={'slug': self.user.slug})
 
 
-class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
+class PasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = "registration/password_change_done.html"
-    success_url = reverse_lazy("index")
+
+
+class PasswordResetView(PasswordResetView):
+    """パスワード変更用URLの送付ページ"""
+    subject_template_name = 'registration/mail_template/create/subject.txt'
+    email_template_name = 'registration/mail_template/create/message.txt'
+    template_name = 'registration/password_reset_form.html'
+    form_class = MyPasswordResetForm
+    success_url = reverse_lazy('password_reset_done')
+
+
+class PasswordResetDoneView(PasswordResetDoneView):
+    """パスワード変更用URLを送りましたページ"""
+    template_name = 'registration/password_reset_done.html'
+
+
+class PasswordResetConfirmView(PasswordResetConfirmView):
+    """新パスワード入力ページ"""
+    form_class = MySetPasswordForm
+    success_url = reverse_lazy('password_reset_complete')
+    template_name = 'registration/password_reset_confirm.html'
+
+    def get_success_url(self):
+
+        return reverse('password_reset_complete')
+
+
+class PasswordResetCompleteView(PasswordResetCompleteView):
+    """新パスワード設定しましたページ"""
+    template_name = 'registration/password_reset_complete.html'

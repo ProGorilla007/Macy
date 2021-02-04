@@ -38,6 +38,7 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractUser):
+    email = models.EmailField(_('email address'), null=False, unique=True)
     my_id = models.UUIDField(null=False, unique=True)
     slug = models.SlugField(null=False, unique=True)
     intro = models.TextField(blank=True, null=True)
@@ -66,7 +67,7 @@ class User(AbstractUser):
     # 平たくいうと上からメールドレスフィールド、ユーザー名として使うフィールド、スーパーユーザーを作る際に必ず入力するべきフィールドを指定している。
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELD = []
+    REQUIRED_FIELD = ['email']
 
     class Meta:
         verbose_name = _('user')

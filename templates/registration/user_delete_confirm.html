@@ -11,6 +11,7 @@
         <form method="post">
             {% csrf_token %}
             <p>本当にアカウントを削除しますか？</p>
+            <p>一度削除すると、データの復元は出来ません。</p>
             <input class="waves-effect waves-light btn-large" type="submit" value="削除する">
         </form>
     </div>

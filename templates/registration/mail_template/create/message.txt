@@ -5,4 +5,4 @@
 再設定用URL
 {{ protocol}}://{{ domain }}{% url 'password_reset_confirm' uid token %}
 
-ほにゃらら
+いつもMacyをご利用頂き、ありがとうございます。

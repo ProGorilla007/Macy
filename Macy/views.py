@@ -179,7 +179,7 @@ class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = "registration/password_change.html"
 
     def get_success_url(self):
-        return reverse('password_change_done', kwargs={'slug': self.user.slug})
+        return reverse('password_change_done', kwargs={'slug': self.request.user.slug})
 
 
 class PasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):

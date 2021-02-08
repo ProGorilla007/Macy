@@ -20,10 +20,15 @@
                     {{ links_form.management_form }}
                     {% for form in links_form.forms %}
                         {% if forloop.first %}
-                            {% for field in form.visible_fields %}
+                            <th><label>SNS:</label></th>
+                            <th><label>リンクURL:</label></th>
+                            <th><label>ユーザーID:</label></th>
+                            <th><label>削除:</label></th>
+                            <!--{% for field in form.visible_fields %}
                                 <th>{{ field.label_tag }}</th>
-                            {% endfor %}
+                            {% endfor %}-->
                         {% endif %}
+
                 </thead>
                 <tbody>
                         <tr>
@@ -39,5 +44,4 @@
             </div>
         </form>
     </div>
-
 {% endblock %}

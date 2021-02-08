@@ -1,7 +1,8 @@
 from .models import User
 from django.forms import ModelForm, inlineformset_factory
 from .models import Links
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, \
+    UserChangeForm, PasswordResetForm, SetPasswordForm
 from django import forms
 
 
@@ -22,7 +23,9 @@ class UserForm(UserCreationForm):
         widgets = {
             'intro': forms.Textarea(attrs={'placeholder': '簡単な自己紹介を書いてね！'}),
         }
-
+        help_texts = {
+            'username': '150文字以内で入力してください。英数字と以下の記号がお使いいただけます。@/./+/-/_',
+        }
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
@@ -44,9 +47,13 @@ class UserEditForm(UserChangeForm):
             'last_name': '氏名',
             'intro': '自己紹介',
         }
+        help_texts = {
+            'username': 'ユーザーネームの再設定はできません。',
+        }
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)
+        self.fields['username'].disabled = True
         self.fields.pop('password')
 
 
@@ -69,7 +76,8 @@ class LinksForm(ModelForm):
 
 
 UserSignupFormSet = inlineformset_factory(User, Links, form=LinksForm, extra=4, can_delete=False)
-UserEditFormSet = inlineformset_factory(User, Links, form=LinksForm, extra=4, can_delete=False)
+UserEditFormSet = inlineformset_factory(
+    User, Links, form=LinksForm, extra=4, can_delete=True)
 
 
 class LoginForm(AuthenticationForm):

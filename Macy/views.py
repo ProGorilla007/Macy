@@ -1,10 +1,12 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, DetailView, DeleteView
 from django.views.generic.edit import CreateView, UpdateView
-from Macy.form import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet, MyPasswordResetForm, MySetPasswordForm
+from Macy.form import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet, \
+    MyPasswordResetForm, MySetPasswordForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, \
+    PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
 from django.shortcuts import redirect, get_object_or_404
@@ -37,15 +39,26 @@ class SignupView(SuccessMessageMixin, CreateView):
         return reverse_lazy('users', kwargs={'slug': self.object.slug})
 
     def post(self, request, *args, **kwargs):
+        self.object = None
+
         formset = UserSignupFormSet(self.request.POST)
         form = self.get_form()
-        if form.is_valid():
-            self.object = form.save()
-            formset.instance = self.object
-            formset.save()
-            return self.form_valid(form)
+
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(form, formset)
         else:
-            return self.form_invalid(form)
+            return self.form_invalid(form, formset)
+
+    def form_valid(self, form, formset):
+        self.object = form.save()
+        formset.instance = self.object
+        formset.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, links_form):
+        return self.render_to_response(
+            self.get_context_data(form=form,
+                                  links_form=links_form))
 
 
 class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
@@ -63,7 +76,10 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     template_name = "registration/edit.html"
     model = User
     form_class = UserEditForm
-    success_url = reverse_lazy("index")
+
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
+        return url
 
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
@@ -116,17 +132,28 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form, formset):
 
+        # save user info such as usernames and emails.
         self.object = form.save()
+
+        # overwrite the formset info with new input.
         formset.instance = self.object
+
+        # delete objects in deleted forms.
+        for obj in formset.deleted_forms:
+            if obj.instance.id is not None:
+                obj.instance.delete()
+
+        # save objects in formset excluding deleted forms.
         links = formset.save()
 
-        # assign each data to link instance and save the changes
+        # assign new data to each link instance and save the changes
         i = 0  # counter
         for link in links:
             link.media_choice = formset.cleaned_data[i]['media_choice']
             link.link = formset.cleaned_data[i]['link']
             link.account_id = formset.cleaned_data[i]['account_id']
             link.save()
+
             i += 1
 
         return HttpResponseRedirect(self.get_success_url())
@@ -175,18 +202,18 @@ class ContactView(TemplateView):
     template_name = "contact.html"
 
 
-class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = "registration/password_change.html"
 
     def get_success_url(self):
-        return reverse('password_change_done', kwargs={'slug': self.user.slug})
+        return reverse('password_change_done', kwargs={'slug': self.request.user.slug})
 
 
-class PasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
+class UserPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = "registration/password_change_done.html"
 
 
-class PasswordResetView(PasswordResetView):
+class UserPasswordResetView(PasswordResetView):
     """パスワード変更用URLの送付ページ"""
     subject_template_name = 'registration/mail_template/create/subject.txt'
     email_template_name = 'registration/mail_template/create/message.txt'
@@ -195,12 +222,12 @@ class PasswordResetView(PasswordResetView):
     success_url = reverse_lazy('password_reset_done')
 
 
-class PasswordResetDoneView(PasswordResetDoneView):
+class UserPasswordResetDoneView(PasswordResetDoneView):
     """パスワード変更用URLを送りましたページ"""
     template_name = 'registration/password_reset_done.html'
 
 
-class PasswordResetConfirmView(PasswordResetConfirmView):
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
     """新パスワード入力ページ"""
     form_class = MySetPasswordForm
     success_url = reverse_lazy('password_reset_complete')
@@ -211,6 +238,6 @@ class PasswordResetConfirmView(PasswordResetConfirmView):
         return reverse('password_reset_complete')
 
 
-class PasswordResetCompleteView(PasswordResetCompleteView):
+class UserPasswordResetCompleteView(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
     template_name = 'registration/password_reset_complete.html'

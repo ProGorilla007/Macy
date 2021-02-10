@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, DetailView, DeleteView
 from django.views.generic.edit import CreateView, UpdateView
-from Macy.form import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet, \
+from Macy.forms import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet, \
     MyPasswordResetForm, MySetPasswordForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin

@@ -1,4 +1,5 @@
 # Macy
+
 # DEMO
 ---
 
@@ -8,13 +9,15 @@
 Macy let the users share their customized information in a moment. 
 It can be used in a casual scene to any business scene. Think it as digitalized form of business card.
 
-# Requirement
+# Libraries
 
 * Materialize
 * django-sass
   ```
     python manage.py sass Macy/static/Macy/scss/ Macy/static/Macy/css/ --watch 
   ```
+* factory_boy
+* coverage
 * ...
 
 # Usage

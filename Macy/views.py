@@ -75,6 +75,7 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
 class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     template_name = "registration/edit.html"
     model = User
+
     form_class = UserEditForm
 
     def get_success_url(self):
@@ -144,17 +145,7 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
                 obj.instance.delete()
 
         # save objects in formset excluding deleted forms.
-        links = formset.save()
-
-        # assign new data to each link instance and save the changes
-        i = 0  # counter
-        for link in links:
-            link.media_choice = formset.cleaned_data[i]['media_choice']
-            link.link = formset.cleaned_data[i]['link']
-            link.account_id = formset.cleaned_data[i]['account_id']
-            link.save()
-
-            i += 1
+        formset.save()
 
         return HttpResponseRedirect(self.get_success_url())
 

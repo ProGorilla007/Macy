@@ -13,6 +13,10 @@ class RoutingTests(TestCase):
         response = self.client.get('')
         self.assertEqual(response.status_code, 200)
 
+    def test_get_about(self):
+        response = self.client.get('/about/')
+        self.assertEqual(response.status_code, 200)
+
     def test_signup_template_name(self):
         template_name = ['registration/signup.html']
         response = self.client.get('/signup/')

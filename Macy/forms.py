@@ -77,7 +77,7 @@ class LinksForm(ModelForm):
 
 UserSignupFormSet = inlineformset_factory(User, Links, form=LinksForm, extra=4, can_delete=False)
 UserEditFormSet = inlineformset_factory(
-    User, Links, form=LinksForm, extra=4, can_delete=True)
+    User, Links, form=LinksForm, extra=10, can_delete=True)
 
 
 class LoginForm(AuthenticationForm):

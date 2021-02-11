@@ -34,6 +34,13 @@ body {
     color: $grey;
     background-size: cover;
     text-decoration: none;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1 0 auto;
 }
 
 .menu {
@@ -350,10 +357,22 @@ body {
 
     input{
         &[type="checkbox"]{
-            opacity: 1;
-            pointer-events: auto;
+            // opacity: 1;
+            // pointer-events: auto;
         }
 
+    }
+
+    textarea{
+        background: white;
+        min-height: 250px;
+        padding: 3%;
+        border-radius: 3px;
+    }
+
+    .add-link{
+        margin: 1%;
+        float: right;
     }
 
 }

@@ -33,12 +33,19 @@
                 <tbody>
                         <tr>
                             {% for field in form.visible_fields %}
-                                <td>{{ field }}</td>
+
+                                {% if forloop.last %}
+
+                                    <td><label>{{ field }}<span> </span></label></td>
+                                {% else %}
+                                    <td>{{ field }}</td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <a class="btn-floating btn-large waves-effect waves-light red add-link"><i class="material-icons">add</i></a>
             <div class="center-btn">
                 <button type="submit" class="waves-effect waves-light btn-large" >保存</button>
             </div>

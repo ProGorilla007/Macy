@@ -217,6 +217,7 @@ body {
         .label{
             text-align: right;
             margin: 2%;
+            min-width: 30%;
         }
         .user-info{
             margin: 2%;
@@ -226,14 +227,24 @@ body {
                 vertical-align: middle;
             }
 
-            a{
-                color: darken($white, 15%);
-                transition: color .2s ease-in;
+            li{
+                a {
 
-                &:hover{
-                    color:$orange;
+                    color: darken($white, 15%);
+                    transition: color .2s ease-in;
 
+                    &:hover {
+                        color: $orange;
+
+                    }
                 }
+            }
+
+            .img-delete{
+                a{
+                    color: $white;
+                }
+
             }
 
 
@@ -252,11 +263,11 @@ body {
     padding: 5%;
 
     h4{
-        color: $white;
+        color: $grey;
     }
 
     h6{
-        color: darken($white, 5%);
+        color: darken($grey, 5%);
     }
 
     .slide{
@@ -279,6 +290,13 @@ body {
 
         -webkit-box-shadow: inset 0px -2px 13px -2px rgba(0,0,0,0.9);
         box-shadow: inset 0px -2px 13px -2px rgba(0,0,0,0.9);
+
+        .profile-img{
+            border-radius: 50%;
+            border: 2px solid $blue;
+            width: 150px;
+            height: 150px;
+        }
     }
 
     .desc{

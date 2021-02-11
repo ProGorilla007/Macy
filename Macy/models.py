@@ -42,6 +42,8 @@ class User(AbstractUser):
     my_id = models.UUIDField(null=False, unique=True)
     slug = models.SlugField(null=False, unique=True)
     intro = models.TextField(blank=True, null=True)
+    profile = models.ImageField(upload_to='profile/', null=True, blank=True)
+    header = models.ImageField(upload_to='header/', null=True, blank=True)
 
     # adminサイトへのアクセス権をユーザーが持っているか判断するメソッド
     is_staff = models.BooleanField(

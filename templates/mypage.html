@@ -16,7 +16,7 @@
                 {% for links in user.links_set.all %}
                     {% with 'Macy/img/'|add:links.media_choice|add:'.png' as image_static %}
                     <li data-emergence="hidden">
-                        <a href="{{ links.link }}">
+                        <a target="_blank" href="{{ links.link }}">
                             <img class="logo" alt="" src="{% static image_static %}"/>
                             <p>{{ links.account_id }}</p>
                         </a>

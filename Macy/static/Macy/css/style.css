@@ -65,6 +65,17 @@ body {
   vertical-align: top;
 }
 
+.menu .profile-img {
+  border-radius: 50%;
+  border: 2px solid #4F5D75;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  vertical-align: middle;
+  display: inline-block;
+  object-fit: cover;
+}
+
 .container h1 {
   color: #646464;
   margin-bottom: 2%;
@@ -270,6 +281,7 @@ body {
   border: 2px solid #4F5D75;
   width: 150px;
   height: 150px;
+  object-fit: cover;
 }
 
 .mypage .desc {

@@ -59,6 +59,17 @@ body {
         margin: .5%;
         vertical-align: top;
     }
+
+    .profile-img{
+        border-radius: 50%;
+        border: 2px solid $blue;
+        width: 30px;
+        height: 30px;
+        margin: auto;
+        vertical-align: middle;
+        display: inline-block;
+        object-fit:cover;
+    }
 }
 
 .container{
@@ -296,6 +307,7 @@ body {
             border: 2px solid $blue;
             width: 150px;
             height: 150px;
+            object-fit:cover;
         }
     }
 

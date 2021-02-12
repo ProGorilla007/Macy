@@ -40,6 +40,13 @@ body {
   color: #8a8a8a;
   background-size: cover;
   text-decoration: none;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1 0 auto;
 }
 
 .menu p {
@@ -56,6 +63,17 @@ body {
   width: 5%;
   margin: .5%;
   vertical-align: top;
+}
+
+.menu .profile-img {
+  border-radius: 50%;
+  border: 2px solid #4F5D75;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  vertical-align: middle;
+  display: inline-block;
+  object-fit: cover;
 }
 
 .container h1 {
@@ -197,6 +215,7 @@ body {
 .account .account-info .label {
   text-align: right;
   margin: 2%;
+  min-width: 30%;
 }
 
 .account .account-info .user-info {
@@ -208,13 +227,17 @@ body {
   vertical-align: middle;
 }
 
-.account .account-info .user-info a {
+.account .account-info .user-info li a {
   color: #c0cad1;
   transition: color .2s ease-in;
 }
 
-.account .account-info .user-info a:hover {
+.account .account-info .user-info li a:hover {
   color: #EF8354;
+}
+
+.account .account-info .user-info .img-delete a {
+  color: #eceff1;
 }
 
 .account .account-manage {
@@ -228,11 +251,11 @@ body {
 }
 
 .mypage h4 {
-  color: #eceff1;
+  color: #8a8a8a;
 }
 
 .mypage h6 {
-  color: #dde3e6;
+  color: #7d7d7d;
 }
 
 .mypage .slide {
@@ -251,6 +274,14 @@ body {
   color: white;
   -webkit-box-shadow: inset 0px -2px 13px -2px rgba(0, 0, 0, 0.9);
   box-shadow: inset 0px -2px 13px -2px rgba(0, 0, 0, 0.9);
+}
+
+.mypage .header .profile-img {
+  border-radius: 50%;
+  border: 2px solid #4F5D75;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 
 .mypage .desc {
@@ -317,9 +348,16 @@ body {
   display: inline-block;
 }
 
-.edit input[type="checkbox"] {
-  opacity: 1;
-  pointer-events: auto;
+.edit textarea {
+  background: white;
+  min-height: 250px;
+  padding: 3%;
+  border-radius: 3px;
+}
+
+.edit .add-link {
+  margin: 1%;
+  float: right;
 }
 
 footer {

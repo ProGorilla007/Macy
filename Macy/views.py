@@ -6,7 +6,7 @@ from Macy.forms import UserForm, LoginForm, UserSignupFormSet, UserEditForm, Use
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, \
-    PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+    PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
 from django.shortcuts import redirect, get_object_or_404
@@ -42,7 +42,7 @@ class SignupView(SuccessMessageMixin, CreateView):
         self.object = None
 
         formset = UserSignupFormSet(self.request.POST)
-        form = self.get_form()
+        form = UserForm(self.request.POST, request.FILES)
 
         if form.is_valid() and formset.is_valid():
             return self.form_valid(form, formset)
@@ -81,6 +81,46 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
         return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+
+
+class DeleteProfileView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
+    model = User
+    template_name = 'registration/delete_img.html'
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
+        return url
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.profile.delete()
+        return HttpResponseRedirect(success_url)
+
+
+class DeleteHeaderView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
+    model = User
+    template_name = 'registration/delete_img.html'
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
+        return url
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.header.delete()
+        return HttpResponseRedirect(success_url)
 
 
 class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
@@ -134,7 +174,7 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
             link_form.instance = instance
             i += 1
 
-        form = UserEditForm(self.request.POST, instance=user_update)
+        form = UserEditForm(self.request.POST, self.request.FILES, instance=user_update)
 
         # if both user form and link forms are valid, pass those forms to form_valid and save the changes
         if form.is_valid() and formset.is_valid():
@@ -190,6 +230,10 @@ class LogInView(LoginView):
     def get_success_url(self):
         url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
         return url
+
+
+class LogOutView(LogoutView):
+    pass
 
 
 class AboutView(TemplateView):

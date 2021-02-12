@@ -12,12 +12,13 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
 
-        fields = ('username', 'email', 'first_name', 'last_name', 'intro', 'email')
+        fields = ('username', 'email', 'first_name', 'last_name', 'profile', 'intro', 'email')
         labels = {
             'username': 'ユーザー名',
             'email': 'メールアドレス',
             'first_name': '名前',
             'last_name': '氏名',
+            'profile': 'プロフィール画像',
             'intro': '自己紹介',
         }
         widgets = {
@@ -39,12 +40,14 @@ class UserEditForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'intro')
+        fields = ('username', 'email', 'first_name', 'last_name', 'profile', 'header', 'intro')
         labels = {
             'username': '名前',
             'email': 'メールアドレス',
             'first_name': '名前',
             'last_name': '氏名',
+            'profile': 'プロフィール画像',
+            'header': 'ヘッダー画像',
             'intro': '自己紹介',
         }
         help_texts = {
@@ -77,7 +80,7 @@ class LinksForm(ModelForm):
 
 UserSignupFormSet = inlineformset_factory(User, Links, form=LinksForm, extra=4, can_delete=False)
 UserEditFormSet = inlineformset_factory(
-    User, Links, form=LinksForm, extra=4, can_delete=True)
+    User, Links, form=LinksForm, extra=10, can_delete=True)
 
 
 class LoginForm(AuthenticationForm):

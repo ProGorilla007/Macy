@@ -34,6 +34,13 @@ body {
     color: $grey;
     background-size: cover;
     text-decoration: none;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1 0 auto;
 }
 
 .menu {
@@ -51,6 +58,17 @@ body {
         width: 5%;
         margin: .5%;
         vertical-align: top;
+    }
+
+    .profile-img{
+        border-radius: 50%;
+        border: 2px solid $blue;
+        width: 30px;
+        height: 30px;
+        margin: auto;
+        vertical-align: middle;
+        display: inline-block;
+        object-fit:cover;
     }
 }
 
@@ -210,6 +228,7 @@ body {
         .label{
             text-align: right;
             margin: 2%;
+            min-width: 30%;
         }
         .user-info{
             margin: 2%;
@@ -219,14 +238,24 @@ body {
                 vertical-align: middle;
             }
 
-            a{
-                color: darken($white, 15%);
-                transition: color .2s ease-in;
+            li{
+                a {
 
-                &:hover{
-                    color:$orange;
+                    color: darken($white, 15%);
+                    transition: color .2s ease-in;
 
+                    &:hover {
+                        color: $orange;
+
+                    }
                 }
+            }
+
+            .img-delete{
+                a{
+                    color: $white;
+                }
+
             }
 
 
@@ -245,11 +274,11 @@ body {
     padding: 5%;
 
     h4{
-        color: $white;
+        color: $grey;
     }
 
     h6{
-        color: darken($white, 5%);
+        color: darken($grey, 5%);
     }
 
     .slide{
@@ -272,6 +301,14 @@ body {
 
         -webkit-box-shadow: inset 0px -2px 13px -2px rgba(0,0,0,0.9);
         box-shadow: inset 0px -2px 13px -2px rgba(0,0,0,0.9);
+
+        .profile-img{
+            border-radius: 50%;
+            border: 2px solid $blue;
+            width: 150px;
+            height: 150px;
+            object-fit:cover;
+        }
     }
 
     .desc{
@@ -350,10 +387,22 @@ body {
 
     input{
         &[type="checkbox"]{
-            opacity: 1;
-            pointer-events: auto;
+            // opacity: 1;
+            // pointer-events: auto;
         }
 
+    }
+
+    textarea{
+        background: white;
+        min-height: 250px;
+        padding: 3%;
+        border-radius: 3px;
+    }
+
+    .add-link{
+        margin: 1%;
+        float: right;
     }
 
 }

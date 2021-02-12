@@ -2,11 +2,17 @@
 {%load static%}
 {% block title %}Macy | マイページ{% endblock %}
 {% block content %}
+
     <div class="mypage">
-        <div class="header slide">
-            <h4>{{ user.first_name }} {{ user.last_name }}</h4>
-            <h6>{{ user.username }}</h6>
+        <div class="header slide" {% if user.header %}style="background-image: url('{{ MEDIA_URL }}{{user.header}}')"{% endif %}>
+            <img class="profile-img"
+                {% if user.profile %}src='{{ MEDIA_URL }}{{user.profile}}'
+                {% else %} src="{% static 'Macy/img/avatar.png' %}" {% endif %}>
+
+
             <div class="desc">
+                <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                <h6>{{ user.username }}</h6>
                 <p>{{ user.intro }}</p>
             </div>
         </div>
@@ -16,7 +22,7 @@
                 {% for links in user.links_set.all %}
                     {% with 'Macy/img/'|add:links.media_choice|add:'.png' as image_static %}
                     <li data-emergence="hidden">
-                        <a href="{{ links.link }}">
+                        <a target="_blank" href="{{ links.link }}">
                             <img class="logo" alt="" src="{% static image_static %}"/>
                             <p>{{ links.account_id }}</p>
                         </a>

@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.views.generic import TemplateView, DetailView, DeleteView
 from django.views.generic.edit import CreateView, UpdateView
 from Macy.forms import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet, \
@@ -65,6 +65,17 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
     permission_denied_message = "お手数ですがログイン後、もう一度お試しください"
     template_name = "registration/account.html"
     model = User
+    """
+    def get_test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        try:
+            current_user = self.request.user
+        except current_user.slug == 'AnonymousUser':
+            raise Http404("Question does not exist")
+
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+        
+    """
 
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。

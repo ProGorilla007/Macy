@@ -19,7 +19,6 @@ It can be used in a casual scene to any business scene. Think it as digitalized 
     python manage.py sass Macy/static/Macy/scss/ Macy/static/Macy/css/ --watch 
   ```
 * django-cleanup 5.1.0
-* django-cleanup 5.1.0
 * factory_boy
 * coverage
 * pillow

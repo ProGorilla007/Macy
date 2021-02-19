@@ -11,6 +11,20 @@ FAKER_LOCALE = 'ja_JP'
 MEDIA_CHOICES = [x[0] for x in Links.MEDIA_CHOICES]
 
 
+class NonActivatedUserFactory(DjangoModelFactory):
+    class Meta:
+        model = User
+
+    # 'user_name'というprovider
+    # username = Faker('user_name', locale=FAKER_LOCALE)
+    # first_name = Faker('first_name', locale=FAKER_LOCALE)
+    # last_name = Faker('last_name', locale=FAKER_LOCALE)
+    # email = Faker('email', locale=FAKER_LOCALE)
+    # intro = Faker('sentence', locale=FAKER_LOCALE)
+    # password = 'default1234'
+    is_active = False
+
+
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
@@ -21,7 +35,7 @@ class UserFactory(DjangoModelFactory):
     last_name = Faker('last_name', locale=FAKER_LOCALE)
     email = Faker('email', locale=FAKER_LOCALE)
     intro = Faker('sentence', locale=FAKER_LOCALE)
-    is_staff = False
+    password = 'default1234'
 
 
 class LinksFactory(DjangoModelFactory):

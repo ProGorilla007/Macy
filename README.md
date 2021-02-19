@@ -29,6 +29,17 @@ It can be used in a casual scene to any business scene. Think it as digitalized 
 2. Edit your info
 3. Be creative with your personalized business card
 
+# Available Custom Commands
+* create non activated users 
+```
+python manage.py create_users <number of users>
+```
+
+* create dummy links for specified user
+```
+python manage.py create_users <user_id> <number of links>
+```
+
 # Note
 
 

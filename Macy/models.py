@@ -44,6 +44,8 @@ class User(AbstractUser):
     intro = models.TextField(blank=True, null=True)
     profile = models.ImageField(upload_to='profile/', null=True, blank=True)
     header = models.ImageField(upload_to='header/', null=True, blank=True)
+    direct_link = models.URLField(max_length=255, null=True, blank=True)
+    is_direct = models.BooleanField(default=False)
 
     # adminサイトへのアクセス権をユーザーが持っているか判断するメソッド
     is_staff = models.BooleanField(
@@ -69,7 +71,7 @@ class User(AbstractUser):
     # 平たくいうと上からメールドレスフィールド、ユーザー名として使うフィールド、スーパーユーザーを作る際に必ず入力するべきフィールドを指定している。
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELD = ['email']
+    REQUIRED_FIELD = []
 
     class Meta:
         verbose_name = _('user')
@@ -86,6 +88,17 @@ class User(AbstractUser):
         if self._password is not None:
             password_validation.password_changed(self._password, self)
             self._password = None
+
+    def toggle_direct(self):
+        if self.is_direct:
+            self.is_direct = False
+        else:
+            self.is_direct = True
+        self.save()
+
+    def set_direct_link(self, link):
+        self.direct_link = link.link
+        self.save()
 
 
 class Links(models.Model):
@@ -111,3 +124,6 @@ class Links(models.Model):
     )
 
     link = models.URLField(max_length=255)
+
+    def __str__(self):
+        return self.get_media_choice_display()

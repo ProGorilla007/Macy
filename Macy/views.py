@@ -74,7 +74,7 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
 
 class DeleteProfileView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = User
-    template_name = 'registration/delete_img.html'
+    template_name = 'registration/blank.html'
 
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
@@ -94,7 +94,7 @@ class DeleteProfileView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
 
 class DeleteHeaderView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = User
-    template_name = 'registration/delete_img.html'
+    template_name = 'registration/blank.html'
 
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
@@ -117,6 +117,11 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = User
 
     form_class = UserEditForm
+
+    def get_form_kwargs(self):
+        kwargs = super(UserEditView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def get_success_url(self):
         url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
@@ -147,7 +152,6 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         initial['first_name'] = self.request.user.first_name
         initial['last_name'] = self.request.user.last_name
         initial['intro'] = self.request.user.intro
-
         return initial
 
     def post(self, request, *args, **kwargs):
@@ -163,7 +167,7 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
             link_form.instance = instance
             i += 1
 
-        form = UserEditForm(self.request.POST, self.request.FILES, instance=user_update)
+        form = UserEditForm(self.request.POST, self.request.FILES, instance=user_update, request=self.request)
 
         # if both user form and link forms are valid, pass those forms to form_valid and save the changes
         if form.is_valid() and formset.is_valid():
@@ -175,6 +179,9 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
 
         # save user info such as usernames and emails.
         self.object = form.save()
+
+        if form.cleaned_data['direct_link'] is not None:
+            self.request.user.set_direct_link(form.cleaned_data['direct_link'])
 
         # overwrite the formset info with new input.
         formset.instance = self.object
@@ -195,9 +202,36 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
                                   links_form=links_form))
 
 
+class IsDirectView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
+    model = User
+    template_name = 'registration/blank.html'
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
+        return url
+
+    def get(self, request, *args, **kwargs):
+        self.object = User.objects.get(slug=self.request.user.slug)
+        self.object.toggle_direct()
+        success_url = self.get_success_url()
+        return HttpResponseRedirect(success_url)
+
+
 class MypageView(DetailView):
     template_name = "mypage.html"
     model = User
+
+    def get(self, request, *args, **kwargs):
+
+        if self.request.user.is_direct:
+            return HttpResponseRedirect(self.request.user.direct_link)
+
+        return super().get(request, *args, **kwargs)
 
 
 class UserDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):

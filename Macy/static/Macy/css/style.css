@@ -240,10 +240,13 @@ body {
   color: #eceff1;
 }
 
-.account .account-manage {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 5%;
+.account span.material-icons {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.account .direct_on {
+  background-color: darkseagreen;
 }
 
 .mypage {

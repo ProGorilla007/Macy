@@ -37,6 +37,7 @@ class UserForm(UserCreationForm):
 
 
 class UserEditForm(UserChangeForm):
+    direct_link = forms.ModelChoiceField(queryset=None, required=False)
 
     class Meta:
         model = User
@@ -55,8 +56,10 @@ class UserEditForm(UserChangeForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
         super(UserEditForm, self).__init__(*args, **kwargs)
         self.fields['username'].disabled = True
+        self.fields['direct_link'].queryset = Links.objects.filter(user_id=self.request.user.id)
         self.fields.pop('password')
 
 

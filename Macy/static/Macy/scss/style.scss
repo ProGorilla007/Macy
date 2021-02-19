@@ -255,17 +255,18 @@ body {
                 a{
                     color: $white;
                 }
-
             }
-
-
         }
+
     }
 
-    .account-manage{
-        display: flex;
-        justify-content: space-evenly;
-        margin-top: 5%;
+    span.material-icons{
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+
+    .direct_on{
+        background-color:darkseagreen;
     }
 
 }

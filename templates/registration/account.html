@@ -50,6 +50,8 @@
                     <p>{{ user.date_joined }}</p>
                     <p>{{ user.intro }}</p>
                     <p>{{ user.my_id }}</p>
+                    <p>{{ user.is_direct }}</p>
+                    <p>{{ user.direct_link }}</p>
 
                     <ul>
 
@@ -67,16 +69,31 @@
                 </div>
             </div>
 
-            <div class="account-manage">
-                <div class="account-delete">
-                    <a class="waves-effect waves-light btn-large" href="{% url 'delete' slug=user.slug %}">アカウント削除</a>
-                </div>
-                <div class="password-change">
-                    <a class="waves-effect waves-light btn-large" href="{% url 'password_change' slug=user.slug %}">パスワード変更</a>
-                </div>
-                <div class="account-edit">
-                    <a class="waves-effect waves-light btn-large" href="{% url 'edit' slug=user.slug %}">アカウント情報変更</a>
-                </div>
+            <div class="collection">
+
+                    <a class="collection-item" href="{% url 'delete' slug=user.slug %}">
+                        <span class="material-icons">
+                            delete_forever
+                        </span>アカウント削除</a>
+
+                    <a class="collection-item" href="{% url 'password_change' slug=user.slug %}">
+                        <span class="material-icons">
+                            password
+                        </span>パスワード変更</a>
+
+
+                    <a class="collection-item" href="{% url 'edit' slug=user.slug %}">
+                        <span class="material-icons">
+                            create
+                        </span>アカウント情報変更</a>
+
+
+                    <a class="collection-item {% if user.is_direct %} direct_on {% endif %}" href="{% url 'is_direct' slug=user.slug %}">
+
+                        <span class="material-icons">
+                            ios_share
+                        </span>Directモード</a>
+
 
             </div>
         </div>

@@ -155,7 +155,7 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         return initial
 
     def post(self, request, *args, **kwargs):
-
+        self.object = None
         user_update = get_object_or_404(User, slug=self.request.user.slug)
 
         formset = UserEditFormSet(self.request.POST)

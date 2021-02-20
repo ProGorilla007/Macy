@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+
 from .models import User
 from django.forms import ModelForm, inlineformset_factory
 from .models import Links
@@ -53,6 +55,8 @@ class UserEditForm(UserChangeForm):
         }
         help_texts = {
             'username': 'ユーザーネームの再設定はできません。',
+            'profile': '1500px*1500px未満、2MB以下の画像がお使いいただけます。',
+            'header': '2000px*2000px未満、2MB以下の画像がお使いいただけます。',
         }
 
     def __init__(self, *args, **kwargs):
@@ -61,6 +65,48 @@ class UserEditForm(UserChangeForm):
         self.fields['username'].disabled = True
         self.fields['direct_link'].queryset = Links.objects.filter(user_id=self.request.user.id)
         self.fields.pop('password')
+
+    def clean_profile(self):
+        profile = self.cleaned_data['profile']
+        if profile is not None:
+            profile_width = 1500
+            if profile.image.width > profile_width:
+                raise ValidationError(
+                    'この画像の幅は%spxです。%spx以下の横幅の画像の登録をお願いします' % (profile.image.width, profile_width)
+                )
+
+            profile_height = 1500
+            if profile.image.height > profile_height:
+                raise ValidationError(
+                    'この画像の高さは%spxです。%spx以下の縦幅の画像の登録をお願いします' % (profile.image.width, profile_height)
+                )
+
+            img_size = 2*1000*1000
+            if profile.size > img_size:
+                raise ValidationError(
+                    '画像が大きすぎます。%sMBより小さいサイズの画像をお願いします。' % str(img_size//1000//1000)
+                )
+
+    def clean_header(self):
+        header = self.cleaned_data['header']
+        if header is not None:
+            img_width = 2000
+            if header.image.width > img_width:
+                raise ValidationError(
+                    'この画像の幅は%spxです。%spx以下の横幅の画像の登録をお願いします' % (header.image.width, img_width)
+                )
+
+            img_height = 2000
+            if header.image.height > img_height:
+                raise ValidationError(
+                    'この画像の高さは%spxです。%spx以下の縦幅の画像の登録をお願いします' % (header.image.width, img_height)
+                )
+
+            img_size = 2 * 1000 * 1000
+            if header.size > img_size:
+                raise ValidationError(
+                    '画像が大きすぎます。%sMBより小さいサイズの画像をお願いします。' % str(img_size // 1000 // 1000)
+                )
 
 
 class LinksForm(ModelForm):

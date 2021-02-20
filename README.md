@@ -22,6 +22,7 @@ It can be used in a casual scene to any business scene. Think it as digitalized 
 * factory_boy
 * coverage
 * pillow
+* qrcode-6.1
 * ...
 
 # Usage

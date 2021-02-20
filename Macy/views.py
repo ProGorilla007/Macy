@@ -1,3 +1,5 @@
+import base64
+
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, DetailView, DeleteView
 from django.views.generic.edit import CreateView, UpdateView
@@ -9,7 +11,9 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordCha
     PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
+import qrcode
+from io import BytesIO
 
 
 User = get_user_model()
@@ -226,10 +230,21 @@ class MypageView(DetailView):
     template_name = "mypage.html"
     model = User
 
+
+    @staticmethod
+    def make_qr(request):
+        qr_img = qrcode.make(request.build_absolute_uri())
+        buffer = BytesIO()
+        qr_img.save(buffer, format="PNG")
+        img = base64.b64encode(buffer.getvalue()).decode().replace("'", "")
+        request.qr = img
+
     def get(self, request, *args, **kwargs):
 
         if self.request.user.is_direct:
             return HttpResponseRedirect(self.request.user.direct_link)
+
+        self.make_qr(request)
 
         return super().get(request, *args, **kwargs)
 

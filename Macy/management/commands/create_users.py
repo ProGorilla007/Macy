@@ -12,4 +12,4 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         total = kwargs['total']
         for i in range(total):
-            UserFactory.create()
+            NonActivatedUserFactory.create()

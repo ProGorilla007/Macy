@@ -1,6 +1,7 @@
 from factory.django import DjangoModelFactory
 from factory import Faker, SubFactory, fuzzy
 from Macy.models import User, Links
+from django.contrib.auth.hashers import make_password
 
 """
     factories.py:
@@ -16,12 +17,12 @@ class NonActivatedUserFactory(DjangoModelFactory):
         model = User
 
     # 'user_name'というprovider
-    # username = Faker('user_name', locale=FAKER_LOCALE)
+    username = Faker('user_name', locale=FAKER_LOCALE)
     # first_name = Faker('first_name', locale=FAKER_LOCALE)
     # last_name = Faker('last_name', locale=FAKER_LOCALE)
-    # email = Faker('email', locale=FAKER_LOCALE)
+    email = Faker('email', locale=FAKER_LOCALE)
     # intro = Faker('sentence', locale=FAKER_LOCALE)
-    # password = 'default1234'
+    password = make_password('default1234')
     is_active = False
 
 
@@ -35,7 +36,7 @@ class UserFactory(DjangoModelFactory):
     last_name = Faker('last_name', locale=FAKER_LOCALE)
     email = Faker('email', locale=FAKER_LOCALE)
     intro = Faker('sentence', locale=FAKER_LOCALE)
-    password = 'default1234'
+    password = make_password('default1234')
 
 
 class LinksFactory(DjangoModelFactory):

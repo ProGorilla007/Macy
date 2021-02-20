@@ -11,7 +11,7 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordCha
     PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
-from django.shortcuts import redirect, get_object_or_404, render
+from django.shortcuts import redirect, get_object_or_404
 import qrcode
 from io import BytesIO
 
@@ -230,7 +230,6 @@ class MypageView(DetailView):
     template_name = "mypage.html"
     model = User
 
-
     @staticmethod
     def make_qr(request):
         qr_img = qrcode.make(request.build_absolute_uri())
@@ -240,9 +239,9 @@ class MypageView(DetailView):
         request.qr = img
 
     def get(self, request, *args, **kwargs):
-
-        if self.request.user.is_direct:
-            return HttpResponseRedirect(self.request.user.direct_link)
+        user = User.objects.get(slug=kwargs['slug'])
+        if user.is_direct:
+            return HttpResponseRedirect(user.direct_link)
 
         self.make_qr(request)
 

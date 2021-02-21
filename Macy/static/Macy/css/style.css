@@ -347,10 +347,6 @@ body {
   transition: opacity .5s ease, transform .5s ease, background .5s ease;
 }
 
-.edit select {
-  display: inline-block;
-}
-
 .edit textarea {
   background: white;
   min-height: 250px;

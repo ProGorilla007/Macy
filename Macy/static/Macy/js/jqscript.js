@@ -14,6 +14,13 @@ $(function(){
             $(link_fields[i]).hide();
         }
     }
+    let thumbnail_uri = '/static/Macy/img/';
+    let img_ext = '.png';
+    let options = $('.link-choice option').get();
+    for (let i = 0; i < options.length; ++i) {
+        $(options[i]).attr('data-icon', thumbnail_uri + $(options[i]).val() + img_ext);
+    }
+
 
     // show hidden link fields dynamically in account edit page
     $('.add-link').click(function() {

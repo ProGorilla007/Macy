@@ -31,6 +31,32 @@ $(function(){
             "padding-left": "20px"
         });
     });
+
+    const mediaChoice = {
+        TWT: 'https://twitter.com/',
+        FBK: 'https://www.facebook.com/',
+        INS: 'https://www.instagram.com/',
+        YTB: 'https://www.youtube.com/c/',
+    }
+
+    $('.link-choice').change(function() {
+        let url_field = $(this).closest('tr').find('.link-url');
+        if (this.value in mediaChoice) {
+            url_field.attr('readonly', true);
+        } else {
+            url_field.val('');
+            url_field.attr('readonly', false);
+        }
+    });
+
+    $('.link-account').on('input propertychange paste', function() {
+        let media = $(this).closest('tr').find('.link-choice');
+        let url = $(this).closest('tr').find('.link-url');
+        if(media.val() in mediaChoice){
+            url.val( mediaChoice[media.val()] + $(this).val());
+        }
+});
+
 });
 
 

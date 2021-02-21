@@ -125,6 +125,9 @@ class LinksForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(LinksForm, self).__init__(*args, **kwargs)
+        self.fields['media_choice'].widget.attrs['class'] = 'link-choice'
+        self.fields['link'].widget.attrs['class'] = 'link-url'
+        self.fields['account_id'].widget.attrs['class'] = 'link-account'
 
 
 UserSignupFormSet = inlineformset_factory(User, Links, form=LinksForm, extra=4, can_delete=False)

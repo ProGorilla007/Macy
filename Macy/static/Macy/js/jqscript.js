@@ -41,10 +41,12 @@ $(function(){
 
     $('.link-choice').change(function() {
         let url_field = $(this).closest('tr').find('.link-url');
+        let account_field = $(this).closest('tr').find('.link-account');
+        url_field.val('');
+        account_field.val('');
         if (this.value in mediaChoice) {
             url_field.attr('readonly', true);
         } else {
-            url_field.val('');
             url_field.attr('readonly', false);
         }
     });

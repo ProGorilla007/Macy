@@ -127,6 +127,7 @@ class LinksForm(ModelForm):
         super(LinksForm, self).__init__(*args, **kwargs)
         self.fields['media_choice'].widget.attrs['class'] = 'link-choice'
         self.fields['link'].widget.attrs['class'] = 'link-url'
+        self.fields['link'].widget.attrs['readonly'] = True
         self.fields['account_id'].widget.attrs['class'] = 'link-account'
 
 

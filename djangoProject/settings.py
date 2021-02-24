@@ -33,6 +33,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# DJANGO_SETTINGS_MODULE = "Macy.settings"
 
 # Application definition
 

@@ -39,7 +39,8 @@ class CustomUserManager(UserManager):
 
 class User(AbstractUser):
     email = models.EmailField(_('email address'), null=False, unique=True)
-    my_id = models.UUIDField(null=False, unique=True)
+    # my_id = models.UUIDField(null=False, unique=True)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     slug = models.SlugField(null=False, unique=True)
     intro = models.TextField(blank=True, null=True)
     profile = models.ImageField(upload_to='profile/', null=True, blank=True)

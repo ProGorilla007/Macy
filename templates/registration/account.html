@@ -3,13 +3,7 @@
 
     {% block title %}Macy | アカウント情報{% endblock %}
     {% block content %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+
         <h3>アカウント情報</h3>
         <div class="account">
             <div class="account-info">
@@ -19,12 +13,9 @@
                     <br />
                     <p>ユーザーネーム: </p>
                     <p>メール: </p>
-                    <p>名前: </p>
-                    <p>苗字: </p>
                     <p>最終ログイン日: </p>
                     <p>加入した日: </p>
                     <p>紹介文: </p>
-                    <p>ユーザーID: </p>
                     <p>紐づいたリンク:</p>
                 </div>
                 <div class="user-info">
@@ -39,17 +30,14 @@
                         <p>ヘッダー画像は設定されていません</p>
                     {% endif %}
                     <div class="img-delete">
-                        <a class="waves-effect waves-light btn-large" href="{% url 'delete_profile' slug=user.slug %}">プロファイル画像削除</a>
-                        <a class="waves-effect waves-light btn-large" href="{% url 'delete_header' slug=user.slug %}">ヘッダー画像削除</a>
+                        <a class="waves-effect waves-light btn-large" href="{% url 'delete_profile' id=user.user_id %}">プロファイル画像削除</a>
+                        <a class="waves-effect waves-light btn-large" href="{% url 'delete_header' id=user.user_id %}">ヘッダー画像削除</a>
                     </div>
                     <p>{{ user.username }}</p>
                     <p>{{ user.email }}</p>
-                    <p>{{ user.first_name }}</p>
-                    <p>{{ user.last_name }}</p>
                     <p>{{ user.last_login }}</p>
                     <p>{{ user.date_joined }}</p>
                     <p>{{ user.intro }}</p>
-                    <p>{{ user.my_id }}</p>
                     <p>{{ user.is_direct }}</p>
                     <p>{{ user.direct_link }}</p>
 
@@ -71,24 +59,24 @@
 
             <div class="collection">
 
-                    <a class="collection-item" href="{% url 'delete' slug=user.slug %}">
+                    <a class="collection-item" href="{% url 'delete' id=user.user_id %}">
                         <span class="material-icons">
                             delete_forever
                         </span>アカウント削除</a>
 
-                    <a class="collection-item" href="{% url 'password_change' slug=user.slug %}">
+                    <a class="collection-item" href="{% url 'password_change' id=user.user_id %}">
                         <span class="material-icons">
                             password
                         </span>パスワード変更</a>
 
 
-                    <a class="collection-item" href="{% url 'edit' slug=user.slug %}">
+                    <a class="collection-item" href="{% url 'edit' id=user.user_id %}">
                         <span class="material-icons">
                             create
                         </span>アカウント情報変更</a>
 
 
-                    <a class="collection-item {% if user.is_direct %} direct_on {% endif %}" href="{% url 'is_direct' slug=user.slug %}">
+                    <a class="collection-item {% if user.is_direct %} direct_on {% endif %}" href="{% url 'is_direct' id=user.user_id %}">
 
                         <span class="material-icons">
                             ios_share

@@ -14,20 +14,11 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
 
-        fields = ('username', 'email', 'first_name', 'last_name', 'profile', 'intro', 'email')
+        fields = ('email',)
         labels = {
-            'username': 'ユーザー名',
             'email': 'メールアドレス',
-            'first_name': '名前',
-            'last_name': '氏名',
-            'profile': 'プロフィール画像',
-            'intro': '自己紹介',
-        }
-        widgets = {
-            'intro': forms.Textarea(attrs={'placeholder': '簡単な自己紹介を書いてね！'}),
         }
         help_texts = {
-            'username': '150文字以内で入力してください。英数字と以下の記号がお使いいただけます。@/./+/-/_',
         }
 
     def __init__(self, *args, **kwargs):
@@ -43,18 +34,15 @@ class UserEditForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'profile', 'header', 'intro')
+        fields = ('username', 'profile', 'header', 'intro')
         labels = {
             'username': '名前',
-            'email': 'メールアドレス',
-            'first_name': '名前',
-            'last_name': '氏名',
             'profile': 'プロフィール画像',
             'header': 'ヘッダー画像',
             'intro': '自己紹介',
         }
         help_texts = {
-            'username': 'ユーザーネームの再設定はできません。',
+            # 'username': 'ユーザーネームの再設定はできません。',
             'profile': '1500px*1500px未満、2MB以下の画像がお使いいただけます。',
             'header': '2000px*2000px未満、2MB以下の画像がお使いいただけます。',
         }
@@ -62,8 +50,8 @@ class UserEditForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super(UserEditForm, self).__init__(*args, **kwargs)
-        self.fields['username'].disabled = True
-        self.fields['direct_link'].queryset = Links.objects.filter(user_id=self.request.user.id)
+        # self.fields['username'].disabled = True
+        self.fields['direct_link'].queryset = Links.objects.filter(user_id=self.request.user.user_id)
         self.fields.pop('password')
 
     def clean_profile(self):

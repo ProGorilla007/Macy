@@ -6,6 +6,13 @@
 
 {% block content %}
     <div class="home">
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <div class="intro">
             <h1>Macyで快適なソーシャルライフを</h1>
             <blockquote>
@@ -81,10 +88,5 @@
                 </div>
              </div>
         </div>
-        {% if not user.is_authenticated %}
-        <div class="signup-btn">
-            <a class="waves-effect waves-light btn-large" href="{% url 'signup' %}">今すぐ登録！</a>
-        </div>
-    {% endif %}
     </div>
 {% endblock %}

@@ -1,4 +1,5 @@
 import uuid
+
 from django.db import models
 from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin, UserManager, AbstractUser
@@ -6,7 +7,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth import password_validation
-from django.utils.text import slugify
+# from django.utils.text import slugify
 
 
 class CustomUserManager(UserManager):
@@ -37,16 +38,20 @@ class CustomUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser):
+class User(AbstractBaseUser):
+    user_id = models.UUIDField(unique=True, default=uuid.uuid4, primary_key=True, editable=False)
     email = models.EmailField(_('email address'), null=False, unique=True)
-    my_id = models.UUIDField(null=False, unique=True)
-    slug = models.SlugField(null=False, unique=True)
     intro = models.TextField(blank=True, null=True)
     profile = models.ImageField(upload_to='profile/', null=True, blank=True)
     header = models.ImageField(upload_to='header/', null=True, blank=True)
     direct_link = models.URLField(max_length=255, null=True, blank=True)
     is_direct = models.BooleanField(default=False)
-
+    username = models.CharField(
+        max_length=150,
+        unique=False,
+        help_text=_('150 characters or fewer.'),
+        blank=False, null=False,
+    )
     # adminサイトへのアクセス権をユーザーが持っているか判断するメソッド
     is_staff = models.BooleanField(
         _('staff status'),
@@ -54,7 +59,6 @@ class User(AbstractUser):
         help_text=_(
             'Designates whether this user can log into this admin site.'),
     )
-
     # ユーザーがアクティブかどうか判断するメソッド
     is_active = models.BooleanField(
         _('active'),
@@ -70,7 +74,7 @@ class User(AbstractUser):
 
     # 平たくいうと上からメールドレスフィールド、ユーザー名として使うフィールド、スーパーユーザーを作る際に必ず入力するべきフィールドを指定している。
     EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELD = []
 
     class Meta:
@@ -82,8 +86,7 @@ class User(AbstractUser):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def save(self, *args, **kwargs):
-        self.slug = self.slug or slugify(self.username)
-        self.my_id = uuid.uuid4()
+        # self.slug = self.slug or slugify(self.username)
         super().save(*args, **kwargs)
         if self._password is not None:
             password_validation.password_changed(self._password, self)
@@ -112,7 +115,7 @@ class Links(models.Model):
         ('MIS', 'Other'),
     ]
 
-    account_id = models.CharField(blank=True, null=True, max_length=50)
+    account_id = models.CharField(blank=True, max_length=150)
 
     user_id = models.ForeignKey(
         User, on_delete=models.CASCADE)

@@ -14,6 +14,13 @@ $(function(){
             $(link_fields[i]).hide();
         }
     }
+    let thumbnail_uri = '/static/Macy/img/';
+    let img_ext = '.png';
+    let options = $('.link-choice option').get();
+    for (let i = 0; i < options.length; ++i) {
+        $(options[i]).attr('data-icon', thumbnail_uri + $(options[i]).val() + img_ext);
+    }
+
 
     // show hidden link fields dynamically in account edit page
     $('.add-link').click(function() {
@@ -31,6 +38,34 @@ $(function(){
             "padding-left": "20px"
         });
     });
+
+    const mediaChoice = {
+        TWT: 'https://twitter.com/',
+        FBK: 'https://www.facebook.com/',
+        INS: 'https://www.instagram.com/',
+        YTB: 'https://www.youtube.com/c/',
+    }
+
+    $('.link-choice').change(function() {
+        let url_field = $(this).closest('tr').find('.link-url');
+        let account_field = $(this).closest('tr').find('.link-account');
+        url_field.val('');
+        account_field.val('');
+        if (this.value in mediaChoice) {
+            url_field.attr('readonly', true);
+        } else {
+            url_field.attr('readonly', false);
+        }
+    });
+
+    $('.link-account').on('input propertychange paste', function() {
+        let media = $(this).closest('tr').find('.link-choice');
+        let url = $(this).closest('tr').find('.link-url');
+        if(media.val() in mediaChoice){
+            url.val( mediaChoice[media.val()] + $(this).val());
+        }
+});
+
 });
 
 

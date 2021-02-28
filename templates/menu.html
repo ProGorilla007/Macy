@@ -28,13 +28,12 @@
                     {% if request.user.is_authenticated %}
                         <li>
                             <a class="dropdown-trigger" href="#!" data-target="dropdown1">
-                                <img class="profile-img"
-                                        {% if user.profile %}src='{{ MEDIA_URL }}{{user.profile}}'
+                                <img alt="" class="profile-img"
+                                        {% if request.user.profile %}src='{{ MEDIA_URL }}{{request.user.profile}}'
                                         {% else %} src="{% static 'Macy/img/avatar.png' %}" {% endif %} width="30px">
                                 Hi {{ request.user.username }}!
                                 <i class="material-icons right">arrow_drop_down</i>
                             </a>
-
                         </li>
 
                     {% else %}

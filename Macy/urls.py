@@ -18,6 +18,7 @@ urlpatterns = [
 	path('account/<slug:slug>/edit/', views.UserEditView.as_view(), name='edit'),
 	path('account/<slug:slug>/password_change/', views.UserPasswordChangeView.as_view(), name='password_change'),
 	path('account/<slug:slug>/password_change/done/', views.UserPasswordChangeDoneView.as_view(), name='password_change_done'),
+	path('account/<slug:slug>/direct/', views.IsDirectView.as_view(), name='is_direct'),
 	path('password_reset/', views.UserPasswordResetView.as_view(), name='password_reset'),
 	path('password_reset/done/', views.UserPasswordResetDoneView.as_view(), name='password_reset_done'),
 	path('password_reset/confirm/<uidb64>/<token>/', views.UserPasswordResetConfirmView.as_view(), name='password_reset_confirm'),

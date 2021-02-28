@@ -4,8 +4,9 @@
 {% block content %}
 
     <div class="mypage">
+        {% if user.is_active %}
         <div class="header slide" {% if user.header %}style="background-image: url('{{ MEDIA_URL }}{{user.header}}')"{% endif %}>
-            <img class="profile-img"
+            <img alt="" class="profile-img"
                 {% if user.profile %}src='{{ MEDIA_URL }}{{user.profile}}'
                 {% else %} src="{% static 'Macy/img/avatar.png' %}" {% endif %}>
 
@@ -29,8 +30,16 @@
                     </li>
                     {% endwith %}
                 {% endfor %}
+                <li><img alt="" class="qr" src="data:image/png;base64, {{ request.qr }}" /></li>
             </ul>
         </div>
+    {% else %}
+        <div>
+            <p>Macyカードが未登録です。下のボタンからアクティベートしてください。</p>
+            <div class="signup-btn">
+                <a class="waves-effect waves-light btn-large" href="{% url 'signup' %}">アクティベート</a>
+            </div>
+        </div>
+    {% endif %}
     </div>
-
 {% endblock %}

@@ -19,16 +19,27 @@ It can be used in a casual scene to any business scene. Think it as digitalized 
     python manage.py sass Macy/static/Macy/scss/ Macy/static/Macy/css/ --watch 
   ```
 * django-cleanup 5.1.0
-* django-cleanup 5.1.0
 * factory_boy
 * coverage
 * pillow
+* qrcode-6.1
 * ...
 
 # Usage
 1. Tap the card
 2. Edit your info
 3. Be creative with your personalized business card
+
+# Available Custom Commands
+* create non activated users 
+```
+python manage.py create_users <number of users>
+```
+
+* create dummy links for specified user
+```
+python manage.py create_users <user_id> <number of links>
+```
 
 # Note
 

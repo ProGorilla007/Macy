@@ -1,4 +1,6 @@
-from django.http import HttpResponseRedirect, Http404
+import base64
+
+from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, DetailView, DeleteView
 from django.views.generic.edit import CreateView, UpdateView
 from Macy.forms import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet, \
@@ -10,6 +12,8 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordCha
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model, login
 from django.shortcuts import redirect, get_object_or_404
+import qrcode
+from io import BytesIO
 
 
 User = get_user_model()
@@ -85,7 +89,7 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
 
 class DeleteProfileView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = User
-    template_name = 'registration/delete_img.html'
+    template_name = 'registration/blank.html'
 
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
@@ -105,7 +109,7 @@ class DeleteProfileView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
 
 class DeleteHeaderView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = User
-    template_name = 'registration/delete_img.html'
+    template_name = 'registration/blank.html'
 
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
@@ -128,6 +132,11 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = User
 
     form_class = UserEditForm
+
+    def get_form_kwargs(self):
+        kwargs = super(UserEditView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def get_success_url(self):
         url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
@@ -158,11 +167,10 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         initial['first_name'] = self.request.user.first_name
         initial['last_name'] = self.request.user.last_name
         initial['intro'] = self.request.user.intro
-
         return initial
 
     def post(self, request, *args, **kwargs):
-
+        self.object = None
         user_update = get_object_or_404(User, slug=self.request.user.slug)
 
         formset = UserEditFormSet(self.request.POST)
@@ -174,7 +182,7 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
             link_form.instance = instance
             i += 1
 
-        form = UserEditForm(self.request.POST, self.request.FILES, instance=user_update)
+        form = UserEditForm(self.request.POST, self.request.FILES, instance=user_update, request=self.request)
 
         # if both user form and link forms are valid, pass those forms to form_valid and save the changes
         if form.is_valid() and formset.is_valid():
@@ -186,6 +194,9 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
 
         # save user info such as usernames and emails.
         self.object = form.save()
+
+        if form.cleaned_data['direct_link'] is not None:
+            self.request.user.set_direct_link(form.cleaned_data['direct_link'])
 
         # overwrite the formset info with new input.
         formset.instance = self.object
@@ -206,9 +217,46 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
                                   links_form=links_form))
 
 
+class IsDirectView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
+    model = User
+    template_name = 'registration/blank.html'
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
+        return url
+
+    def get(self, request, *args, **kwargs):
+        self.object = User.objects.get(slug=self.request.user.slug)
+        self.object.toggle_direct()
+        success_url = self.get_success_url()
+        return HttpResponseRedirect(success_url)
+
+
 class MypageView(DetailView):
     template_name = "mypage.html"
     model = User
+
+    @staticmethod
+    def make_qr(request):
+        qr_img = qrcode.make(request.build_absolute_uri())
+        buffer = BytesIO()
+        qr_img.save(buffer, format="PNG")
+        img = base64.b64encode(buffer.getvalue()).decode().replace("'", "")
+        request.qr = img
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(slug=kwargs['slug'])
+        if user.is_direct:
+            return HttpResponseRedirect(user.direct_link)
+
+        self.make_qr(request)
+
+        return super().get(request, *args, **kwargs)
 
 
 class UserDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):

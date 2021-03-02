@@ -8,7 +8,6 @@
         <form method="post" enctype='multipart/form-data'>
             {% csrf_token %}
             {{ form.non_field_errors }}
-           <table>
                 {% for field in form %}
                     {{ field.label_tag }}
                     {{ field }}
@@ -16,26 +15,8 @@
                     <br/>
                     {{ field.errors }}
                 {% endfor %}
-                <thead>
-                    {{ links_form.management_form }}
-                    {% for form in links_form.forms %}
-                        {% if forloop.first %}
-                            {% for field in form.visible_fields %}
-                                <th>{{ field.label_tag }}</th>
-                            {% endfor %}
-                        {% endif %}
-                </thead>
-                <tbody>
-                        <tr>
-                            {% for field in form.visible_fields %}
-                                <td>{{ field }}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
             <div class="center-btn">
-                <button type="submit" class="waves-effect waves-light btn-large" >登録</button>
+                <button type="submit" class="waves-effect waves-light btn-large" >アクティベートする</button>
             </div>
         </form>
     </div>

@@ -17,12 +17,12 @@ class NonActivatedUserFactory(DjangoModelFactory):
         model = User
 
     # 'user_name'というprovider
-    username = Faker('user_name', locale=FAKER_LOCALE)
+    # username = Faker('user_name', locale=FAKER_LOCALE)
     # first_name = Faker('first_name', locale=FAKER_LOCALE)
     # last_name = Faker('last_name', locale=FAKER_LOCALE)
     email = Faker('email', locale=FAKER_LOCALE)
     # intro = Faker('sentence', locale=FAKER_LOCALE)
-    password = make_password('default1234')
+    # password = make_password('default1234')
     is_active = False
 
 
@@ -32,8 +32,8 @@ class UserFactory(DjangoModelFactory):
 
     # 'user_name'というprovider
     username = Faker('user_name', locale=FAKER_LOCALE)
-    first_name = Faker('first_name', locale=FAKER_LOCALE)
-    last_name = Faker('last_name', locale=FAKER_LOCALE)
+    # first_name = Faker('first_name', locale=FAKER_LOCALE)
+    # last_name = Faker('last_name', locale=FAKER_LOCALE)
     email = Faker('email', locale=FAKER_LOCALE)
     intro = Faker('sentence', locale=FAKER_LOCALE)
     password = make_password('default1234')

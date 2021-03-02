@@ -1,5 +1,5 @@
 from django.core.management import BaseCommand
-from Macy.tests.factories import UserFactory, NonActivatedUserFactory
+from Macy.tests.factories import NonActivatedUserFactory
 
 
 class Command(BaseCommand):

@@ -1,9 +1,9 @@
 import base64
-
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, DetailView, DeleteView
 from django.views.generic.edit import CreateView, UpdateView
-from Macy.forms import UserForm, LoginForm, UserSignupFormSet, UserEditForm, UserEditFormSet, \
+from Macy.forms import UserForm, LoginForm, UserEditForm, UserEditFormSet, \
     MyPasswordResetForm, MySetPasswordForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -23,50 +23,73 @@ class IndexView(TemplateView):
     template_name = "index.html"
 
 
+class MypageView(DetailView):
+    template_name = "mypage.html"
+    model = User
+
+    @staticmethod
+    def make_qr(request):
+        qr_img = qrcode.make(request.build_absolute_uri())
+        buffer = BytesIO()
+        qr_img.save(buffer, format="PNG")
+        img = base64.b64encode(buffer.getvalue()).decode().replace("'", "")
+        request.qr = img
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(user_id=kwargs['id'])
+        if user.is_direct:
+            return HttpResponseRedirect(user.direct_link)
+
+        self.make_qr(request)
+
+        return super().get(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return User.objects.get(user_id=self.kwargs.get("id"))
+
+
 class SignupView(SuccessMessageMixin, CreateView):
     form_class = UserForm
     template_name = "registration/signup.html"
-    success_message = "ユーザ登録が完了しました。以下よりアカウントの情報が確認できます。"
+    success_message = "ユーザ認証が完了しました。以下よりアカウント情報の追加/編集を行ってください。"
 
     def get(self, request, *args, **kwargs):
         self.object = None
-        if self.request.user.is_authenticated:
+        # プロダクトコードがアクティベイトされていたら、Indexにリダイレクトする
+        if User.objects.get(user_id=self.kwargs.get("id")).is_active:
             return redirect('/')
+        # 空のフォームをレンダーする
         form = self.get_form(self.form_class)
-        links_form = UserSignupFormSet()
         return self.render_to_response(
-            self.get_context_data(form=form,
-                                  links_form=links_form))
+            self.get_context_data(form=form))
 
     def get_success_url(self):
+        # Postが成功したらユーザーをログインして編集画面に転移する
         login(self.request, self.object)
-        return reverse_lazy('users', kwargs={'slug': self.object.slug})
+        messages.add_message(self.request, messages.INFO, self.success_message)
+        return reverse_lazy('edit', kwargs={'id': self.object.user_id})
 
     def post(self, request, *args, **kwargs):
         self.object = None
-
-        formset = UserSignupFormSet(self.request.POST)
-        form = UserForm(self.request.POST, request.FILES)
-
-        if form.is_valid() and formset.is_valid():
-            return self.form_valid(form, formset)
+        user_update = get_object_or_404(User, user_id=self.kwargs.get("id"))
+        form = UserForm(self.request.POST, request.FILES, instance=user_update)
+        if form.is_valid():
+            user_update.is_active = True
+            user_update.save()
+            return self.form_valid(form)
         else:
-            return self.form_invalid(form, formset)
+            return self.form_invalid(form)
 
-    def form_valid(self, form, formset):
+    def form_valid(self, form):
         self.object = form.save()
-        formset.instance = self.object
-        formset.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    def form_invalid(self, form, links_form):
+    def form_invalid(self, form):
         return self.render_to_response(
-            self.get_context_data(form=form,
-                                  links_form=links_form))
+            self.get_context_data(form=form))
 
 
-class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
-    permission_denied_message = "お手数ですがログイン後、もう一度お試しください"
+class AccountView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     template_name = "registration/account.html"
     model = User
     """
@@ -82,55 +105,17 @@ class AccountView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
     """
 
     def test_func(self):
-        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        # idが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
+
+    def get_object(self, queryset=None):
+        return User.objects.get(user_id=self.kwargs.get("id"))
 
 
-class DeleteProfileView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
-    model = User
-    template_name = 'registration/blank.html'
-
-    def test_func(self):
-        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
-        current_user = self.request.user
-        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
-
-    def get_success_url(self):
-        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
-        return url
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        success_url = self.get_success_url()
-        self.object.profile.delete()
-        return HttpResponseRedirect(success_url)
-
-
-class DeleteHeaderView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
-    model = User
-    template_name = 'registration/blank.html'
-
-    def test_func(self):
-        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
-        current_user = self.request.user
-        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
-
-    def get_success_url(self):
-        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
-        return url
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        success_url = self.get_success_url()
-        self.object.header.delete()
-        return HttpResponseRedirect(success_url)
-
-
-class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = "registration/edit.html"
     model = User
-
     form_class = UserEditForm
 
     def get_form_kwargs(self):
@@ -139,13 +124,13 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
-        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
+        url = reverse_lazy('users', kwargs={'id': self.request.user.user_id})
         return url
 
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
 
     def get(self, request, *args, **kwargs):
         self.object = None
@@ -163,15 +148,12 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     def get_initial(self):
         initial = super().get_initial()
         initial['username'] = self.request.user.username
-        initial['email'] = self.request.user.email
-        initial['first_name'] = self.request.user.first_name
-        initial['last_name'] = self.request.user.last_name
         initial['intro'] = self.request.user.intro
         return initial
 
     def post(self, request, *args, **kwargs):
         self.object = None
-        user_update = get_object_or_404(User, slug=self.request.user.slug)
+        user_update = get_object_or_404(User, user_id=self.request.user.user_id)
 
         formset = UserEditFormSet(self.request.POST)
 
@@ -217,48 +199,6 @@ class UserEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
                                   links_form=links_form))
 
 
-class IsDirectView(UserPassesTestMixin, LoginRequiredMixin, TemplateView):
-    model = User
-    template_name = 'registration/blank.html'
-
-    def test_func(self):
-        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
-        current_user = self.request.user
-        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
-
-    def get_success_url(self):
-        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
-        return url
-
-    def get(self, request, *args, **kwargs):
-        self.object = User.objects.get(slug=self.request.user.slug)
-        self.object.toggle_direct()
-        success_url = self.get_success_url()
-        return HttpResponseRedirect(success_url)
-
-
-class MypageView(DetailView):
-    template_name = "mypage.html"
-    model = User
-
-    @staticmethod
-    def make_qr(request):
-        qr_img = qrcode.make(request.build_absolute_uri())
-        buffer = BytesIO()
-        qr_img.save(buffer, format="PNG")
-        img = base64.b64encode(buffer.getvalue()).decode().replace("'", "")
-        request.qr = img
-
-    def get(self, request, *args, **kwargs):
-        user = User.objects.get(slug=kwargs['slug'])
-        if user.is_direct:
-            return HttpResponseRedirect(user.direct_link)
-
-        self.make_qr(request)
-
-        return super().get(request, *args, **kwargs)
-
-
 class UserDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     template_name = "registration/user_delete_confirm.html"
     model = User
@@ -268,39 +208,74 @@ class UserDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
 
 
-class LogInView(LoginView):
-    form_class = LoginForm
-    template_name = "registration/login.html"
+class DeleteProfileView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = User
+    template_name = 'registration/blank.html'
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
 
     def get_success_url(self):
-        url = reverse_lazy('users', kwargs={'slug': self.request.user.slug})
+        url = reverse_lazy('users', kwargs={'id': self.request.user.user_id})
         return url
 
-
-class LogOutView(LogoutView):
-    pass
-
-
-class AboutView(TemplateView):
-    template_name = "about.html"
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.profile.delete()
+        return HttpResponseRedirect(success_url)
 
 
-class GuideView(TemplateView):
-    template_name = "guide.html"
+class DeleteHeaderView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = User
+    template_name = 'registration/blank.html'
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
+
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'id': self.request.user.user_id})
+        return url
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.header.delete()
+        return HttpResponseRedirect(success_url)
 
 
-class ContactView(TemplateView):
-    template_name = "contact.html"
+class IsDirectView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    model = User
+    template_name = 'registration/blank.html'
+
+    def test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        current_user = self.request.user
+        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
+
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'id': self.request.user.user_id})
+        return url
+
+    def get(self, request, *args, **kwargs):
+        self.object = User.objects.get(user_id=self.request.user.user_id)
+        self.object.toggle_direct()
+        success_url = self.get_success_url()
+        return HttpResponseRedirect(success_url)
 
 
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = "registration/password_change.html"
 
     def get_success_url(self):
-        return reverse('password_change_done', kwargs={'slug': self.request.user.slug})
+        return reverse('password_change_done', kwargs={'id': self.request.user.user_id})
 
 
 class UserPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
@@ -335,3 +310,28 @@ class UserPasswordResetConfirmView(PasswordResetConfirmView):
 class UserPasswordResetCompleteView(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
     template_name = 'registration/password_reset_complete.html'
+
+
+class LogInView(LoginView):
+    form_class = LoginForm
+    template_name = "registration/login.html"
+
+    def get_success_url(self):
+        url = reverse_lazy('users', kwargs={'id': self.request.user.user_id})
+        return url
+
+
+class LogOutView(LogoutView):
+    pass
+
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+
+class GuideView(TemplateView):
+    template_name = "guide.html"
+
+
+class ContactView(TemplateView):
+    template_name = "contact.html"

@@ -12,7 +12,6 @@
 
 
             <div class="desc">
-                <h4>{{ user.first_name }} {{ user.last_name }}</h4>
                 <h6>{{ user.username }}</h6>
                 <p>{{ user.intro }}</p>
             </div>
@@ -37,7 +36,7 @@
         <div>
             <p>Macyカードが未登録です。下のボタンからアクティベートしてください。</p>
             <div class="signup-btn">
-                <a class="waves-effect waves-light btn-large" href="{% url 'signup' %}">アクティベート</a>
+                <a class="waves-effect waves-light btn-large" href="{% url 'signup' id=user.user_id%}">アクティベート</a>
             </div>
         </div>
     {% endif %}

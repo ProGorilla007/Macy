@@ -96,7 +96,7 @@ class AccountView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     def test_func(self):
         # idが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
+        return current_user.user_id == self.kwargs['id']
 
     def get_object(self, queryset=None):
         return User.objects.get(user_id=self.kwargs.get("id"))
@@ -119,7 +119,7 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
+        return current_user.user_id == self.kwargs['id']
 
     def get(self, request, *args, **kwargs):
         self.object = None
@@ -187,6 +187,9 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             self.get_context_data(form=form,
                                   links_form=links_form))
 
+    def get_object(self, queryset=None):
+        return User.objects.get(user_id=self.kwargs.get("id"))
+
 
 class UserDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     template_name = "registration/user_delete_confirm.html"
@@ -199,6 +202,9 @@ class UserDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
         current_user = self.request.user
         return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
 
+    def get_object(self, queryset=None):
+        return User.objects.get(user_id=self.kwargs.get("id"))
+
 
 class DeleteProfileView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = User
@@ -207,7 +213,7 @@ class DeleteProfileView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
+        return current_user.user_id == self.kwargs['id']
 
     def get_success_url(self):
         url = reverse_lazy('users', kwargs={'id': self.request.user.user_id})
@@ -219,6 +225,9 @@ class DeleteProfileView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         self.object.profile.delete()
         return HttpResponseRedirect(success_url)
 
+    def get_object(self, queryset=None):
+        return User.objects.get(user_id=self.kwargs.get("id"))
+
 
 class DeleteHeaderView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = User
@@ -227,7 +236,7 @@ class DeleteHeaderView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
+        return current_user.user_id == self.kwargs['id']
 
     def get_success_url(self):
         url = reverse_lazy('users', kwargs={'id': self.request.user.user_id})
@@ -239,6 +248,9 @@ class DeleteHeaderView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         self.object.header.delete()
         return HttpResponseRedirect(success_url)
 
+    def get_object(self, queryset=None):
+        return User.objects.get(user_id=self.kwargs.get("id"))
+
 
 class IsDirectView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     model = User
@@ -247,7 +259,7 @@ class IsDirectView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     def test_func(self):
         # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
         current_user = self.request.user
-        return current_user.user_id == self.kwargs['id'] or current_user.is_superuser
+        return current_user.user_id == self.kwargs['id']
 
     def get_success_url(self):
         url = reverse_lazy('users', kwargs={'id': self.request.user.user_id})
@@ -258,6 +270,9 @@ class IsDirectView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         self.object.toggle_direct()
         success_url = self.get_success_url()
         return HttpResponseRedirect(success_url)
+
+    def get_object(self, queryset=None):
+        return User.objects.get(user_id=self.kwargs.get("id"))
 
 
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):

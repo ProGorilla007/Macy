@@ -74,6 +74,7 @@ class UserEditForm(UserChangeForm):
                 raise ValidationError(
                     '画像が大きすぎます。%sMBより小さいサイズの画像をお願いします。' % str(img_size//1000//1000)
                 )
+        return profile
 
     def clean_header(self):
         header = self.cleaned_data['header']
@@ -95,6 +96,8 @@ class UserEditForm(UserChangeForm):
                 raise ValidationError(
                     '画像が大きすぎます。%sMBより小さいサイズの画像をお願いします。' % str(img_size // 1000 // 1000)
                 )
+
+        return header
 
 
 class LinksForm(ModelForm):

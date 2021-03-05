@@ -38,7 +38,7 @@ class CustomUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     user_id = models.UUIDField(unique=True, default=uuid.uuid4, primary_key=True, editable=False)
     email = models.EmailField(_('email address'), null=False, unique=True)
     intro = models.TextField(blank=True, null=True)

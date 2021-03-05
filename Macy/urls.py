@@ -2,8 +2,6 @@ from . import views
 from django.urls import path
 
 
-# シンプル、おしゃれ、ミニマリスティック、かわいいの要素。
-
 urlpatterns = [
 	path('about/', views.AboutView.as_view(), name='about'),
 	path('guide/', views.GuideView.as_view(), name='guide'),
@@ -26,4 +24,4 @@ urlpatterns = [
 	path('password_reset/complete/', views.UserPasswordResetCompleteView.as_view(), name='password_reset_complete'),
 	path('', views.IndexView.as_view(), name='index'),
 	]
-# log out 追加
+

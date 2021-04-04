@@ -72,6 +72,61 @@ body {
     }
 }
 
+.hamburger {
+    position: relative;
+    display: flex;
+    height: 85px;
+    width: 85px;
+    justify-content: center;
+    align-items: center;
+
+    & span, 
+    & span::before, 
+    & span::after{
+        content: '';
+        display: block;
+        height: 2px;
+        width: 30px;
+        border-radius: 1px;
+        background-color: #ffffff;
+        position: absolute;
+        transition: all .3s ease-in;
+    } 
+
+    & span:before {
+        bottom: 8px
+    }
+    & span:after {
+        top: 8px;
+    }
+
+    &.active span{
+        background-color: rgba(255,255,255,0);
+    }
+    
+    &.active span:before{
+        transform:rotate(45deg);
+        bottom: 0;
+    }  
+    &.active span:after{
+        transform: rotate(135deg);
+        top: 0;
+    }
+}
+
+.hamburger_list{
+    height: 105vh;
+    width: 100%;
+    transform: translateX(100%);
+    transition: all .2s;
+    position: absolute;
+    
+    &.active{
+        transform: translateX(0);
+    }
+}
+
+
 .container{
     h1{
         color: darken($grey, 15%);

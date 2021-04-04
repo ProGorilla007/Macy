@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import UploadedFile
 
 from .models import User
 from django.forms import ModelForm, inlineformset_factory
@@ -56,7 +57,7 @@ class UserEditForm(UserChangeForm):
 
     def clean_profile(self):
         profile = self.cleaned_data['profile']
-        if profile is not None:
+        if profile and isinstance(profile, UploadedFile):
             profile_width = 1500
             if profile.image.width > profile_width:
                 raise ValidationError(
@@ -78,7 +79,7 @@ class UserEditForm(UserChangeForm):
 
     def clean_header(self):
         header = self.cleaned_data['header']
-        if header is not None:
+        if header and isinstance(header, UploadedFile):
             img_width = 2000
             if header.image.width > img_width:
                 raise ValidationError(
@@ -96,7 +97,6 @@ class UserEditForm(UserChangeForm):
                 raise ValidationError(
                     '画像が大きすぎます。%sMBより小さいサイズの画像をお願いします。' % str(img_size // 1000 // 1000)
                 )
-
         return header
 
 

@@ -155,6 +155,7 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         self.object = None
         user_update = get_object_or_404(User, user_id=self.request.user.user_id)
 
+        form = UserEditForm(self.request.POST, self.request.FILES, instance=user_update, request=self.request)
         formset = UserEditFormSet(self.request.POST)
 
         # create instance for each link forms
@@ -163,8 +164,6 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             link_form = formset.forms[i]
             link_form.instance = instance
             i += 1
-
-        form = UserEditForm(self.request.POST, self.request.FILES, instance=user_update, request=self.request)
 
         # if both user form and link forms are valid, pass those forms to form_valid and save the changes
         if form.is_valid() and formset.is_valid():

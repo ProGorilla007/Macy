@@ -34,9 +34,14 @@
         </div>
     {% else %}
         <div>
-            <p>Macyカードが未登録です。下のボタンからアクティベートしてください。</p>
+            <h1>Welcome To Macy!</h1>
+            <p>
+                あともう一息・・・
+                まずは下のボタンをクリックして
+                メイシーをアクティベートしましょう！
+            </p>
             <div class="signup-btn">
-                <a class="waves-effect waves-light btn-large" href="{% url 'signup' id=user.user_id%}">アクティベート</a>
+                <a class="waves-effect waves-light btn-large" href="{% url 'signup' id=user.user_id%}">Activate</a>
             </div>
         </div>
     {% endif %}

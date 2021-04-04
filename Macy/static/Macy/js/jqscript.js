@@ -64,7 +64,16 @@ $(function(){
         if(media.val() in mediaChoice){
             url.val( mediaChoice[media.val()] + $(this).val());
         }
-});
+    });
+
+    $('#hamburger').on('click', function(){
+        $(this).toggleClass('active');
+        $('#hamburger_list').toggleClass('active')
+        console.log('open menu')
+        return false;
+    });
+
+    
 
 });
 

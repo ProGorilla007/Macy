@@ -5,13 +5,16 @@
     <meta charset="utf-8">
     <title>{% block title %}Macy{% endblock %}</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'Macy/css/vendor/materialize.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'Macy/css/vendor/materialize.css' %}">-->
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
     <link rel="stylesheet" type="text/css" href="{% static 'Macy/css/style.css' %}">
 
-    <script type="text/javascript" src="{% static 'Macy/js/vendor/jquery-3.5.1.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'Macy/vendor/OnsenUI/css/onsenui.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Macy/vendor/OnsenUI/css/onsen-css-components.min.css' %}">
 
+    <script type="text/javascript" src="{% static 'Macy/vendor/OnsenUI/js/onsenui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Macy/vendor/js/jquery-3.5.1.min.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'Macy/js/script.js' %}"></script>
     <script type="text/javascript" src="{% static 'Macy/js/jqscript.js' %}"></script>
@@ -19,8 +22,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet">
-    <link rel="shortcut icon" type="image/png" href="{% static 'Macy/favicon/favicon-96x96.png' %}"/>
 
+    <link rel="shortcut icon" type="image/png" href="{% static 'Macy/favicon/favicon-96x96.png' %}"/>
     <link rel="apple-touch-icon-precomposed" href="{% static 'Macy/favicon/favicon-96x96.png' %}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -50,11 +53,10 @@
         </div>
     </footer>
 
-    <script type="text/javascript" src="{% static 'Macy/js/vendor/materialize.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'Macy/js/vendor/emergence.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Macy/vendor/js/emergence.min.js' %}"></script>
 
     <script>
-      emergence.init();
+        emergence.init();
     </script>
 
 </body>

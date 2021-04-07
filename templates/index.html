@@ -13,80 +13,16 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <div class="intro">
-            <h1>Macyで快適なソーシャルライフを</h1>
-            <blockquote>
-                あなただけの特別なカードでネットワークの輪を広げよう！
-                使い方は相手の携帯にタップするだけ！
-                手軽に自分の情報をシェア！
-            </blockquote>
-        </div>
-        <div class="slider">
-            <ul class="slides">
-              <li>
-                <img alt="slide1" src="{% static 'Macy/img/slideshow/slide-1.jpg' %}" />
-                <div class="caption right-align">
-                    <h3>Tapして、</h3>
-                </div>
-              </li>
-              <li>
-                <img alt="slide2" src="{% static 'Macy/img/slideshow/slide-3.jpg' %}" />
-                <div class="caption right-align">
-                  <h3>登録したら、</h3>
-
-                </div>
-              </li>
-              <li>
-                <img alt="slide3" src="{% static 'Macy/img/slideshow/slide-2.jpg' %}" />
-                <div class="caption right-align">
-                  <h3>いつでも共有！</h3>
-
-                </div>
-              </li>
-            </ul>
-        </div>
-        <div class="demo">
-             <div class="ji">
-                <div class="flex-box">
-                  <div class="card">
-                    <div class="card-image">
-                      <img alt="sample-1" src="{% static 'Macy/img/sample-1.png' %}">
-                      <span class="card-title">Card Title</span>
-                    </div>
-                    <div class="card-content">
-                      <p>I am a very simple card. I am good at containing small bits of information.
-                      I am convenient because I require little markup to use effectively.</p>
-                    </div>
-                    <div class="card-action">
-                      <a href="#">This is a link</a>
-                    </div>
-                  </div><div class="card">
-                    <div class="card-image">
-                      <img alt="sample-1" src="{% static 'Macy/img/sample-1.png' %}">
-                      <span class="card-title">Card Title</span>
-                    </div>
-                    <div class="card-content">
-                      <p>I am a very simple card. I am good at containing small bits of information.
-                      I am convenient because I require little markup to use effectively.</p>
-                    </div>
-                    <div class="card-action">
-                      <a href="#">This is a link</a>
-                    </div>
-                  </div><div class="card">
-                    <div class="card-image">
-                      <img alt="sample-1" src="{% static 'Macy/img/sample-1.png' %}">
-                      <span class="card-title">Card Title</span>
-                    </div>
-                    <div class="card-content">
-                      <p>I am a very simple card. I am good at containing small bits of information.
-                      I am convenient because I require little markup to use effectively.</p>
-                    </div>
-                    <div class="card-action">
-                      <a href="#">This is a link</a>
-                    </div>
-                  </div>
-                </div>
-             </div>
+        <div class="card card--material">
+          <div class="card-head">
+            <img alt="slide1" src="{% static 'Macy/img/slideshow/slide-1.jpg' %}" />
+            <div class="card_title">Macy Meiko</div>
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card_content">
+            Macyで快適なソーシャルライフを
+          </div>
         </div>
     </div>
 {% endblock %}
+<!-- <img alt="slide1" src="{% static 'Macy/img/slideshow/slide-1.jpg' %}" />-->

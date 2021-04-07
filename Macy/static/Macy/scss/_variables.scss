@@ -1,0 +1,80 @@
+/* 
+/*-----------------------------------------------------------------------------
+    Global Settings
+------------------------------------------------------------------------------*/
+
+/* Available Fonts */ 
+$project-font: "M PLUS 1p", ‘ヒラギノ角ゴシック’, ‘メイリオ’ ,sans-serif;
+
+/*  Old Colours
+$navy: #2D3142;
+$blue: #4F5D75;
+$grey: #8a8a8a;
+$white: #eceff1;
+$orange: #EF8354;
+*/
+
+/* Available Colours */
+$black: #000000;
+$grey: #878787;
+$ashwhite: #f0f0f0;
+$white: #ffffff;
+$yellow: #f4c434;
+$tealyellow: #e8ba31;
+$blue: #1759a8;
+$lightblue: #79c4ef;
+
+/* Media Queries */
+$xs: 600px; // small to large phone
+$sm: 960px; // small to medium tablet
+$md: 1264px;  // large tablet to laptop
+$lg: 1904px;  // desktop
+
+@mixin xs {
+    @media (max-width: ($xs)) {
+        @content;
+    }
+}
+@mixin sm {
+    @media (max-width: ($sm)) {
+        @content;
+    }
+}
+@mixin md {
+    @media (max-width: ($md)) {
+        @content;
+    }
+}
+@mixin lg {
+    @media (max-width: ($lg)) {
+        @content;
+    }
+}
+
+/* Animations */
+@keyframes jump {
+    0%   { transform: scale(1.0, 1.0) translate(0%, 0%); }
+    15%  { transform: scale(0.9, 0.9) translate(0%, 3%); }
+    30%  { transform: scale(1.1, 0.9) translate(0%, 3%); }
+    50%  { transform: scale(0.9, 1.1) translate(0%, -3%); }
+    70%  { transform: scale(0.9, 0.9) translate(0%, 3%); }
+    100% { transform: scale(1.0, 1.0) translate(0%, 0%); }
+}
+
+/* Global */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    font-family:  $project-font;
+    background: $white;
+    color: $grey;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1 0 auto;
+}

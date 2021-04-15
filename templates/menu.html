@@ -1,8 +1,10 @@
 {%load static%}
 {% block menu %}
+
     <div class="hamburger" id="hamburger">
         <span></span>
     </div>
+
     <nav class="hamburger_list" id="hamburger_list">
         <ul>
             <li><a href="#">MyMacy</a></li>
@@ -10,10 +12,30 @@
             <li><a href="#">アカウント設定</a></li>
             <li><a href="#">ヘルプ</a></li>
             <li><a href="#">チュートリアル</a></li>
-            <li><a href="{% url 'logout' id=request.user.user_id%}"><i class="material-icons right">login</i>ログイン</a></li>   
-        </ul> 
+            <li><a href="#"ログイン></a></li>
+            <div class="hamburger_footer" id="hamburger_footer">
+                <ul>
+                    <li><a href="#">会社概要</a></li>
+                    <li><a href="#">お問い合わせ</a></li>
+                    <li><a href="#">製品情報</a></li>
+                    <li><a href="#">利用規約</a></li>
+                    <li><a href="#">プライバシー規約</a></li>
+                </ul>
+            </div>
+        </ul>
     </nav>
-    <!-- 
+
+    <!--
+    <footer class="hamburger_footer" id="hamburger_footer">
+        <ul>
+            <li><a href="#">会社概要</a></li>
+            <li><a href="#">お問い合わせ</a></li>
+            <li><a href="#">製品情報</a></li>
+            <li><a href="#">利用規約</a></li>
+            <li><a href="#">プライバシー規約</a></li>
+        </ul>
+    </footer>
+
     {% if request.user.is_authenticated %}
         <ul id="dropdown1" class="dropdown-content">
             <li><a href="{% url 'logout' id=request.user.user_id%}"><i class="material-icons right">login</i>Log Out</a></li>

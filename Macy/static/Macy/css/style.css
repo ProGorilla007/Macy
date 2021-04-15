@@ -85,12 +85,18 @@ body {
 }
 
 .hamburger {
-  position: relative;
+  position: fixed;
   display: flex;
   height: 85px;
   width: 85px;
   justify-content: center;
   align-items: center;
+  z-index: 3;
+  left: 75%;
+}
+
+.hamburger span {
+  opacity: 1;
 }
 
 .hamburger span,
@@ -98,20 +104,46 @@ body {
 .hamburger span::after {
   content: '';
   display: block;
-  height: 2px;
+  height: 3px;
   width: 30px;
-  border-radius: 1px;
-  background-color: #ffffff;
+  border-radius: 2px;
+  background-color: red;
   position: absolute;
-  transition: all .3s ease-in;
+  transition: all .4s ease-in;
 }
 
 .hamburger span:before {
   bottom: 8px;
+  animation: menu-bar01 .75s forwards;
+}
+
+@keyframes menu-bar01 {
+  0% {
+    transform: translateY(8px) rotate(45deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(0);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
 }
 
 .hamburger span:after {
   top: 8px;
+  animation: menu-bar02 .75s forwards;
+}
+
+@keyframes menu-bar02 {
+  0% {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
 }
 
 .hamburger.active span {
@@ -119,25 +151,194 @@ body {
 }
 
 .hamburger.active span:before {
-  transform: rotate(45deg);
-  bottom: 0;
+  animation: active-menu-bar01 .75s forwards;
+}
+
+@keyframes active-menu-bar01 {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(8px) rotate(0);
+  }
+  100% {
+    transform: translateY(8px) rotate(45deg);
+  }
 }
 
 .hamburger.active span:after {
-  transform: rotate(135deg);
-  top: 0;
+  animation: active-menu-bar03 .75s forwards;
 }
 
+@keyframes active-menu-bar03 {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0);
+  }
+  100% {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+/*
+.hamburger {
+    position: absolute;
+    display: flex;
+    height: 85px;
+    width: 85px;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+
+    & span,
+    & span::before,
+    & span::after{
+        content: '';
+        display: block;
+        height: 2px;
+        width: 30px;
+        border-radius: 1px;
+        background-color: #ffffff;
+        position: relative;
+        transition: all .3s ease-in;
+    }
+
+    & span:before {
+        bottom: 8px
+    }
+    & span:after {
+        top: 8px;
+    }
+
+    &.active span{
+        background-color: rgba(255,255,255,0);
+    }
+
+    &.active span:before{
+        transform:rotate(45deg);
+        bottom: 0;
+    }
+    &.active span:after{
+        transform: rotate(135deg);
+        top: 0;
+    }
+}
+ */
 .hamburger_list {
+  position: fixed;
   height: 105vh;
   width: 100%;
+  background-color: black;
   transform: translateX(100%);
   transition: all .2s;
-  position: absolute;
+  z-index: 2;
+  flex-direction: column;
+  transition-delay: .1s;
 }
 
 .hamburger_list.active {
   transform: translateX(0);
+}
+
+.hamburger_list ul {
+  margin: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hamburger_list li {
+  padding: 0.5em;
+}
+
+.hamburger_list a {
+  font-size: 40px;
+}
+
+.hamburger_footer {
+  position: relative;
+  height: 105vh;
+  width: 100%;
+  background-color: black;
+  /*transform: translateX(100%);*/
+  transition: all .2s;
+  z-index: 3;
+  flex-direction: column;
+  transition-delay: .1s;
+  /*&.active{
+        transform: translateX(0);
+    }*/
+}
+
+#menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#menu li {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+#menu li a {
+  display: block;
+  width: 150px;
+  padding: 3px;
+  margin: 10px 0px 10px 0px;
+  text-decoration: none;
+  border: outset 3px #C2CBBD;
+  background-color: #C2CBBD;
+  text-align: center;
+  color: #000000;
+  font-size: 14px;
+}
+
+#menu li a:hover {
+  border: inset 3px #95A38D;
+  background-color: #95A38D;
+}
+
+.container h1 {
+  color: #616161;
+  margin-bottom: 2%;
+}
+
+.container .alert-success {
+  padding: 20px;
+  background-color: #00897b;
+  color: white;
+  border-radius: 8px;
+}
+
+.container form {
+  margin-top: 50px;
+}
+
+.container form label {
+  font-size: 1.5em;
+}
+
+.container form p {
+  font-size: 1em;
+}
+
+.container form .errorlist {
+  color: red;
+}
+
+.container form .center-btn {
+  padding: 10%;
+  text-align: center;
+}
+
+.container form .center-btn .btn-large {
+  width: 100%;
+  line-height: 50px;
+  height: 50px;
+  font-size: 25px;
 }
 
 .home .card {

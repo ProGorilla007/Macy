@@ -92,6 +92,17 @@ class SignupView(SuccessMessageMixin, CreateView):
 class AccountView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     template_name = "registration/account.html"
     model = User
+    """
+    def get_test_func(self):
+        # pkが現在ログイン中ユーザと同じ、またはsuperuserならOK。
+        try:
+            current_user = self.request.user
+        except current_user.slug == 'AnonymousUser':
+            raise Http404("Question does not exist")
+
+        return current_user.slug == self.kwargs['slug'] or current_user.is_superuser
+        
+    """
 
     def test_func(self):
         # idが現在ログイン中ユーザと同じ、またはsuperuserならOK。
@@ -126,13 +137,13 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form = self.get_form(self.form_class)
         links_form = UserEditFormSet(
             initial=[{'media_choice': link.media_choice,
-                      'link': link.link,
-                      'account_id': link.account_id,
-                      } for link in self.request.user.links_set.all()]
+                        'link': link.link,
+                        'account_id': link.account_id,
+                        } for link in self.request.user.links_set.all()]
         )
         return self.render_to_response(
             self.get_context_data(form=form,
-                                  links_form=links_form))
+                                links_form=links_form))
 
     def get_initial(self):
         initial = super().get_initial()
@@ -184,7 +195,7 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_invalid(self, form, links_form):
         return self.render_to_response(
             self.get_context_data(form=form,
-                                  links_form=links_form))
+                                links_form=links_form))
 
     def get_object(self, queryset=None):
         return User.objects.get(user_id=self.kwargs.get("id"))

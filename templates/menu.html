@@ -1,9 +1,13 @@
 {%load static%}
 {% block menu %}
-
-    <div class="hamburger" id="hamburger">
-        <span></span>
-    </div>
+    <ons-toolbar class="menu">
+        <div class="center logo">
+            <img src="{% static 'Macy/img/logo.png' %}">
+        </div>
+        <div class="hamburger right" id="hamburger">
+            <span></span>
+        </div>
+    </ons-toolbar>
 
     <nav class="hamburger_list" id="hamburger_list">
         <ul>
@@ -13,16 +17,24 @@
             <li><a href="#">ヘルプ</a></li>
             <li><a href="#">チュートリアル</a></li>
             <li><a href="#"ログイン></a></li>
-            <div class="hamburger_footer" id="hamburger_footer">
-                <ul>
-                    <li><a href="#">会社概要</a></li>
-                    <li><a href="#">お問い合わせ</a></li>
-                    <li><a href="#">製品情報</a></li>
-                    <li><a href="#">利用規約</a></li>
-                    <li><a href="#">プライバシー規約</a></li>
-                </ul>
-            </div>
         </ul>
+        <div class="hamburger_footer" id="hamburger_footer">
+            <div class="hamburger_footer_SNS">
+                <img src="{% static 'Macy/img/FBK.png' %}">
+                <img src="{% static 'Macy/img/TWT.png' %}">
+                <img src="{% static 'Macy/img/INS.png' %}">
+            </div>
+            <div class="hamburger_footer_top">
+                <a href="#">会社概要</a>
+                <a href="#">お問い合わせ</a>
+                <a href="#">製品情報</a>
+                
+            </div>
+            <div class="hamburger_footer_bottom">
+                <a href="#">利用規約</a>
+                <a href="#">プライバシー規約</a>
+            </div>
+        </div>
     </nav>
 
     <!--

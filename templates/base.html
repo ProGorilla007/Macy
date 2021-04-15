@@ -31,28 +31,26 @@
 
 </head>
 <body>
-    {% if view.template_name != 'mypage.html' or request.user.is_authenticated %}
+    <!--{% if view.template_name != 'mypage.html' or request.user.is_authenticated %}-->
+    <!--{% endif %}-->
+    <ons-page>
         {% block menu %}
             {% include "menu.html" %}
         {% endblock %}
-    {% endif %}
 
-    <div class="container">
-        <main>
-            {% block content %}
-            {% endblock %}
-        </main>
-    </div>
-
-
-    <footer>
-        <div class="footer-copyright">
-            <div class="container">
+        <div class="container">
+            <main>
+                {% block content %}
+                {% endblock %}
+            </main>
+        </div>
+        <footer>
+            <div class="footer-copyright">
                 © 2020 Copyright Macy
             </div>
-        </div>
-    </footer>
-
+        </footer>
+    </ons-page>
+    
     <script type="text/javascript" src="{% static 'Macy/vendor/js/emergence.min.js' %}"></script>
 
     <script>

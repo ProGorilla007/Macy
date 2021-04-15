@@ -24,6 +24,11 @@ $tealyellow: #e8ba31;
 $blue: #1759a8;
 $lightblue: #79c4ef;
 
+/* Font Size */
+$normal_text: 16px;
+$small_text: 10px;
+
+
 /* Media Queries */
 $xs: 600px; // small to large phone
 $sm: 960px; // small to medium tablet
@@ -77,4 +82,19 @@ body {
 
 .container {
     flex: 1 0 auto;
+    color: $black;
+}
+
+footer{
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2rem;
+    color: $grey;
+    font-size: $small_text; 
+}
+
+.footer-copyright{
+    padding-right: 5%
 }

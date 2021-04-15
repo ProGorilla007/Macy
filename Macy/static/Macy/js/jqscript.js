@@ -68,8 +68,9 @@ $(function(){
 
     $('#hamburger').on('click', function(){
         $(this).toggleClass('active');
+        $('.menu').toggleClass('menu-active')
         $('#hamburger_list').toggleClass('active')
-        console.log('open menu')
+        // console.log('open menu')
         return false;
     });
 

@@ -260,14 +260,17 @@
     text-align: center;
     margin-top: 40px;
 
-    h1{
-        font-size: 28px;
+    div{
+        h1{
+            font-size: 28px;
+            margin: 60px 0px 40px 0px;
+        }
     }
 
     p{
         font-size: $normal_text;
         white-space: pre-line;
-        margin: 40px auto 40px auto;
+        margin: 0;
         line-height: 33px;
     }
 
@@ -281,6 +284,7 @@
         text-align: center;
         border-width: 3px;
         font-weight: bold;
+        margin-top: 40px;
     }
 }
 

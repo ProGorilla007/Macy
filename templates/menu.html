@@ -1,39 +1,44 @@
 {%load static%}
 {% block menu %}
-    <ons-toolbar class="menu">
-        <div class="center logo">
-            <img src="{% static 'Macy/img/logo.png' %}">
+    <ons-toolbar modifier="noshadow" class="menu {% if view.template_name == 'registration/signup.html' %}menu-signup{% endif %}" {% if view.template_name == 'registration/signup.html' %}style="background-color: #f4c434" {% endif %}>
+        {% if not user.is_active %}
+            <div class="center logo">
+                <img src="{% static 'Macy/img/logo.png' %}">
+            </div>
+        {% else %}
+        <div class="left logo">
+            <img src="{% static 'Macy/img/logo1.svg' %}">
         </div>
         <div class="hamburger right" id="hamburger">
             <span></span>
         </div>
-
-        <nav class="hamburger_list" id="hamburger_list">
-            <ul>
-                <li><a href="#">MyMacy</a></li>
-                <li><a href="#">保存</a></li>
-                <li><a href="#">アカウント設定</a></li>
-                <li><a href="#">ヘルプ</a></li>
-                <li><a href="#">チュートリアル</a></li>
-                <li><a href="#"ログイン></a></li>
-            </ul>
-            <div class="hamburger_footer" id="hamburger_footer">
-                <div class="hamburger_footer_SNS">
-                    <img src="{% static 'Macy/img/FBK.png' %}">
-                    <img src="{% static 'Macy/img/TWT.png' %}">
-                    <img src="{% static 'Macy/img/INS.png' %}">
-                </div>
-                <div class="hamburger_footer_top">
-                    <a href="#">会社概要</a>
-                    <a href="#">お問い合わせ</a>
-                    <a href="#">製品情報</a>
-                    
-                </div>
-                <div class="hamburger_footer_bottom">
-                    <a href="#">利用規約</a>
-                    <a href="#">プライバシー規約</a>
-                </div>
-            </div>
-        </nav>
+        {% endif %}
     </ons-toolbar>
+    <nav class="hamburger_list" id="hamburger_list">
+        <ul>
+            <li><a href="#">MyMacy</a></li>
+            <li><a href="#">保存</a></li>
+            <li><a href="#">アカウント設定</a></li>
+            <li><a href="#">ヘルプ</a></li>
+            <li><a href="#">チュートリアル</a></li>
+            <li><a href="#"ログイン></a></li>
+        </ul>
+        <div class="hamburger_footer" id="hamburger_footer">
+            <div class="hamburger_footer_SNS">
+                <img src="{% static 'Macy/img/FBK.png' %}">
+                <img src="{% static 'Macy/img/TWT.png' %}">
+                <img src="{% static 'Macy/img/INS.png' %}">
+            </div>
+            <div class="hamburger_footer_top">
+                <a href="#">会社概要</a>
+                <a href="#">お問い合わせ</a>
+                <a href="#">製品情報</a>
+                
+            </div>
+            <div class="hamburger_footer_bottom">
+                <a href="#">利用規約</a>
+                <a href="#">プライバシー規約</a>
+            </div>
+        </div>
+    </nav>
 {% endblock %}

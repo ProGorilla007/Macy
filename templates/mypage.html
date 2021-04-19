@@ -3,43 +3,44 @@
 {% block title %}Macy | マイページ{% endblock %}
 {% block content %}
 
-    <div class="mypage">
+    <div>
         {% if user.is_active %}
-        <div class="header slide" {% if user.header %}style="background-image: url('{{ MEDIA_URL }}{{user.header}}')"{% endif %}>
-            <img alt="" class="profile-img"
-                {% if user.profile %}src='{{ MEDIA_URL }}{{user.profile}}'
-                {% else %} src="{% static 'Macy/img/avatar.png' %}" {% endif %}>
+            <div class="mypage">
+                <div class="header slide" {% if user.header %}style="background-image: url('{{ MEDIA_URL }}{{user.header}}')"{% endif %}>
+                    <img alt="" class="profile-img"
+                        {% if user.profile %}src='{{ MEDIA_URL }}{{user.profile}}'
+                        {% else %} src="{% static 'Macy/img/avatar.png' %}" {% endif %}>
 
+                    <div class="desc">
+                        <h6>{{ user.username }}</h6>
+                        <p>{{ user.intro }}</p>
+                    </div>
+                </div>
 
-            <div class="desc">
-                <h6>{{ user.username }}</h6>
-                <p>{{ user.intro }}</p>
+                <div class="links slide">
+                    <ul>
+                        {% for links in user.links_set.all %}
+                            {% with 'Macy/img/'|add:links.media_choice|add:'.png' as image_static %}
+                            <li data-emergence="hidden">
+                                <a target="_blank" href="{{ links.link }}">
+                                    <img class="logo" alt="" src="{% static image_static %}"/>
+                                    <p>{{ links.account_id }}</p>
+                                </a>
+                            </li>
+                            {% endwith %}
+                        {% endfor %}
+                        <li><img alt="" class="qr" src="data:image/png;base64, {{ request.qr }}" /></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <div class="links slide">
-            <ul>
-                {% for links in user.links_set.all %}
-                    {% with 'Macy/img/'|add:links.media_choice|add:'.png' as image_static %}
-                    <li data-emergence="hidden">
-                        <a target="_blank" href="{{ links.link }}">
-                            <img class="logo" alt="" src="{% static image_static %}"/>
-                            <p>{{ links.account_id }}</p>
-                        </a>
-                    </li>
-                    {% endwith %}
-                {% endfor %}
-                <li><img alt="" class="qr" src="data:image/png;base64, {{ request.qr }}" /></li>
-            </ul>
-        </div>
-    {% else %}
-        <div>
-            <h1>Welcome To Macy!</h1>
-            <p>あともう一息・・・</p><p>まずは下のボタンをクリックして</p><p>メイシーをアクティベートしましょう！</p>
-            <div class="signup-btn">
-                <a class="button button--outline" href="{% url 'signup' id=user.user_id%}">Activate</a>
+        {% else %}
+            <div class="activation">
+                <h1>Macyへようこそ！</h1>
+                <p>あともう一息・・・</p><p>まずは下のボタンをクリックして</p><p>メイシーをアクティベートしましょう！</p>
+                <div class="activation-btn">
+                    <a class="button" href="{% url 'signup' id=user.user_id%}">アクティベート</a>
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

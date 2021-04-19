@@ -8,13 +8,6 @@
     Global Settings
 ------------------------------------------------------------------------------*/
 /* Available Fonts */
-/*  Old Colours
-$navy: #2D3142;
-$blue: #4F5D75;
-$grey: #8a8a8a;
-$white: #eceff1;
-$orange: #EF8354;
-*/
 /* Available Colours */
 /* Font Size */
 /* Media Queries */
@@ -74,35 +67,22 @@ footer {
 }
 
 /* Menu Bar */
-.menu {
-  align-items: center !important;
-  padding: 33px 0 33px 0 !important;
-  transition: all 0.5s ease-in;
+/* .page class is to override Onsen UI */
+.page .menu {
+  align-items: center;
+  padding: 33px 0 33px 0;
+  box-shadow: 0px 1px 0px rgba(151, 151, 151, 0.4);
+  display: flex;
+  justify-content: center;
+  /* Hamburger button */
 }
 
-.menu .logo img {
+.page .menu .logo img {
   width: 100px;
   vertical-align: middle;
-  transition: all 0.5s ease-in;
 }
 
-.menu-active {
-  background-color: #000000 !important;
-}
-
-.menu-active img {
-  filter: invert(1);
-}
-
-.page .menu-signup {
-  background-color: #f4c434;
-}
-
-.page .menu-signup .logo img {
-  filter: invert(1);
-}
-
-.hamburger {
+.page .menu .hamburger {
   display: flex;
   height: 25px;
   width: 25px;
@@ -111,11 +91,13 @@ footer {
   z-index: 3;
 }
 
-.hamburger span {
+.page .menu .hamburger span {
   opacity: 1;
 }
 
-.hamburger span, .hamburger span::before, .hamburger span::after {
+.page .menu .hamburger span,
+.page .menu .hamburger span::before,
+.page .menu .hamburger span::after {
   content: '';
   display: block;
   height: 3px;
@@ -126,7 +108,7 @@ footer {
   transition: all .4s ease-in;
 }
 
-.hamburger span:before {
+.page .menu .hamburger span:before {
   bottom: 12px;
   animation: menu-bar01 .75s forwards;
 }
@@ -143,7 +125,7 @@ footer {
   }
 }
 
-.hamburger span:after {
+.page .menu .hamburger span:after {
   top: 12px;
   animation: menu-bar02 .75s forwards;
 }
@@ -160,11 +142,11 @@ footer {
   }
 }
 
-.hamburger.active span {
+.page .menu .hamburger.active span {
   background-color: rgba(255, 255, 255, 0);
 }
 
-.hamburger.active span:before {
+.page .menu .hamburger.active span:before {
   background-color: #ffffff;
   animation: active-menu-bar01 .75s forwards;
 }
@@ -181,7 +163,7 @@ footer {
   }
 }
 
-.hamburger.active span:after {
+.page .menu .hamburger.active span:after {
   background-color: #ffffff;
   animation: active-menu-bar03 .75s forwards;
 }
@@ -198,6 +180,24 @@ footer {
   }
 }
 
+.menu-active {
+  background-color: #000000 !important;
+  box-shadow: none !important;
+}
+
+.menu-active img {
+  filter: invert(1);
+}
+
+.page .menu-signup .hamburger span, .page .menu-signup .hamburger span::after, .page .menu-signup .hamburger span::before {
+  background-color: #ffffff;
+}
+
+.page .menu-signup img {
+  filter: invert(1);
+}
+
+/* Hamburger Overlay */
 .hamburger_list {
   position: fixed;
   height: 100vh;
@@ -231,31 +231,31 @@ footer {
   text-align: left;
 }
 
-.hamburger_footer .hamburger_footer_SNS {
+.hamburger_list .hamburger_footer .hamburger_footer_SNS {
   display: flex;
   text-align: center;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.hamburger_footer .hamburger_footer_SNS img {
+.hamburger_list .hamburger_footer .hamburger_footer_SNS img {
   width: 50px;
   margin-inline: 5%;
 }
 
-.hamburger_footer .hamburger_footer_top, .hamburger_footer .hamburger_footer_bottom {
+.hamburger_list .hamburger_footer .hamburger_footer_top, .hamburger_list .hamburger_footer .hamburger_footer_bottom {
   display: flex;
   justify-content: center;
   text-align: center;
 }
 
-.hamburger_footer a {
+.hamburger_list .hamburger_footer a {
   display: inline-block;
   font-size: 16px;
   margin-inline: 5%;
 }
 
-/* Home Page */
+/* Home Page　名刺型カードデザイン */
 .home .card {
   width: 340px;
   height: 210px;
@@ -318,40 +318,41 @@ footer {
   }
 }
 
-/* 初期ページ/アカウントページ */
-.mypage {
+/* アクティベーションページ */
+.activation {
   background-color: #f0f0f0;
   text-align: center;
   margin-top: 40px;
 }
 
-.mypage div h1 {
+.activation div h1 {
   font-size: 28px;
   margin: 60px 0px 40px 0px;
 }
 
-.mypage p {
+.activation p {
   font-size: 16px;
   white-space: pre-line;
   margin: 0;
   line-height: 33px;
 }
 
-.mypage .activate-btn a {
-  color: black;
-  border-color: black;
+.activation .activation-btn a {
+  font-size: 18px;
+  color: #f0f0f0;
+  border-color: #000000;
+  background-color: #000000;
   border-radius: 20px;
   width: 168px;
   height: 42px;
   text-align: center;
   border-width: 3px;
-  font-weight: bold;
   margin-top: 40px;
 }
 
-/* signup page */
+/* サインアップページ */
 .signup .form-wrapper {
-  background-color: #f4c434;
+  background-color: #e8ba31;
   color: #ffffff;
   text-align: center;
   padding-top: 40px;
@@ -372,7 +373,7 @@ footer {
 }
 
 .signup .form-wrapper .form-item input {
-  background: #f4c434;
+  background: #e8ba31;
   border: none;
   border-bottom: 1px solid #ffffff;
   font-size: 16px;
@@ -389,6 +390,10 @@ footer {
   font-size: 10px;
 }
 
+.signup .form-wrapper .form-footer a {
+  color: #ffffff;
+}
+
 .signup .form-wrapper .form-footer p {
   margin-top: 8px;
 }
@@ -402,8 +407,13 @@ footer {
   background-color: #ffffff;
   font-size: 20px;
   width: 168px;
-  height: 48px;
+  height: 42px;
   border-radius: 20px;
   text-align: center;
   font-weight: bold;
+  padding-top: 5px;
+}
+
+.page__content {
+  overflow: hidden !important;
 }

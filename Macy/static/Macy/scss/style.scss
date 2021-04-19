@@ -5,137 +5,141 @@
 /* Import Gloabl Variables*/
 @import "variables";
 
-
 /* Menu Bar */
-.menu{
-    align-items: center !important;
-    padding: 33px 0 33px 0!important;
-    transition: all 0.5s ease-in;
+/* .page class is to override Onsen UI */
+.page {
+    .menu{
+    align-items: center;
+    padding: 33px 0 33px 0;
+    //transition: background-color 0.5s ease-in;
+    box-shadow:  0px 1px 0px rgba(151, 151, 151, 0.4);
+    display: flex;
+    justify-content: center;
 
     .logo img{
         width: 100px;
         vertical-align: middle;
-        transition: all 0.5s ease-in;
+        // transition: all 0.5s ease-in;
     }
+
+    /* Hamburger button */
+    .hamburger {
+        // position: fixed;
+        display: flex;
+        height: 25px;
+        width: 25px;
+        justify-content: center;
+        align-items: center;
+        z-index: 3;
+
+        & span {
+            opacity: 1;
+        }
+
+        & span,
+        & span::before,
+        & span::after{
+            content: '';
+            display: block;
+            height: 3px;
+            width: 35px;
+            border-radius: 2px;
+            background-color: $black;
+            position: absolute;
+            transition: all .4s ease-in;
+        }
+
+        & span:before {
+            bottom: 12px;
+            animation: menu-bar01 .75s forwards;
+        }
+        @keyframes menu-bar01 {
+            0% {
+                transform: translateY(12px) rotate(45deg);
+            }
+            50% {
+                transform: translateY(12px) rotate(0);
+            }
+            100% {
+                transform: translateY(0) rotate(0);
+            }
+        }
+        & span:after {
+            top: 12px;
+            animation: menu-bar02 .75s forwards;
+        }
+        @keyframes menu-bar02 {
+            0% {
+                transform: translateY(-12px) rotate(-45deg);
+            }
+            50% {
+                transform: translateY(-12px) rotate(0);
+            }
+            100% {
+                transform: translateY(0) rotate(0);
+            }
+        }
+
+        &.active span{
+            background-color: rgba(255,255,255,0);
+        }
+        
+        &.active span:before{
+            background-color: $white;
+            animation: active-menu-bar01 .75s forwards;
+        }
+        @keyframes active-menu-bar01 {
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+            50% {
+                transform: translateY(12px) rotate(0);
+            }
+            100% {
+                transform: translateY(12px) rotate(45deg);
+            }
+        }
+
+        &.active span:after{
+            background-color: $white;
+            animation: active-menu-bar03 .75s forwards;
+        }
+        @keyframes active-menu-bar03 {
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+            50% {
+                transform: translateY(-12px) rotate(0);
+            }
+            100% {
+                transform: translateY(-12px) rotate(-45deg);
+            }
+        }
+    }
+}
 }
 
 .menu-active{
     background-color: $black !important;
+    box-shadow: none !important;
 
     img{
         filter: invert(1);
     }
 }
 
-
-.page{
- .menu-signup{
-    background-color: $yellow;
-
-    .logo img{
+.page .menu-signup {
+    .hamburger{
+        span, span::after, span::before{
+            background-color: $white;
+        }
+    }
+    img{
         filter: invert(1);
     }
 }
-}
 
-
-.hamburger {
-    // position: fixed;
-    display: flex;
-    height: 25px;
-    width: 25px;
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
-
-    & span {
-        opacity: 1;
-    }
-
-    & span,
-    & span::before,
-    & span::after{
-        content: '';
-        display: block;
-        height: 3px;
-        width: 35px;
-        border-radius: 2px;
-        background-color: $black;
-        position: absolute;
-        transition: all .4s ease-in;
-    }
-
-
-
-    & span:before {
-        bottom: 12px;
-        animation: menu-bar01 .75s forwards;
-    }
-    @keyframes menu-bar01 {
-        0% {
-            transform: translateY(12px) rotate(45deg);
-        }
-        50% {
-            transform: translateY(12px) rotate(0);
-        }
-        100% {
-            transform: translateY(0) rotate(0);
-        }
-    }
-    & span:after {
-        top: 12px;
-        animation: menu-bar02 .75s forwards;
-    }
-    @keyframes menu-bar02 {
-        0% {
-            transform: translateY(-12px) rotate(-45deg);
-        }
-        50% {
-            transform: translateY(-12px) rotate(0);
-        }
-        100% {
-            transform: translateY(0) rotate(0);
-        }
-    }
-
-    &.active span{
-        background-color: rgba(255,255,255,0);
-    }
-    
-    &.active span:before{
-        background-color: $white;
-        animation: active-menu-bar01 .75s forwards;
-    }
-    @keyframes active-menu-bar01 {
-        0% {
-            transform: translateY(0) rotate(0);
-        }
-        50% {
-            transform: translateY(12px) rotate(0);
-        }
-        100% {
-            transform: translateY(12px) rotate(45deg);
-        }
-    }
-
-    &.active span:after{
-        background-color: $white;
-        animation: active-menu-bar03 .75s forwards;
-    }
-    @keyframes active-menu-bar03 {
-        0% {
-            transform: translateY(0) rotate(0);
-        }
-        50% {
-            transform: translateY(-12px) rotate(0);
-        }
-        100% {
-            transform: translateY(-12px) rotate(-45deg);
-        }
-    }
-}
-
-
+/* Hamburger Overlay */
 .hamburger_list{
     position: fixed;
     height: 100vh;
@@ -146,54 +150,54 @@
     z-index: 2;
     flex-direction: column;
     transition-delay: .1s;
+    
     &.active{
         transform: translateX(0);
     }
-}
-.hamburger_list ul{
-    margin: 5%;
-    display: flex;
-    flex-direction: column;
-}
-.hamburger_list li{
-    padding: 0.5em;
-}
-.hamburger_list a{
-    font-size: 40px;
-    text-decoration: none;
-    color: $white;
-    text-align: left;
-}
-
-.hamburger_footer{
-    .hamburger_footer_SNS{
+    
+    ul{
+        margin: 5%;
         display: flex;
-        text-align: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        
-        img {
-            width: 50px;
+        flex-direction: column;
+    }
+    
+    li{
+        padding: 0.5em;
+    }   
+    a{
+        font-size: 40px;
+        text-decoration: none;
+        color: $white;
+        text-align: left;
+    }
+
+    .hamburger_footer{
+        .hamburger_footer_SNS{
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            
+            img {
+                width: 50px;
+                margin-inline: 5%;
+            }
+        }
+
+        .hamburger_footer_top, .hamburger_footer_bottom{
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+        a{
+            display: inline-block;
+            font-size: $normal_text;
             margin-inline: 5%;
         }
     }
-
-    .hamburger_footer_top, .hamburger_footer_bottom{
-        display: flex;
-        justify-content: center;
-        text-align: center;
-    }
-    a{
-        display: inline-block;
-        font-size: $normal_text;
-        margin-inline: 5%;
-    }
-
 }
-
-/* Home Page */
+/* Home Page　名刺型カードデザイン */
 .home{
-
     .card{
         width: 340px;
         height: 210px;
@@ -242,7 +246,6 @@
         }
         .card_content{
             padding: 5%;
-
         }
     }
 
@@ -254,8 +257,8 @@
     }
 }
 
-/* 初期ページ/アカウントページ */
-.mypage{
+/* アクティベーションページ */
+.activation{
     background-color: $ashwhite;
     text-align: center;
     margin-top: 40px;
@@ -274,25 +277,24 @@
         line-height: 33px;
     }
 
-
-    .activate-btn a{
-        color: black;
-        border-color: black;
+    .activation-btn a{
+        font-size: 18px;
+        color: $ashwhite;
+        border-color: $black;
+        background-color: $black;
         border-radius: 20px;
         width: 168px;
         height: 42px;
         text-align: center;
         border-width: 3px;
-        font-weight: bold;
         margin-top: 40px;
     }
 }
 
-/* signup page */
-
+/* サインアップページ */
 .signup{
     .form-wrapper {
-        background-color: $yellow;
+        background-color: $tealyellow;
         color: $white;
         text-align: center;
         padding-top: 40px;
@@ -312,7 +314,7 @@
         }
 
         .form-item input {
-            background: $yellow;
+            background: $tealyellow;
             border: none;
             border-bottom: 1px solid $white;
             font-size: 16px;
@@ -327,6 +329,10 @@
         .form-footer {
             margin-top: 32px;
             font-size: 10px;
+            
+            a{
+                color: $white;
+            }
         }
 
         .form-footer p {
@@ -342,14 +348,17 @@
             background-color: $white;
             font-size: 20px;
             width: 168px;
-            height: 48px;
+            height: 42px;
             border-radius: 20px;
             text-align: center;
             font-weight: bold;
+            padding-top: 5px;
         }
     }
 }
-
+.page__content{
+    overflow: hidden !important;
+}
 
 
 

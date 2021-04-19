@@ -73,6 +73,7 @@ footer {
   padding-right: 5%;
 }
 
+/* Menu Bar */
 .menu {
   align-items: center !important;
   padding: 33px 0 33px 0 !important;
@@ -87,10 +88,17 @@ footer {
 
 .menu-active {
   background-color: #000000 !important;
-  color: #ffffff !important;
 }
 
 .menu-active img {
+  filter: invert(1);
+}
+
+.page .menu-signup {
+  background-color: #f4c434;
+}
+
+.page .menu-signup .logo img {
   filter: invert(1);
 }
 
@@ -107,9 +115,7 @@ footer {
   opacity: 1;
 }
 
-.hamburger span,
-.hamburger span::before,
-.hamburger span::after {
+.hamburger span, .hamburger span::before, .hamburger span::after {
   content: '';
   display: block;
   height: 3px;
@@ -192,50 +198,6 @@ footer {
   }
 }
 
-/*
-.hamburger {
-    position: absolute;
-    display: flex;
-    height: 85px;
-    width: 85px;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-
-    & span,
-    & span::before,
-    & span::after{
-        content: '';
-        display: block;
-        height: 2px;
-        width: 30px;
-        border-radius: 1px;
-        background-color: #ffffff;
-        position: relative;
-        transition: all .3s ease-in;
-    }
-
-    & span:before {
-        bottom: 8px
-    }
-    & span:after {
-        top: 8px;
-    }
-
-    &.active span{
-        background-color: rgba(255,255,255,0);
-    }
-
-    &.active span:before{
-        transform:rotate(45deg);
-        bottom: 0;
-    }
-    &.active span:after{
-        transform: rotate(135deg);
-        top: 0;
-    }
-}
- */
 .hamburger_list {
   position: fixed;
   height: 100vh;
@@ -293,82 +255,7 @@ footer {
   margin-inline: 5%;
 }
 
-#menu ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-#menu li {
-  display: inline;
-  padding: 0;
-  margin: 0;
-}
-
-#menu li a {
-  display: block;
-  width: 150px;
-  padding: 3px;
-  margin: 10px 0px 10px 0px;
-  text-decoration: none;
-  border: outset 3px #C2CBBD;
-  background-color: #C2CBBD;
-  text-align: center;
-  color: #000000;
-  font-size: 14px;
-}
-
-#menu li a:hover {
-  border: inset 3px #95A38D;
-  background-color: #95A38D;
-}
-
-/*
-.container{
-    h1{
-        color: darken($grey, 15%);
-        margin-bottom: 2%;
-    }
-
-    .alert-success{
-        padding: 20px;
-        background-color: #00897b;
-        color: white;
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        border-radius: 8px;
-    }
-
-    form{
-        margin-top: 50px;
-
-        label{
-            font-size: 1.5em;
-        }
-
-        p{
-            font-size: 1em;
-        }
-
-        .errorlist{
-            color: red;
-        }
-
-        .center-btn{
-            padding: 10%;
-            text-align: center;
-
-
-            .btn-large{
-                width: 100%;
-                line-height: 50px;
-                height: 50px;
-                font-size: 25px;
-            }
-        }
-    }
-}
-*/
+/* Home Page */
 .home .card {
   width: 340px;
   height: 210px;
@@ -431,194 +318,11 @@ footer {
   }
 }
 
-.sign-up select {
-  display: inline-block;
-}
-
-.sign-up td.delete input {
-  display: none;
-}
-
-.sign-up textarea {
-  background: white;
-  min-height: 250px;
-  padding: 3%;
-  border-radius: 3px;
-}
-
-.delete {
-  text-align: center;
-  margin: 5%;
-}
-
-.delete i {
-  margin: 5%;
-}
-
-.delete i input {
-  color: white;
-}
-
-.account {
-  padding: 10%;
-  background: #8a8a8a;
-  color: white;
-  border-radius: 3px;
-  min-height: 80vh;
-  line-height: 300%;
-  display: flex;
-  flex-direction: column;
-}
-
-.account .account-info {
-  display: flex;
-}
-
-.account .account-info .label {
-  text-align: right;
-  margin: 2%;
-  min-width: 30%;
-}
-
-.account .account-info .user-info {
-  margin: 2%;
-}
-
-.account .account-info .user-info img {
-  width: 5%;
-  vertical-align: middle;
-}
-
-.account .account-info .user-info li a {
-  color: #d9d9d9;
-  transition: color .2s ease-in;
-}
-
-.account .account-info .user-info li a:hover {
-  color: #f4c434;
-}
-
-.account .account-info .user-info .img-delete a {
-  color: #ffffff;
-}
-
-.account .direct_on {
-  background-color: darkseagreen;
-}
-
+/* 初期ページ/アカウントページ */
 .mypage {
   background-color: #f0f0f0;
   text-align: center;
   margin-top: 40px;
-  /*
-    padding: 5%;
-
-    h4{
-        color: $grey;
-    }
-
-    h6{
-        color: darken($grey, 5%);
-    }
-
-    .slide{
-        margin-bottom: 50px;
-        padding: 5%;
-    }
-
-    .header{
-        background-image: url('../img/mypage.jpg');
-
-        min-height: 500px;
-
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        border-radius: 3px;
-        color: white;
-
-        -webkit-box-shadow: inset 0px -2px 13px -2px rgba(0,0,0,0.9);
-        box-shadow: inset 0px -2px 13px -2px rgba(0,0,0,0.9);
-
-        .profile-img{
-            border-radius: 50%;
-            border: 2px solid $blue;
-            width: 150px;
-            height: 150px;
-            object-fit:cover;
-        }
-    }
-
-    .desc{
-        border-radius: 5px;
-        color: #333;
-        -webkit-backdrop-filter: blur(10px);
-        backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.5);
-        min-height: 150px;
-        padding: 2%;
-        width: 50%;
-    }
-
-    .links{
-        background-color: $white;
-
-        ul{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-
-            max-height: 700px;
-
-            li {
-                width: 250px;
-                height: 250px;
-                background: $blue;
-                color: $white;
-                border-radius: 50px;
-                text-align: center;
-                margin: 3%;
-                padding: 2%;
-                overflow: hidden;
-                box-shadow: 6px 5px 23px -1px rgba(0,0,0,0.2);
-
-
-                a{
-                    color: white;
-
-                }
-
-                img{
-                    height: 100px;
-                    width: 100px;
-                }
-            }
-
-            li:hover{
-                background: lighten($blue, 5%);
-                animation: jump 0.8s linear 0s 1;
-            }
-
-            li[data-emergence=hidden] {
-                opacity: 0;
-                transform: scale(.5);
-
-            }
-
-            li[data-emergence=visible] {
-                opacity: 1;
-                transform: scale(1);
-                transition: opacity .5s ease,
-                transform .5s ease,
-                background .5s ease;
-            }
-        }
-
-
-    }
-    */
 }
 
 .mypage h1 {
@@ -632,7 +336,7 @@ footer {
   line-height: 33px;
 }
 
-.mypage .signup-btn a {
+.mypage .activate-btn a {
   color: black;
   border-color: black;
   border-radius: 20px;
@@ -643,14 +347,61 @@ footer {
   font-weight: bold;
 }
 
-.edit textarea {
-  background: white;
-  min-height: 250px;
-  padding: 3%;
-  border-radius: 3px;
+/* signup page */
+.signup .form-wrapper {
+  background-color: #f4c434;
+  color: #ffffff;
+  text-align: center;
+  padding-top: 40px;
+  height: 100vh;
+  width: 100%;
 }
 
-.edit .add-link {
-  margin: 1%;
-  float: right;
+.signup .form-wrapper h1 {
+  font-size: 28px;
+}
+
+.signup .form-wrapper form {
+  margin-top: 7px;
+}
+
+.signup .form-wrapper .form-item {
+  margin-top: 39px;
+}
+
+.signup .form-wrapper .form-item input {
+  background: #f4c434;
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  font-size: 16px;
+  width: 82%;
+  line-height: 22px;
+}
+
+.signup .form-wrapper ::placeholder {
+  color: #ffffff;
+}
+
+.signup .form-wrapper .form-footer {
+  margin-top: 32px;
+  font-size: 10px;
+}
+
+.signup .form-wrapper .form-footer p {
+  margin-top: 8px;
+}
+
+.signup .form-wrapper .signup-btn {
+  margin-top: 40px;
+}
+
+.signup .form-wrapper .signup-btn a {
+  color: #f4c434;
+  background-color: #ffffff;
+  font-size: 20px;
+  width: 168px;
+  height: 48px;
+  border-radius: 20px;
+  text-align: center;
+  font-weight: bold;
 }

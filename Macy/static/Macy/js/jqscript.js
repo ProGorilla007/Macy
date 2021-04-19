@@ -74,6 +74,11 @@ $(function(){
         return false;
     });
 
+
+    let target = $('.signup')
+    if(target.length>0) {
+        $('.menu').addClass('menu-signup');
+    }
     
 
 });

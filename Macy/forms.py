@@ -5,7 +5,7 @@ from .models import User
 from django.forms import ModelForm, inlineformset_factory
 from .models import Links
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, \
-    UserChangeForm, PasswordResetForm, SetPasswordForm
+    UserChangeForm, PasswordResetForm, SetPasswordForm, UsernameField
 from django import forms
 
 
@@ -129,7 +129,12 @@ UserEditFormSet = inlineformset_factory(
 
 class LoginForm(AuthenticationForm):
     """ログインフォーム"""
-
+    username = UsernameField(label='Eメール', widget=forms.TextInput(attrs={'autofocus': True}))
+    password = forms.CharField(
+        label="パスワード",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password'}),
+    )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():

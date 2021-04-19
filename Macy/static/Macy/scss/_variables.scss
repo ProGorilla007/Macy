@@ -17,6 +17,7 @@ $blue: #1759a8;
 $lightblue: #79c4ef;
 
 /* Font Size */
+$title_size: 28px;
 $normal_text: 16px;
 $small_text: 10px;
 
@@ -70,6 +71,10 @@ body {
     background: $white;
     color: $grey;
     min-height: 100vh;
+}
+
+.page__content{
+    overflow: hidden !important;
 }
 
 .container {

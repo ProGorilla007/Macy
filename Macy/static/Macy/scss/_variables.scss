@@ -82,6 +82,17 @@ body {
     color: $black;
 }
 
+// overriding OnsenUI
+div.page__formatter{
+    padding-top: 72px;
+    height: 100vh;
+    text-align: center;
+    h1{
+        font-size: $title_size;
+        margin: 0 auto;
+    }
+}
+
 footer{
     text-align: right;
     position: absolute;
@@ -94,4 +105,63 @@ footer{
 
 .footer-copyright{
     padding-right: 5%
+}
+
+/* General Form Style */
+.form-wrapper {
+    form {
+        margin-top: 57px;
+    }
+
+    .form-item {
+        margin-top: 23px;
+    }
+
+    .form-item input {
+        border: none;
+        border-bottom: 1px solid $white;
+        font-size: $normal_text;
+        width: 82%;
+        line-height: 27px;
+    }
+
+    ::placeholder {
+        //color: $black;
+    }
+
+    .form-footer {
+        margin-top: 40px;
+        font-size: 10px;
+        
+        a {
+            //color: $white;
+        }
+        p {
+            margin-top: 8px;
+        }
+    }
+
+    .form-btn {
+        margin-top: 40px;
+        
+        .button {
+            font-size: 20px;
+            width: 168px;
+            height: 42px;
+            border-radius: 20px;
+            text-align: center;
+            padding-top: 5px;
+        }
+    }
+}
+
+.round-btn{
+    .button {
+        font-size: 20px;
+        width: 168px;
+        height: 42px;
+        border-radius: 20px;
+        text-align: center;
+        padding-top: 5px;
+    }
 }

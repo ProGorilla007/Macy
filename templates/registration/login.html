@@ -2,28 +2,32 @@
 
 {% block title %}Macy | ログイン{% endblock %}
 {% block content %}
-    <div class="login">
+    <div class="login page__formatter">
         <h1>MACYへログイン</h1>
         {% if form.errors %}
             <p>ユーザー名とパスワードが一致しません。　もう一度お試しください。</p>
         {% endif %}
-        <form method="post">
-            {{ form.non_field_errors }}
-            {% for field in form %}
-                    {{ field }}
-                    <p>{{ field.help_text }}</p>
-                    <br/>
-                    {{ field.errors }}
-            {% endfor %}
-            {% csrf_token %}
-        </form>
-        <div class="password_reset">
-            <p>パスワードを忘れたら？<a href="{% url 'password_reset' %}" class="">こちらへ</a></p>   
-            <p>アカウントをお持ちでない方は<a href="#" class="">こちらへ</a></p>
-        </div>
-        <div class="login-btn">
-            <button type="submit" class="button" >ログイン</button>
-            <input type="hidden" name="next" value="{{ next }}" />
+        <div class="form-wrapper">
+            <form method="post">
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                        <div class="form-item">
+                            {{ field }}
+                        </div>
+                        <p>{{ field.help_text }}</p>
+                        <br/>
+                        {{ field.errors }}
+                {% endfor %}
+                {% csrf_token %}
+            </form>
+            <div class="form-footer">
+                <p>パスワードを忘れたら？<a href="{% url 'password_reset' %}" class="">こちら</a>へ</p>   
+                <p>アカウントをお持ちでない方は<a href="#" class="">こちら</a>へ</p>
+            </div>
+            <div class="form-btn">
+                <button type="submit" class="button" >ログイン</button>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </div>
         </div>
     </div>
 {% endblock %}

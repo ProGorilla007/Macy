@@ -3,9 +3,9 @@
 {% block title %}Macy | マイページ{% endblock %}
 {% block content %}
 
-    <div>
+
         {% if user.is_active %}
-            <div class="mypage">
+            <div class="mypage page__formatter">
                 <div class="header slide" {% if user.header %}style="background-image: url('{{ MEDIA_URL }}{{user.header}}')"{% endif %}>
                     <img alt="" class="profile-img"
                         {% if user.profile %}src='{{ MEDIA_URL }}{{user.profile}}'
@@ -34,13 +34,12 @@
                 </div>
             </div>
         {% else %}
-            <div class="activation">
+            <div class="activation page__formatter">
                 <h1>Macyへようこそ！</h1>
                 <p>あともう一息・・・</p><p>まずは下のボタンをクリックして</p><p>メイシーをアクティベートしましょう！</p>
-                <div class="activation-btn">
+                <div class="round-btn">
                     <a class="button" href="{% url 'signup' id=user.user_id%}">アクティベート</a>
                 </div>
             </div>
         {% endif %}
-    </div>
 {% endblock %}

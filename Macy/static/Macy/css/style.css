@@ -56,6 +56,17 @@ body {
   color: #000000;
 }
 
+div.page__formatter {
+  padding-top: 72px;
+  height: 100vh;
+  text-align: center;
+}
+
+div.page__formatter h1 {
+  font-size: 28px;
+  margin: 0 auto;
+}
+
 footer {
   text-align: right;
   position: absolute;
@@ -70,19 +81,81 @@ footer {
   padding-right: 5%;
 }
 
+/* General Form Style */
+.form-wrapper form {
+  margin-top: 57px;
+}
+
+.form-wrapper .form-item {
+  margin-top: 23px;
+}
+
+.form-wrapper .form-item input {
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  font-size: 16px;
+  width: 82%;
+  line-height: 27px;
+}
+
+.form-wrapper .form-footer {
+  margin-top: 40px;
+  font-size: 10px;
+}
+
+.form-wrapper .form-footer p {
+  margin-top: 8px;
+}
+
+.form-wrapper .form-btn {
+  margin-top: 40px;
+}
+
+.form-wrapper .form-btn .button {
+  font-size: 20px;
+  width: 168px;
+  height: 42px;
+  border-radius: 20px;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.round-btn .button {
+  font-size: 20px;
+  width: 168px;
+  height: 42px;
+  border-radius: 20px;
+  text-align: center;
+  padding-top: 5px;
+}
+
 /* Menu Bar */
 /* .page class is to override Onsen UI */
+.page {
+  /* Hamburger Overlay */
+  /* Home Page　名刺型カードデザイン */
+  /* アクティベーションページ */
+  /* サインアップページ */
+  /* ログインページ */
+}
+
 .page .menu {
   align-items: center;
-  padding: 33px 0 33px 0;
+  padding: 33px 0 18px 0;
   box-shadow: 0px 1px 0px rgba(151, 151, 151, 0.4);
   display: flex;
   justify-content: center;
+  height: fit-content;
   /* Hamburger button */
+}
+
+.page .menu .center {
+  line-height: 0;
 }
 
 .page .menu .logo img {
   width: 100px;
+  height: 25px;
   vertical-align: middle;
 }
 
@@ -109,7 +182,7 @@ footer {
   border-radius: 2px;
   background-color: #000000;
   position: absolute;
-  transition: all .4s ease-in;
+  transition: transform .4s ease-in;
 }
 
 .page .menu .hamburger span:before {
@@ -184,83 +257,83 @@ footer {
   }
 }
 
-.menu-active {
-  background-color: #000000 !important;
-  box-shadow: none !important;
+.page .menu.menu-active, .page .menu.menu-active.menu-signup {
+  background-color: #000000;
+  box-shadow: none;
 }
 
-.menu-active img {
+.page .menu.menu-active img, .page .menu.menu-active.menu-signup img {
   filter: invert(1);
 }
 
-.page .menu-signup .hamburger span, .page .menu-signup .hamburger span::after, .page .menu-signup .hamburger span::before {
+.page .menu.menu-signup .hamburger span, .page .menu.menu-signup .hamburger span::after, .page .menu.menu-signup .hamburger span::before {
   background-color: #ffffff;
 }
 
-.page .menu-signup img {
+.page .menu.menu-signup img {
   filter: invert(1);
 }
 
-/* Hamburger Overlay */
-.hamburger_list {
+.page .hamburger_list {
   position: fixed;
   height: 100vh;
   width: 100%;
   background-color: #000000;
   transform: translateX(100%);
-  transition: all .2s;
+  transition: transform .2s;
   z-index: 2;
   flex-direction: column;
   transition-delay: .1s;
+  padding-top: 72px;
 }
 
-.hamburger_list.active {
+.page .hamburger_list.active {
   transform: translateX(0);
 }
 
-.hamburger_list ul {
+.page .hamburger_list ul {
   margin: 5%;
   display: flex;
   flex-direction: column;
+  list-style: none;
 }
 
-.hamburger_list li {
+.page .hamburger_list li {
   padding: 0.5em;
 }
 
-.hamburger_list a {
-  font-size: 40px;
+.page .hamburger_list a {
+  font-size: 36px;
   text-decoration: none;
   color: #ffffff;
   text-align: left;
 }
 
-.hamburger_list .hamburger_footer .hamburger_footer_SNS {
+.page .hamburger_list .hamburger_footer .hamburger_footer_SNS {
   display: flex;
   text-align: center;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.hamburger_list .hamburger_footer .hamburger_footer_SNS img {
+.page .hamburger_list .hamburger_footer .hamburger_footer_SNS img {
   width: 50px;
   margin-inline: 5%;
 }
 
-.hamburger_list .hamburger_footer .hamburger_footer_top, .hamburger_list .hamburger_footer .hamburger_footer_bottom {
+.page .hamburger_list .hamburger_footer .hamburger_footer_top, .page .hamburger_list .hamburger_footer .hamburger_footer_bottom {
   display: flex;
   justify-content: center;
   text-align: center;
 }
 
-.hamburger_list .hamburger_footer a {
+.page .hamburger_list .hamburger_footer a {
   display: inline-block;
   font-size: 16px;
   margin-inline: 5%;
 }
 
-/* Home Page　名刺型カードデザイン */
-.home .card {
+.page .home .card {
   width: 340px;
   height: 210px;
   border-radius: 15px;
@@ -269,7 +342,7 @@ footer {
   padding: 0%;
 }
 
-.home .card .card-head {
+.page .home .card .card-head {
   display: flex;
   align-items: center;
   padding: 5%;
@@ -278,7 +351,7 @@ footer {
   justify-content: space-evenly;
 }
 
-.home .card .card-head .card-overlay {
+.page .home .card .card-head .card-overlay {
   position: absolute;
   background-color: #f4c434;
   width: 100%;
@@ -290,11 +363,11 @@ footer {
   transform: scale(1);
 }
 
-.home .card .card-head .card_title {
+.page .home .card .card-head .card_title {
   z-index: 1;
 }
 
-.home .card .card-head img {
+.page .home .card .card-head img {
   border-radius: 50%;
   border: 10px solid #ffffff;
   width: 100px;
@@ -306,155 +379,85 @@ footer {
   z-index: 1;
 }
 
-.home .card .card_content {
+.page .home .card .card_content {
   padding: 5%;
 }
 
 @media (max-width: 1264px) {
-  .home {
+  .page .home {
     width: 70%;
   }
 }
 
 @media (max-width: 1904px) {
-  .home {
+  .page .home {
     width: 70%;
   }
 }
 
-/* アクティベーションページ */
-.activation {
+.page .activation {
   background-color: #f0f0f0;
-  text-align: center;
-  margin-top: 40px;
 }
 
-.activation div h1 {
-  font-size: 28px;
-  margin: 60px 0px 40px 0px;
+.page .activation h1 {
+  margin-bottom: 40px;
 }
 
-.activation p {
+.page .activation p {
   font-size: 16px;
-  white-space: pre-line;
   margin: 0;
   line-height: 33px;
 }
 
-.activation .activation-btn a {
-  font-size: 18px;
+.page .activation .round-btn a {
   color: #f0f0f0;
-  border-color: #000000;
   background-color: #000000;
-  border-radius: 20px;
-  width: 168px;
-  height: 42px;
-  text-align: center;
-  border-width: 3px;
   margin-top: 40px;
 }
 
-/* サインアップページ */
-.signup .form-wrapper {
+.page .signup {
   background-color: #e8ba31;
   color: #ffffff;
-  text-align: center;
-  padding-top: 40px;
-  height: 100vh;
-  width: 100%;
 }
 
-.signup .form-wrapper h1 {
-  font-size: 28px;
+.page .signup .form-wrapper .form-item {
+  margin-top: 25px;
 }
 
-.signup .form-wrapper form {
-  margin-top: 7px;
-}
-
-.signup .form-wrapper .form-item {
-  margin-top: 39px;
-}
-
-.signup .form-wrapper .form-item input {
+.page .signup .form-wrapper .form-item input {
   background: #e8ba31;
-  border: none;
-  border-bottom: 1px solid #ffffff;
-  font-size: 16px;
-  width: 82%;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 25px;
 }
 
-.signup .form-wrapper ::placeholder {
+.page .signup .form-wrapper ::placeholder {
   color: #ffffff;
 }
 
-.signup .form-wrapper .form-footer {
-  margin-top: 32px;
-  font-size: 10px;
-}
-
-.signup .form-wrapper .form-footer a {
+.page .signup .form-wrapper .form-footer a {
   color: #ffffff;
 }
 
-.signup .form-wrapper .form-footer p {
-  margin-top: 8px;
-}
-
-.signup .form-wrapper .signup-btn {
-  margin-top: 40px;
-}
-
-.signup .form-wrapper .signup-btn a {
+.page .signup .form-wrapper .form-btn a {
   color: #f4c434;
   background-color: #ffffff;
-  font-size: 20px;
-  width: 168px;
-  height: 42px;
-  border-radius: 20px;
-  text-align: center;
-  font-weight: bold;
-  padding-top: 5px;
 }
 
-/* ログインページ */
-.login {
-  margin-top: 40px;
-  text-align: center;
-  height: 100vh;
-  width: 100%;
+.page .login .form-wrapper form {
+  margin-top: 53px;
 }
 
-.login h1 {
-  font-size: 28px !important;
-  margin: 60px 0px 33px 0px !important;
-}
-
-.login input {
+.page .login .form-wrapper .form-item input {
   background: #f0f0f0;
-  border: none;
   border-bottom: 1px solid #000000;
-  font-size: 16px;
-  width: 82%;
-  line-height: 22px;
-  margin-top: 20px;
 }
 
-.login .login-btn .button {
+.page .login .form-wrapper ::placeholder {
+  color: #000000;
+}
+
+.page .login .form-wrapper .form-btn .button {
   font-size: 18px;
   color: #f0f0f0;
-  border-color: #000000;
   background-color: #000000;
-  border-radius: 20px;
-  width: 168px;
-  height: 42px;
-  text-align: center;
-  border-width: 3px;
-  margin-top: 40px;
-}
-
-.login .password_reset {
-  margin-top: 20px;
-  font-size: 10px;
 }

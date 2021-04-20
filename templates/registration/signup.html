@@ -3,31 +3,31 @@
 {% block title %}Macy | 新規登録{% endblock %}
 {% block content %}
 
-    <div class="signup">
-        <div class="form-wrapper">
-          <h1>アカウントを登録</h1>
-          <form>
-            <div class="form-item">
-              <label for="email"></label>
-              <input type="email" name="email" required="required" placeholder="Eメール"></input>
-            </div>
-            <div class="form-item">
-              <label for="password"></label>
-              <input type="password" name="password" required="required" placeholder="パスワード"></input>
-            </div>
-            <div class="form-item">
-              <label for="re_password"></label>
-              <input type="re_password" name="re_password" required="required" placeholder="パスワード（確認用）"></input>
-            </div>
-          </form>
-          <div class="form-footer">
-            <p>既にアカウントをお持ちの方は<a href="#">こちら</a>へ</p>
-            <p><a href="#">利用規約＆プライバシー規約</a></p>
+  <div class="signup page__formatter">
+    <h1>アカウントを登録</h1>
+      <div class="form-wrapper">
+        <form>
+          <div class="form-item">
+            <label for="email"></label>
+            <input type="email" name="email" required="required" placeholder="Eメール"></input>
           </div>
-          <div class="signup-btn">
-              <a class="button">登録</a>
+          <div class="form-item">
+            <label for="password"></label>
+            <input type="password" name="password" required="required" placeholder="パスワード"></input>
           </div>
+          <div class="form-item">
+            <label for="re_password"></label>
+            <input type="re_password" name="re_password" required="required" placeholder="パスワード（確認用）"></input>
+          </div>
+        </form>
+        <div class="form-footer">
+          <p>既にアカウントをお持ちの方は<a href="#">こちら</a>へ</p>
+          <p><a href="#">利用規約＆プライバシー規約</a></p>
         </div>
-    </div>
+        <div class="form-btn">
+          <a class="button">登録</a>
+        </div>
+      </div>
+  </div>
 
 {% endblock %}

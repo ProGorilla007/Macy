@@ -103,11 +103,12 @@ class UserEditForm(UserChangeForm):
 class LinksForm(ModelForm):
     class Meta:
         model = Links
-        fields = ('media_choice', 'link', 'account_id')
+        fields = ('media_choice', 'link', 'account_id', 'order_num')
         labels = {
             'media_choice': 'SNS',
             'link': 'リンクURL',
             'account_id': 'ユーザーID',
+            'order_num': '順番',
         }
         widgets = {
             'link': forms.TextInput(attrs={'placeholder': '例）https://twitter.com/アカウント名'}),
@@ -120,7 +121,7 @@ class LinksForm(ModelForm):
         self.fields['link'].widget.attrs['class'] = 'link-url'
         self.fields['link'].widget.attrs['readonly'] = True
         self.fields['account_id'].widget.attrs['class'] = 'link-account'
-
+        self.fields['order_num'].widget= forms.HiddenInput()
 
 UserSignupFormSet = inlineformset_factory(User, Links, form=LinksForm, extra=4, can_delete=False)
 UserEditFormSet = inlineformset_factory(

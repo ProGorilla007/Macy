@@ -128,5 +128,7 @@ class Links(models.Model):
 
     link = models.URLField(max_length=255)
 
+    order_num = models.PositiveIntegerField(default=None, null=True, blank=True)
+
     def __str__(self):
         return self.get_media_choice_display()

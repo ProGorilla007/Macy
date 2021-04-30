@@ -6,20 +6,21 @@
 
         {% if user.is_active %}
             <div class="mypage page__formatter">
-                <div class="header slide" {% if user.header %}style="background-image: url('{{ MEDIA_URL }}{{user.header}}')"{% endif %}>
-                    <img alt="" class="profile-img"
+                <div class="card card--material">
+                    <div class="card-head" {% if user.header %}style="background-image: url('{{ MEDIA_URL }}{{user.header}}')"{% endif %}>
+                        <img alt="" class="profile-img"
                         {% if user.profile %}src='{{ MEDIA_URL }}{{user.profile}}'
                         {% else %} src="{% static 'Macy/img/avatar.png' %}" {% endif %}>
-
-                    <div class="desc">
-                        <h6>{{ user.username }}</h6>
-                        <p>{{ user.intro }}</p>
+                        <div class="card_title"></div>
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card_content">
+                        {{ user.username }}
                     </div>
                 </div>
-
                 <div class="links slide">
                     <ul>
-                        {% for links in user.links_set.all %}
+                        {% for links in user.links_set.all|dictsortreversed:"order_num" %}
                             {% with 'Macy/img/'|add:links.media_choice|add:'.png' as image_static %}
                             <li data-emergence="hidden">
                                 <a target="_blank" href="{{ links.link }}">

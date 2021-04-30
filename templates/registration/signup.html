@@ -5,12 +5,35 @@
 
   <div class="signup page__formatter">
     <h1>アカウントを登録</h1>
-      <div class="form-wrapper">
-        <form>
+    <div class="form-wrapper">
+      <form method="post" enctype='multipart/form-data'>
+        {{ form.non_field_errors }}
+        
+        {% for field in form %}
           <div class="form-item">
-            <label for="email"></label>
+            {{ field }}
+            <!--<p>{{ field.help_text }}</p>-->
+            {{ field.errors }}
+            </div>
+        {% endfor %}
+        
+        {% csrf_token %}
+        <div class="form-footer">
+          <p>既にアカウントをお持ちの方は<a href="#">こちら</a>へ</p>
+          <p><a href="#">利用規約＆プライバシー規約</a></p>
+        </div>
+        <div class="form-btn">
+          <button type="submit" class="button" >登録</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+<!--
+  <label for="email"></label>
             <input type="email" name="email" required="required" placeholder="Eメール"></input>
-          </div>
+          
           <div class="form-item">
             <label for="password"></label>
             <input type="password" name="password" required="required" placeholder="パスワード"></input>
@@ -19,15 +42,4 @@
             <label for="re_password"></label>
             <input type="re_password" name="re_password" required="required" placeholder="パスワード（確認用）"></input>
           </div>
-        </form>
-        <div class="form-footer">
-          <p>既にアカウントをお持ちの方は<a href="#">こちら</a>へ</p>
-          <p><a href="#">利用規約＆プライバシー規約</a></p>
-        </div>
-        <div class="form-btn">
-          <a class="button">登録</a>
-        </div>
-      </div>
-  </div>
-
-{% endblock %}
+-->

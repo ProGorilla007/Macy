@@ -139,6 +139,7 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             initial=[{'media_choice': link.media_choice,
                         'link': link.link,
                         'account_id': link.account_id,
+                        'order_num': link.order_num,
                         } for link in self.request.user.links_set.all()]
         )
         return self.render_to_response(

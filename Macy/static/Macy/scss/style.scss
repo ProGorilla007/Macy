@@ -21,10 +21,14 @@
         line-height: 0;
     }
 
+    .logo{
+        height: 25px;
+    }
+
     .logo img{
         width: 100px;
         height: 25px;
-        vertical-align: middle;
+        //vertical-align: middle;
         // transition: all 0.5s ease-in;
     }
 
@@ -208,22 +212,31 @@
 }
 
 /* Home Page　名刺型カードデザイン */
-.home{
+.mypage{
+    .profile-img{
+        width: 30%;
+    }
+    .qr{
+        width: 30%;
+    }
+
     .card{
-        width: 340px;
-        height: 210px;
+        width: 345px;
+        height: 213px;
         border-radius: 15px;
         color: $black;
         text-align: right;
         padding: 0%;
+        margin: 0 auto;
+        position: relative;
+        box-shadow: 0px 5px 18px 2px rgba(204, 204, 204, 0.4);
 
         .card-head{
             display: flex;
             align-items: center;
-            padding: 5%;
             color: $white;
             position: relative;
-            justify-content: space-evenly;
+            justify-content: left;
 
             .card-overlay {
                 position: absolute;
@@ -243,27 +256,33 @@
 
             img{
                 border-radius: 50%;
-                border: 10px solid $white;
-                width: 100px;
-                height: 100px;
+                border: 7px solid $white;
+                width: 85px;
+                height: 85px;
                 vertical-align: middle;
                 display: inline-block;
                 object-fit:cover;
                 position: relative;
                 z-index: 1;
+                margin-top: 26px;
+                margin-left: 34px;
             }
         }
 
         .card_content{
-            padding: 5%;
+            position: absolute;
+            right: 34px;
+            bottom: 16px;
+            font-weight: bold;
+            font-size: $title_size;
         }
     }
 
     @include md {
-        width: 70%;
+        
     }
     @include lg {
-        width: 70%;
+        
     }
 }
 
@@ -308,11 +327,11 @@
             color: $white;
         }
         
-        .form-footer a{
+        .form-footer button{
             color: $white;
         }
 
-        .form-btn a{
+        .form-btn button{
             color: $yellow;
             background-color: $white;
         }
@@ -344,4 +363,6 @@
         }
     }
 }
+
+
 }

@@ -153,10 +153,13 @@ footer {
   line-height: 0;
 }
 
+.page .menu .logo {
+  height: 25px;
+}
+
 .page .menu .logo img {
   width: 100px;
   height: 25px;
-  vertical-align: middle;
 }
 
 .page .menu .hamburger {
@@ -333,25 +336,35 @@ footer {
   margin-inline: 5%;
 }
 
-.page .home .card {
-  width: 340px;
-  height: 210px;
+.page .mypage .profile-img {
+  width: 30%;
+}
+
+.page .mypage .qr {
+  width: 30%;
+}
+
+.page .mypage .card {
+  width: 345px;
+  height: 213px;
   border-radius: 15px;
   color: #000000;
   text-align: right;
   padding: 0%;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: 0px 5px 18px 2px rgba(204, 204, 204, 0.4);
 }
 
-.page .home .card .card-head {
+.page .mypage .card .card-head {
   display: flex;
   align-items: center;
-  padding: 5%;
   color: #ffffff;
   position: relative;
-  justify-content: space-evenly;
+  justify-content: left;
 }
 
-.page .home .card .card-head .card-overlay {
+.page .mypage .card .card-head .card-overlay {
   position: absolute;
   background-color: #f4c434;
   width: 100%;
@@ -363,36 +376,30 @@ footer {
   transform: scale(1);
 }
 
-.page .home .card .card-head .card_title {
+.page .mypage .card .card-head .card_title {
   z-index: 1;
 }
 
-.page .home .card .card-head img {
+.page .mypage .card .card-head img {
   border-radius: 50%;
-  border: 10px solid #ffffff;
-  width: 100px;
-  height: 100px;
+  border: 7px solid #ffffff;
+  width: 85px;
+  height: 85px;
   vertical-align: middle;
   display: inline-block;
   object-fit: cover;
   position: relative;
   z-index: 1;
+  margin-top: 26px;
+  margin-left: 34px;
 }
 
-.page .home .card .card_content {
-  padding: 5%;
-}
-
-@media (max-width: 1264px) {
-  .page .home {
-    width: 70%;
-  }
-}
-
-@media (max-width: 1904px) {
-  .page .home {
-    width: 70%;
-  }
+.page .mypage .card .card_content {
+  position: absolute;
+  right: 34px;
+  bottom: 16px;
+  font-weight: bold;
+  font-size: 28px;
 }
 
 .page .activation {
@@ -434,11 +441,11 @@ footer {
   color: #ffffff;
 }
 
-.page .signup .form-wrapper .form-footer a {
+.page .signup .form-wrapper .form-footer button {
   color: #ffffff;
 }
 
-.page .signup .form-wrapper .form-btn a {
+.page .signup .form-wrapper .form-btn button {
   color: #f4c434;
   background-color: #ffffff;
 }
